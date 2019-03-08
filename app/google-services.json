@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "346080575227",
+    "firebase_url": "https://on-road-7dcf2.firebaseio.com",
+    "project_id": "on-road-7dcf2",
+    "storage_bucket": "on-road-7dcf2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:346080575227:android:92518085817fd5f4",
+        "android_client_info": {
+          "package_name": "com.android.onroad"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "346080575227-p00qq5thdfcr87lghm4hhuv5h3aqfotn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.android.onroad",
+            "certificate_hash": "ec78d64fc02516721e6cf4f18425e58004f40fb5"
+          }
+        },
+        {
+          "client_id": "346080575227-o1vht4u5ghhschc23mgrn06ao74c16vm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANmIK5xTmHC87zRFCZC5H4xWrOdSmZrGI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "346080575227-o1vht4u5ghhschc23mgrn06ao74c16vm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
