@@ -92,8 +92,8 @@ public class HomeActivity extends AppCompatActivity {
     void initViews() {
         manager = getSupportFragmentManager();
         adapter = new ViewPagerAdapter(manager);
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.history_trips));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.upcomming_string_key));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.history_trips));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         pager.setAdapter(adapter);
         pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));

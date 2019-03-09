@@ -37,15 +37,15 @@ public class UpCommingTripsFragment extends Fragment {
     List<Trip>trips=new ArrayList<>();
     Trip trip=new Trip();
     TripsAdapter adapter;
-    RecyclerView recyclerView;
+
     @BindView(R.id.home_activity_constrint)
     ConstraintLayout constraint;
+    @BindView(R.id.recycler_main)
+    RecyclerView recyclerView;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
           View view=inflater.inflate(R.layout.framgent_upcomming,container,false);
         ButterKnife.bind(this, view);
-        recyclerView=view.findViewById(R.id.recycler_main);
-        Toast.makeText(getActivity(), "onCreateView", Toast.LENGTH_SHORT).show();
           return view;
     }
 
@@ -61,7 +61,6 @@ public class UpCommingTripsFragment extends Fragment {
             trip.setEndPoint("cairo");
             trips.add(trip);
         }
-        Toast.makeText(getActivity(), "onActivityCreated", Toast.LENGTH_SHORT).show();
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
