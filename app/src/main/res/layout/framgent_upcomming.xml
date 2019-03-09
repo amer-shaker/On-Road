@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_activity_constrint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/home_activity_constrint"
     android:background="@color/fui_bgPhone">
 
+<<<<<<< HEAD
     <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
@@ -19,18 +20,30 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#fff" />
+=======
+>>>>>>> 455eaf8b5359e5321cd29d3cfd41e53d8b8d4657
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_add_trip"
         android:layout_width="77dp"
         android:layout_height="76dp"
         android:layout_gravity="end|bottom"
+<<<<<<< HEAD
         android:layout_marginEnd="92dp"
         android:src="@drawable/sign_plus"
         android:layout_marginRight="92dp"
         android:layout_marginBottom="200dp"
+=======
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/fab"
+>>>>>>> 455eaf8b5359e5321cd29d3cfd41e53d8b8d4657
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

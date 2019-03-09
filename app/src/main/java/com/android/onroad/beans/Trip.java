@@ -1,24 +1,26 @@
 package com.android.onroad.beans;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
-public class TripModel {
+public class Trip {
 
+    String tripName;
     private int tripId;
     private String startPoint;
     private String endPoint;
-    private LocalDateTime startDateTime;
-    private LocalDateTime endDateTime;
+    private Date startDateTime;
+    private Date endDateTime;
     private String status;
-    private List<NoteModel> notes;
+    private List<Note> notes;
 
-    public TripModel() {
+    public Trip() {
 
     }
 
-    public TripModel(int tripId, String startPoint, String endPoint, LocalDateTime startDateTime,
-                     LocalDateTime endDateTime, String status, List<NoteModel> notes) {
+    public Trip(int tripId, String startPoint, String endPoint, Date startDateTime,
+                Date endDateTime, String status, List<Note> notes) {
         this.tripId = tripId;
         this.startPoint = startPoint;
         this.endPoint = endPoint;
@@ -26,6 +28,14 @@ public class TripModel {
         this.endDateTime = endDateTime;
         this.status = status;
         this.notes = notes;
+    }
+
+    public String getTripName() {
+        return tripName;
+    }
+
+    public void setTripName(String tripName) {
+        this.tripName = tripName;
     }
 
     public int getTripId() {
@@ -52,19 +62,19 @@ public class TripModel {
         this.endPoint = endPoint;
     }
 
-    public LocalDateTime getStartDateTime() {
+    public Date getStartDateTime() {
         return startDateTime;
     }
 
-    public void setStartDateTime(LocalDateTime startDateTime) {
+    public void setStartDateTime(Date startDateTime) {
         this.startDateTime = startDateTime;
     }
 
-    public LocalDateTime getEndDateTime() {
+    public Date getEndDateTime() {
         return endDateTime;
     }
 
-    public void setEndDateTime(LocalDateTime endDateTime) {
+    public void setEndDateTime(Date endDateTime) {
         this.endDateTime = endDateTime;
     }
 
@@ -76,11 +86,13 @@ public class TripModel {
         this.status = status;
     }
 
-    public List<NoteModel> getNotes() {
+    public List<Note> getNotes() {
         return notes;
     }
 
-    public void setNotes(List<NoteModel> notes) {
+    public void setNotes(List<Note> notes) {
         this.notes = notes;
     }
+
+
 }

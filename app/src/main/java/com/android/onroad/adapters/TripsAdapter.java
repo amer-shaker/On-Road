@@ -1,34 +1,34 @@
 package com.android.onroad.adapters;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.android.onroad.HomeActivity;
 import com.android.onroad.R;
-import com.android.onroad.beans.TripModel;
+import com.android.onroad.beans.Trip;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-
-/**
- * Created by abdulrahman on 6/4/2018.
- */
 
 public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> {
 
-    private HomeActivity activity;
-    private List<TripModel> items;
+    private Context context;
+    private List<Trip> items;
 
-    public TripsAdapter(HomeActivity activity) {
+    public TripsAdapter(Context context) {
         items = new ArrayList<>();
-        this.activity = activity;
+        this.context = context;
     }
 
 
@@ -41,41 +41,67 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        TripModel repo = items.get(position);
-//        holder.tvRepoDescribtion.setText(repo.getDescription());
-//        holder.tvRepoNAme.setText(repo.getFull_name());
-//        holder.tvRepoOwner.setText(repo.getName());
-
-
+        Trip trip = items.get(position);
+        Log.e("items size onBindViewH", items.size() + "");
+        holder.tvTripName.setText(trip.getTripName());
+        holder.tvStartPoint.setText(trip.getStartPoint());
+        holder.tvEndPoint.setText(trip.getEndPoint());
     }
 
     @Override
     public int getItemCount() {
+        Log.e("items getItemCount", items.size() + "");
+
         return items.size();
+
     }
 
-    public void setItems(List<TripModel> items) {
+    public void setItems(List<Trip> items) {
         this.items = items;
+        Log.e("items size", items.size() + "");
         notifyDataSetChanged();
     }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        //        @BindView(R.id.tv_repo_name)
-//        TextView tvRepoNAme;
-//
-//        @BindView(R.id.tv_repo_owner)
-//        TextView tvRepoOwner;
-//
-//        @BindView(R.id.tv_repo_describtion)
-//        TextView tvRepoDescribtion;
-//        @BindView(R.id.row_constraint)
-        ConstraintLayout layout;
+
+        @BindView(R.id.imv_cancel_trip)
+        ImageView imgCancelTrip;
+        @BindView(R.id.imv_edit_trip)
+        ImageView imgEditTrip;
+
+        @BindView(R.id.tv_trip_name)
+        TextView tvTripName;
+
+        @BindView(R.id.tv_start_point)
+        TextView tvStartPoint;
+        @BindView(R.id.tv_end_point)
+        TextView tvEndPoint;
+
+        @BindView(R.id.btn_start_trip)
+        TextView btnStart;
+
 
         ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-//            itemView.setOnLongClickListener(this);
+        }
+
+        @OnClick(R.id.imv_cancel_trip)
+        void nacelTrip(View view) {
+            Log.e("position clicked", getAdapterPosition() + "");
+        }
+
+        @OnClick(R.id.imv_edit_trip)
+        void editTrip(View view) {
+            Log.e("position clicked", getAdapterPosition() + "");
+
+        }
+
+        @OnClick(R.id.btn_start_trip)
+        void startTrip(View view) {
+            Log.e("position clicked", getAdapterPosition() + "");
+
         }
 
 

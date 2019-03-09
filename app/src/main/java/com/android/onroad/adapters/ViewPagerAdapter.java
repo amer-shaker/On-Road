@@ -8,8 +8,8 @@ import com.android.onroad.fragments.HisroryTripsFragment;
 import com.android.onroad.fragments.UpCommingTripsFragment;
 
 
-public class MainViewPagerAdapter extends FragmentStatePagerAdapter {
-    public MainViewPagerAdapter(FragmentManager fm) {
+public class ViewPagerAdapter extends FragmentStatePagerAdapter {
+    public ViewPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 

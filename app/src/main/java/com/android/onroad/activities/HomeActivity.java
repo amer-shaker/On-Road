@@ -1,4 +1,4 @@
-package com.android.onroad;
+package com.android.onroad.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +15,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.android.onroad.adapters.MainViewPagerAdapter;
+import android.widget.LinearLayout;
+
+import com.android.onroad.R;
+import com.android.onroad.adapters.ViewPagerAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,8 +40,9 @@ public class HomeActivity extends AppCompatActivity {
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
 
+
     FragmentManager manager;
-    MainViewPagerAdapter adapter;
+    ViewPagerAdapter adapter;
 
 
     @Override
@@ -77,14 +81,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
-    @Optional
-    @OnClick(R.id.fab_add_trip)
-    public void add(View view) {
-        Snackbar.make(constraint, "hello from fab man ", Snackbar.LENGTH_LONG).show();
-        Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(getApplicationContext(),AddTripActivity.class));
-
-    }
 
     @Override
     public void onBackPressed() {
@@ -97,11 +93,29 @@ public class HomeActivity extends AppCompatActivity {
 
     void initViews() {
         manager = getSupportFragmentManager();
-        adapter = new MainViewPagerAdapter(manager);
+        adapter = new ViewPagerAdapter(manager);
         tabLayout.addTab(tabLayout.newTab().setText(R.string.history_trips));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.upcomming_string_key));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         pager.setAdapter(adapter);
         pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+    }
+
+    @OnClick(R.id.linear_logout)
+    void logout(View view) {
+        Snackbar.make(constraint, "logout", Snackbar.LENGTH_LONG).show();
+
+    }
+
+    @OnClick(R.id.linear_profile)
+    void showProfile(View view) {
+        Snackbar.make(constraint, "showProfile", Snackbar.LENGTH_LONG).show();
+
+    }
+
+    @OnClick(R.id.linear_sync)
+    void syncData(View view) {
+        Snackbar.make(constraint, "syncData", Snackbar.LENGTH_LONG).show();
+
     }
 }
