@@ -10,4 +10,7 @@
     <color name="darkGrey">#A9A9A9</color>
     <color name="colorWhite">#fff</color>
     <color name="tap_bg_color">#f2f3ed</color>
+
+    <color name="Black">#000000</color>
+    <color name="White">#FFFFFF</color>
 </resources>

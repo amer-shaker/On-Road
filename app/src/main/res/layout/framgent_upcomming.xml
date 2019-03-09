@@ -8,21 +8,26 @@
     android:background="@color/fui_bgPhone">
 
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#fff" />
+
+
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_add_trip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginRight="64dp"
 
-        android:layout_marginBottom="92dp"
+
+        android:layout_marginEnd="92dp"
+        android:src="@drawable/sign_plus"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="60dp"
         android:background="@drawable/fab"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />

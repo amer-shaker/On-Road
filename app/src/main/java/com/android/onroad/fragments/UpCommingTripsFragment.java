@@ -1,5 +1,6 @@
 package com.android.onroad.fragments;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.android.onroad.R;
+import com.android.onroad.activities.AddTripActivity;
 import com.android.onroad.adapters.TripsAdapter;
 import com.android.onroad.beans.Trip;
 
@@ -34,29 +36,30 @@ import butterknife.Optional;
 
 
 public class UpCommingTripsFragment extends Fragment {
-    List<Trip>trips=new ArrayList<>();
-    Trip trip=new Trip();
+    List<Trip> trips = new ArrayList<>();
+    Trip trip = new Trip();
     TripsAdapter adapter;
 
     @BindView(R.id.home_activity_constrint)
     ConstraintLayout constraint;
     @BindView(R.id.recycler_main)
     RecyclerView recyclerView;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-          View view=inflater.inflate(R.layout.framgent_upcomming,container,false);
+        View view = inflater.inflate(R.layout.framgent_upcomming, container, false);
         ButterKnife.bind(this, view);
-          return view;
+        return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         for (int i = 0; i < 5; i++) {
-            trip=new Trip();
+            trip = new Trip();
             trip.setTripName("school");
-            trip.setEndDateTime( Calendar.getInstance().getTime());
-            trip.setStartDateTime( Calendar.getInstance().getTime());
+            trip.setEndDateTime(Calendar.getInstance().getTime());
+            trip.setStartDateTime(Calendar.getInstance().getTime());
             trip.setStartPoint("giza");
             trip.setEndPoint("cairo");
             trips.add(trip);
@@ -64,14 +67,14 @@ public class UpCommingTripsFragment extends Fragment {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        adapter=new TripsAdapter(getActivity());
+        adapter = new TripsAdapter(getActivity());
         adapter.setItems(trips);
         recyclerView.setAdapter(adapter);
 
     }
+
     @OnClick(R.id.fab_add_trip)
     public void add(View view) {
-        Snackbar.make(constraint, "hello from fab man ", Snackbar.LENGTH_LONG).show();
-
+        startActivity(new Intent(getActivity(), AddTripActivity.class));
     }
 }
