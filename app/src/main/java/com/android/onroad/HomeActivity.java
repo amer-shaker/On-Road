@@ -1,5 +1,6 @@
 package com.android.onroad;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.NavigationView;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.onroad.adapters.MainViewPagerAdapter;
 
@@ -79,6 +81,8 @@ public class HomeActivity extends AppCompatActivity {
     @OnClick(R.id.fab_add_trip)
     public void add(View view) {
         Snackbar.make(constraint, "hello from fab man ", Snackbar.LENGTH_LONG).show();
+        Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(getApplicationContext(),AddTripActivity.class));
 
     }
 
