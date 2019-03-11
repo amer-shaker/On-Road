@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 
 import com.android.onroad.R;
+import com.android.onroad.utils.Utility;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
@@ -28,12 +29,12 @@ public class AddTripActivity extends AppCompatActivity {
 
     private static final String TAG = "Error...";
     Button btnTimePicker, btnDatePicker, AddTrip;
-    TextView txtDate,txtTime;
-    Spinner spnRepeat , spnStatus;
-    String Repeat,Status;
-    EditText tripName,myNote;
+    TextView txtDate, txtTime;
+    Spinner spnRepeat, spnStatus;
+    String Repeat, Status;
+    EditText tripName, myNote;
 
-    String tripNm, sPoint="", sLat="", sLong="", ePoint="", eLat="", eLong="";
+    String tripNm, sPoint = "", sLat = "", sLong = "", ePoint = "", eLat = "", eLong = "";
     double mysLat, mysLong, myeLat, myeLong;
 
     @Override
@@ -45,7 +46,7 @@ public class AddTripActivity extends AppCompatActivity {
         txtDate = findViewById(R.id.in_date_add);
         txtTime = findViewById(R.id.in_time_add);
 
-        tripName= findViewById(R.id.txtTripName);
+        tripName = findViewById(R.id.txtTripName);
         AddTrip = findViewById(R.id.btnAddTrip);
         spnRepeat = findViewById(R.id.spnRepeat);
         spnStatus = findViewById(R.id.spnStatus);
@@ -54,7 +55,7 @@ public class AddTripActivity extends AppCompatActivity {
         spnStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Status =spnStatus.getItemAtPosition(position).toString();
+                Status = spnStatus.getItemAtPosition(position).toString();
                 Toast.makeText(AddTripActivity.this, Status, Toast.LENGTH_SHORT).show();
             }
 
@@ -66,7 +67,7 @@ public class AddTripActivity extends AppCompatActivity {
         spnRepeat.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Repeat =spnRepeat.getItemAtPosition(position).toString();
+                Repeat = spnRepeat.getItemAtPosition(position).toString();
                 Toast.makeText(AddTripActivity.this, Repeat, Toast.LENGTH_SHORT).show();
             }
 
@@ -81,17 +82,21 @@ public class AddTripActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Calendar mcurrentTime = Calendar.getInstance();
-                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = mcurrentTime.get(Calendar.MINUTE);
+                final int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                final int minute = mcurrentTime.get(Calendar.MINUTE);
+                final int day = mcurrentTime.get(Calendar.DAY_OF_MONTH);
+
                 TimePickerDialog mTimePicker;
                 mTimePicker = new TimePickerDialog(AddTripActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        txtTime.setText( selectedHour + ":" + selectedMinute);
+                        txtTime.setText(selectedHour + ":" + selectedMinute);
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 mTimePicker.setTitle("Select Time");
                 mTimePicker.show();
+
+
 
             }
         });
@@ -114,63 +119,64 @@ public class AddTripActivity extends AppCompatActivity {
                     }
                 }, mYear, mMonth, mDay);
                 mDatePicker.setTitle("Select Date");
+
                 mDatePicker.show();
             }
         });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        PlaceAutocompleteFragment autocompleteFragment1 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.txtStartPoint);
-        if (autocompleteFragment1 != null)
-            autocompleteFragment1.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-                @Override
-                public void onPlaceSelected(Place place) {
-                    // TODO: Get info about the selected place.
-                    Log.i(TAG, "Place: " + place.getName());
-                    sPoint = place.getName().toString();
-                    LatLng myLatLong = place.getLatLng();
-                    mysLat = myLatLong.latitude;
-                    mysLong = myLatLong.longitude;
-                    sLat = mysLat + "";
-                    sLong = mysLong + "";
-
-
-                }
-
-                @Override
-                public void onError(com.google.android.gms.common.api.Status status) {
-                    // TODO: Handle the error.
-                    Log.i(TAG, "An error occurred: " + status);
-                }
-            });
-        else Toast.makeText(this, "Problem with loading page", Toast.LENGTH_LONG).show();
-
-
-        PlaceAutocompleteFragment autocompleteFragment2 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.txtEndPoint);
-        if (autocompleteFragment2 != null )
-            autocompleteFragment2.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-                @Override
-                public void onPlaceSelected(Place place) {
-                    // TODO: Get info about the selected place./
-                    Log.i(TAG, "Place: " + place.getName());
-                    String placeName = place.getName().toString();
-                    Toast.makeText(AddTripActivity.this, "the place is "+ placeName ,Toast.LENGTH_SHORT).show();
-                    ePoint = place.getName().toString();
-                    LatLng myLatLong = place.getLatLng();
-                    myeLat = myLatLong.latitude;
-                    myeLong = myLatLong.longitude;
-                    eLat = myeLat + "";
-                    eLong = myeLong + "";
-                }
-
-                @Override
-                public void onError(com.google.android.gms.common.api.Status status) {
-                    // TODO: Handle the error.
-                    Log.i(TAG, "An error occurred: " + status);
-                }
-            });
-        else Toast.makeText(this, "Problem with loading page", Toast.LENGTH_LONG).show();
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        PlaceAutocompleteFragment autocompleteFragment1 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.txtStartPoint);
+//        if (autocompleteFragment1 != null)
+//            autocompleteFragment1.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+//                @Override
+//                public void onPlaceSelected(Place place) {
+//                    // TODO: Get info about the selected place.
+//                    Log.i(TAG, "Place: " + place.getName());
+//                    sPoint = place.getName().toString();
+//                    LatLng myLatLong = place.getLatLng();
+//                    mysLat = myLatLong.latitude;
+//                    mysLong = myLatLong.longitude;
+//                    sLat = mysLat + "";
+//                    sLong = mysLong + "";
+//
+//
+//                }
+//
+//                @Override
+//                public void onError(com.google.android.gms.common.api.Status status) {
+//                    // TODO: Handle the error.
+//                    Log.i(TAG, "An error occurred: " + status);
+//                }
+//            });
+//        else Toast.makeText(this, "Problem with loading page", Toast.LENGTH_LONG).show();
+//
+//
+//        PlaceAutocompleteFragment autocompleteFragment2 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.txtEndPoint);
+//        if (autocompleteFragment2 != null)
+//            autocompleteFragment2.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+//                @Override
+//                public void onPlaceSelected(Place place) {
+//                    // TODO: Get info about the selected place./
+//                    Log.i(TAG, "Place: " + place.getName());
+//                    String placeName = place.getName().toString();
+//                    Toast.makeText(AddTripActivity.this, "the place is " + placeName, Toast.LENGTH_SHORT).show();
+//                    ePoint = place.getName().toString();
+//                    LatLng myLatLong = place.getLatLng();
+//                    myeLat = myLatLong.latitude;
+//                    myeLong = myLatLong.longitude;
+//                    eLat = myeLat + "";
+//                    eLong = myeLong + "";
+//                }
+//
+//                @Override
+//                public void onError(com.google.android.gms.common.api.Status status) {
+//                    // TODO: Handle the error.
+//                    Log.i(TAG, "An error occurred: " + status);
+//                }
+//            });
+//        else Toast.makeText(this, "Problem with loading page", Toast.LENGTH_LONG).show();
+//    }
 }

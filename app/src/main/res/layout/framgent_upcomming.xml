@@ -21,9 +21,6 @@
         android:id="@+id/fab_add_trip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-
-
         android:layout_marginEnd="92dp"
         android:src="@drawable/sign_plus"
         android:layout_marginRight="40dp"

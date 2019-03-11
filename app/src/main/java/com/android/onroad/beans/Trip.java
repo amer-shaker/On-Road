@@ -1,10 +1,13 @@
 package com.android.onroad.beans;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
-public class Trip {
+public class Trip  implements Parcelable {
 
     String tripName;
     private int tripId;
@@ -29,6 +32,26 @@ public class Trip {
         this.status = status;
         this.notes = notes;
     }
+
+    protected Trip(Parcel in) {
+        tripName = in.readString();
+        tripId = in.readInt();
+        startPoint = in.readString();
+        endPoint = in.readString();
+        status = in.readString();
+    }
+
+    public static final Creator<Trip> CREATOR = new Creator<Trip>() {
+        @Override
+        public Trip createFromParcel(Parcel in) {
+            return new Trip(in);
+        }
+
+        @Override
+        public Trip[] newArray(int size) {
+            return new Trip[size];
+        }
+    };
 
     public String getTripName() {
         return tripName;
@@ -95,4 +118,17 @@ public class Trip {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(tripName);
+        dest.writeInt(tripId);
+        dest.writeString(startPoint);
+        dest.writeString(endPoint);
+        dest.writeString(status);
+    }
 }
