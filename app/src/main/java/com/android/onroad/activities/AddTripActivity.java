@@ -1,4 +1,4 @@
-package com.android.onroad;
+package com.android.onroad.activities;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.onroad.R;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
@@ -24,7 +25,6 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.Calendar;
 
 public class AddTripActivity extends AppCompatActivity {
-
     private static final String TAG = "Error...";
     Button btnTimePicker, btnDatePicker, AddTrip;
     TextView txtDate,txtTime;
@@ -172,4 +172,6 @@ public class AddTripActivity extends AppCompatActivity {
             });
         else Toast.makeText(this, "Problem with loading page", Toast.LENGTH_LONG).show();
     }
+
+
 }

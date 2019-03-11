@@ -48,7 +48,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_add_trip);
         ButterKnife.bind(this);
         initViews();
         imgMenue.setOnClickListener(new View.OnClickListener() {
