@@ -8,8 +8,8 @@ import com.android.onroad.fragments.HisroryTripsFragment;
 import com.android.onroad.fragments.UpCommingTripsFragment;
 
 
-public class MainViewPagerAdapter extends FragmentStatePagerAdapter {
-    public MainViewPagerAdapter(FragmentManager fm) {
+public class ViewPagerAdapter extends FragmentStatePagerAdapter {
+    public ViewPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
@@ -18,10 +18,10 @@ public class MainViewPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 1:
-                return new UpCommingTripsFragment();
+                return new HisroryTripsFragment();
 
             case 0:
-                return new HisroryTripsFragment();
+                return new UpCommingTripsFragment ();
 
             default:
                 return null;

@@ -60,4 +60,23 @@
     <string name="edit_photo">Edit Photo</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+<!--Korany-->
+    <string name="Trip_prompt">Choose Status Of Trip</string>
+    <string-array name="Repetayion">
+        <item>No Repeat</item>
+        <item>Repeat Daily</item>
+        <item>Repeat weekly</item>
+        <item>Repeat Monthly</item>
+    </string-array>
+
+    <string name="Trip_prompt2">Choose type of trip</string>
+    <string-array name="Status">
+        <item>One Way Trip</item>
+        <item>Round Trip</item>
+    </string-array>
+
+    <string name="profile_lable">Profile</string>
+    <string name="log_out">Log Out</string>
+    <string name="sync">Sync</string>
 </resources>

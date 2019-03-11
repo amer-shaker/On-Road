@@ -1,6 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite">
 
+    <ImageView
+        android:id="@+id/imv_cancel_trip"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imv_edit_trip"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/edit_icon"
+        app:layout_constraintEnd_toStartOf="@id/imv_cancel_trip"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imv_trip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/circle_image"/>
+
+    <TextView
+        android:id="@+id/tv_trip_lable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="@string/trip_lable"
+        app:layout_constraintStart_toEndOf="@id/imv_trip"
+        app:layout_constraintTop_toBottomOf="@id/imv_trip" />
+
+    <TextView
+        android:id="@+id/tv_trip_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/tv_trip_lable"
+        app:layout_constraintTop_toBottomOf="@id/imv_trip" />
+
+    <TextView
+        android:id="@+id/tv_start_point_lable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="@string/start_point"
+        app:layout_constraintStart_toEndOf="@id/imv_trip"
+        app:layout_constraintTop_toBottomOf="@+id/tv_trip_lable" />
+
+    <TextView
+        android:id="@+id/tv_start_point"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintStart_toEndOf="@id/tv_start_point_lable"
+        app:layout_constraintTop_toBottomOf="@+id/tv_trip_lable" />
+
+    <TextView
+        android:id="@+id/tv_end_point_lable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="@string/start_point"
+        app:layout_constraintStart_toEndOf="@id/imv_trip"
+        app:layout_constraintTop_toBottomOf="@+id/tv_start_point_lable" />
+
+    <TextView
+        android:id="@+id/tv_end_point"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintStart_toEndOf="@id/tv_end_point_lable"
+        app:layout_constraintTop_toBottomOf="@+id/tv_start_point_lable" />
+
+    <Button
+        android:id="@+id/btn_start_trip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/start_button"
+        android:text="@string/button_start_trip"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_end_point_lable" />
 </android.support.constraint.ConstraintLayout>

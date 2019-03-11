@@ -1,15 +1,15 @@
 package com.android.onroad.beans;
 
-public class NoteModel {
+public class Note {
 
     private int noteId;
     private String note;
 
-    public NoteModel() {
+    public Note() {
 
     }
 
-    public NoteModel(int noteId, String note) {
+    public Note(int noteId, String note) {
         this.noteId = noteId;
         this.note = note;
     }
