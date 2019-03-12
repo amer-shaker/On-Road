@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item android:state_pressed="true"
-        android:drawable="@color/colorAccent" /> <!-- pressed -->
+        android:drawable="@drawable/start_button_pressed"
+        /> <!-- pressed -->
     <item android:state_focused="true"
-        android:drawable="@color/colorPrimary" /> <!-- focused -->
+        android:drawable="@drawable/start_button_unpressed" >
+
+    </item><!-- focused -->
     <item android:state_hovered="true"
-        android:drawable="@color/colorPrimaryDark" /> <!-- hovered -->
-    <item android:drawable="@color/lightGrey" /> <!-- default -->
+        android:drawable="@drawable/start_button_unpressed" /> <!-- hovered -->
+    <item android:drawable="@drawable/start_button_pressed"
+        >
+
+    </item><!-- default -->
+
 </selector>

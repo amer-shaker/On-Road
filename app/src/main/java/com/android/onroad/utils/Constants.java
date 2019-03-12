@@ -15,4 +15,5 @@ public interface Constants {
     public String TRIP_END_TIME_COL ="trip_end_time";
     public String TRIP_USER="trip_user";
 
+    String TRIP = "trip";
 }
