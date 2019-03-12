@@ -42,11 +42,9 @@
     <string name="current_password">Current Password</string>
     <string name="new_password">New Password</string>
     <string name="confirm_new_password">Confirm New Password</string>
-
-
     <string name="send_button_label">Send</string>
     <string name="upcomming_string_key">Up Comming</string>
-    <string name="history_trips">History</string>>
+    <string name="history_trips">History</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -57,4 +55,29 @@
     <string name="trip_lable">Trip Name</string>
     <string name="start_point">Start Date</string>
     <string name="button_start_trip">Start</string>
+    <!-- related to edit account-->
+    <string name="Edit_Profile">Edit Profile</string>
+    <string name="edit_photo">Edit Photo</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+<!--Korany-->
+    <string name="Trip_prompt">Choose Status Of Trip</string>
+    <string-array name="Repetayion">
+        <item>No Repeat</item>
+        <item>Repeat Daily</item>
+        <item>Repeat weekly</item>
+        <item>Repeat Monthly</item>
+    </string-array>
+
+    <string name="Trip_prompt2">Choose type of trip</string>
+    <string-array name="Status">
+        <item>One Way Trip</item>
+        <item>Round Trip</item>
+    </string-array>
+
+    <string name="profile_lable">Profile</string>
+    <string name="log_out">Log Out</string>
+    <string name="sync">Sync</string>
 </resources>

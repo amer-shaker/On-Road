@@ -1,4 +1,4 @@
-package com.android.onroad;
+package com.android.onroad.activities;
 
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -12,16 +12,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
-import com.android.onroad.adapters.MainViewPagerAdapter;
+import com.android.onroad.R;
+import com.android.onroad.adapters.ViewPagerAdapter;
+import com.android.onroad.beans.Trip;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Optional;
 
 public class HomeActivity extends AppCompatActivity {
-    @BindView(R.id.tab_main)
+    @BindView(R.id.tab_main_view)
     TabLayout tabLayout;
 
     @BindView(R.id.main_pager)
@@ -35,16 +37,19 @@ public class HomeActivity extends AppCompatActivity {
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
 
+
     FragmentManager manager;
-    MainViewPagerAdapter adapter;
+    ViewPagerAdapter adapter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_add_trip);
         ButterKnife.bind(this);
         initViews();
+        Trip trip = getIntent().getParcelableExtra("myTrip");
+        Toast.makeText(this, trip.getStartPoint() + " "+ trip.getTripName(), Toast.LENGTH_SHORT).show();
         imgMenue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,12 +80,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
-    @Optional
-    @OnClick(R.id.fab_add_trip)
-    public void add(View view) {
-        Snackbar.make(constraint, "hello from fab man ", Snackbar.LENGTH_LONG).show();
-
-    }
 
     @Override
     public void onBackPressed() {
@@ -93,11 +92,29 @@ public class HomeActivity extends AppCompatActivity {
 
     void initViews() {
         manager = getSupportFragmentManager();
-        adapter = new MainViewPagerAdapter(manager);
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.history_trips));
+        adapter = new ViewPagerAdapter(manager);
         tabLayout.addTab(tabLayout.newTab().setText(R.string.upcomming_string_key));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.history_trips));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         pager.setAdapter(adapter);
         pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+    }
+
+    @OnClick(R.id.linear_logout)
+    void logout(View view) {
+        Snackbar.make(constraint, "logout", Snackbar.LENGTH_LONG).show();
+
+    }
+
+    @OnClick(R.id.linear_profile)
+    void showProfile(View view) {
+        Snackbar.make(constraint, "showProfile", Snackbar.LENGTH_LONG).show();
+
+    }
+
+    @OnClick(R.id.linear_sync)
+    void syncData(View view) {
+        Snackbar.make(constraint, "syncData", Snackbar.LENGTH_LONG).show();
+
     }
 }

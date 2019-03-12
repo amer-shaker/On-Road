@@ -23,4 +23,6 @@ public class HisroryTripsFragment extends Fragment {
         unbinder= ButterKnife.bind(this,view);
         return view;
     }
+
+
 }

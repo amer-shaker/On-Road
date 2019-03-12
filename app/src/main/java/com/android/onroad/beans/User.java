@@ -2,17 +2,17 @@ package com.android.onroad.beans;
 
 import android.net.Uri;
 
-public class UserModel {
+public class User {
     private int userId;
     private String username;
     private String emailAddress;
     private String password;
     private Uri photoUri;
 
-    public UserModel() {
+    public User() {
     }
 
-    public UserModel(int userId, String username, String emailAddress, String password, Uri photoUri) {
+    public User(int userId, String username, String emailAddress, String password, Uri photoUri) {
         this.userId = userId;
         this.username = username;
         this.emailAddress = emailAddress;
