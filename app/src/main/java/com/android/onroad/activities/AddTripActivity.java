@@ -44,7 +44,6 @@ public class AddTripActivity extends AppCompatActivity {
         btnTimePicker = findViewById(R.id.btnAddTime);
         txtDate = findViewById(R.id.in_date_add);
         txtTime = findViewById(R.id.in_time_add);
-
         tripName= findViewById(R.id.txtTripName);
         AddTrip = findViewById(R.id.btnAddTrip);
         spnRepeat = findViewById(R.id.spnRepeat);
