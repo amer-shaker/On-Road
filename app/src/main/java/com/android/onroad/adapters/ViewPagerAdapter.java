@@ -18,10 +18,10 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 1:
-                return new UpCommingTripsFragment();
+                return new HisroryTripsFragment();
 
             case 0:
-                return new HisroryTripsFragment();
+                return new UpCommingTripsFragment ();
 
             default:
                 return null;

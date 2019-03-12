@@ -1,6 +1,5 @@
 package com.android.onroad.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.NavigationView;
@@ -15,18 +14,16 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import android.widget.LinearLayout;
-
 import com.android.onroad.R;
 import com.android.onroad.adapters.ViewPagerAdapter;
+import com.android.onroad.beans.Trip;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Optional;
 
 public class HomeActivity extends AppCompatActivity {
-    @BindView(R.id.tab_main)
+    @BindView(R.id.tab_main_view)
     TabLayout tabLayout;
 
     @BindView(R.id.main_pager)
@@ -51,6 +48,8 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_trip);
         ButterKnife.bind(this);
         initViews();
+        Trip trip = getIntent().getParcelableExtra("myTrip");
+        Toast.makeText(this, trip.getStartPoint() + " "+ trip.getTripName(), Toast.LENGTH_SHORT).show();
         imgMenue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,8 +93,8 @@ public class HomeActivity extends AppCompatActivity {
     void initViews() {
         manager = getSupportFragmentManager();
         adapter = new ViewPagerAdapter(manager);
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.history_trips));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.upcomming_string_key));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.history_trips));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         pager.setAdapter(adapter);
         pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
