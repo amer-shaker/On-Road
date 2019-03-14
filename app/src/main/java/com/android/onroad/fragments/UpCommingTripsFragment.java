@@ -23,6 +23,7 @@ import com.android.onroad.R;
 import com.android.onroad.activities.AddTripActivity;
 import com.android.onroad.adapters.TripsAdapter;
 import com.android.onroad.beans.Trip;
+import com.android.onroad.utils.Utility;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -76,5 +77,7 @@ public class UpCommingTripsFragment extends Fragment {
     @OnClick(R.id.fab_add_trip)
     public void add(View view) {
         startActivity(new Intent(getActivity(), AddTripActivity.class));
+//                Utility.pushNotification(getActivity(),"");
+
     }
 }

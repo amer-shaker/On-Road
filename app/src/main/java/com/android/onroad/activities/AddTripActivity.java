@@ -91,6 +91,7 @@ public class AddTripActivity extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         txtTime.setText(selectedHour + ":" + selectedMinute);
+                        Utility.setAlarmTime(AddTripActivity.this,selectedHour,selectedMinute);
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 mTimePicker.setTitle("Select Time");
