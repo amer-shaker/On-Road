@@ -11,6 +11,7 @@
     <color name="darkGrey">#A9A9A9</color>
     <color name="colorWhite">#fff</color>
     <color name="tap_bg_color">#f2f3ed</color>
+    <color name="item_recycler_color">#3E8C84</color>
 
     <color name="Black">#000000</color>
     <color name="White">#FFFFFF</color>

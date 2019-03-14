@@ -1,45 +1,35 @@
 package com.android.onroad.fragments;
 
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.android.onroad.R;
 import com.android.onroad.activities.AddTripActivity;
-import com.android.onroad.adapters.TripsAdapter;
+import com.android.onroad.adapters.UpcommingTripsAdapter;
 import com.android.onroad.beans.Trip;
-import com.android.onroad.utils.Utility;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Optional;
 
 
 public class UpCommingTripsFragment extends Fragment {
     List<Trip> trips = new ArrayList<>();
     Trip trip = new Trip();
-    TripsAdapter adapter;
+    UpcommingTripsAdapter adapter;
 
     @BindView(R.id.home_activity_constrint)
     ConstraintLayout constraint;
@@ -59,8 +49,7 @@ public class UpCommingTripsFragment extends Fragment {
         for (int i = 0; i < 5; i++) {
             trip = new Trip();
             trip.setTripName("school");
-            trip.setEndDateTime(Calendar.getInstance().getTime());
-            trip.setStartDateTime(Calendar.getInstance().getTime());
+
             trip.setStartPoint("giza");
             trip.setEndPoint("cairo");
             trips.add(trip);
@@ -68,7 +57,7 @@ public class UpCommingTripsFragment extends Fragment {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        adapter = new TripsAdapter(getActivity());
+        adapter = new UpcommingTripsAdapter(getActivity());
         adapter.setItems(trips);
         recyclerView.setAdapter(adapter);
 

@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,22 +14,67 @@ public class Trip  implements Parcelable {
     private int tripId;
     private String startPoint;
     private String endPoint;
-    private Date startDateTime;
-    private Date endDateTime;
+    private  double latStartPoint , langStartPoint ,latEndPoint , langEndPoint;
+    private Date DateTime;
+
     private String status;
-    private List<Note> notes;
+    private ArrayList<Note> notes;
+
+    private String repeat;
+
+    public String getRepeat() {
+        return repeat;
+    }
+
+    public void setRepeat(String repeat) {
+        this.repeat = repeat;
+    }
+
+    public double getLatStartPoint() {
+        return latStartPoint;
+    }
+
+    public void setLatStartPoint(double latStartPoint) {
+        this.latStartPoint = latStartPoint;
+    }
+
+    public double getLangStartPoint() {
+        return langStartPoint;
+    }
+
+    public void setLangStartPoint(double langStartPoint) {
+        this.langStartPoint = langStartPoint;
+    }
+
+    public double getLatEndPoint() {
+        return latEndPoint;
+    }
+
+    public void setLatEndPoint(double latEndPoint) {
+        this.latEndPoint = latEndPoint;
+    }
+
+    public double getLangEndPoint() {
+        return langEndPoint;
+    }
+
+    public void setLangEndPoint(double langEndPoint) {
+        this.langEndPoint = langEndPoint;
+    }
+
+
 
     public Trip() {
 
     }
 
-    public Trip(int tripId, String startPoint, String endPoint, Date startDateTime,
-                Date endDateTime, String status, List<Note> notes) {
+    public Trip(int tripId, String startPoint, String endPoint, Date startDateTime
+                , String status, ArrayList<Note> notes) {
         this.tripId = tripId;
         this.startPoint = startPoint;
         this.endPoint = endPoint;
-        this.startDateTime = startDateTime;
-        this.endDateTime = endDateTime;
+        this.DateTime = startDateTime;
+
         this.status = status;
         this.notes = notes;
     }
@@ -85,21 +131,16 @@ public class Trip  implements Parcelable {
         this.endPoint = endPoint;
     }
 
-    public Date getStartDateTime() {
-        return startDateTime;
+    public Date getDateTime() {
+        return DateTime;
     }
 
-    public void setStartDateTime(Date startDateTime) {
-        this.startDateTime = startDateTime;
+    public void setDateTime(Date startDateTime) {
+        this.DateTime = startDateTime;
     }
 
-    public Date getEndDateTime() {
-        return endDateTime;
-    }
 
-    public void setEndDateTime(Date endDateTime) {
-        this.endDateTime = endDateTime;
-    }
+
 
     public String getStatus() {
         return status;
@@ -113,7 +154,7 @@ public class Trip  implements Parcelable {
         return notes;
     }
 
-    public void setNotes(List<Note> notes) {
+    public void setNotes(ArrayList<Note> notes) {
         this.notes = notes;
     }
 

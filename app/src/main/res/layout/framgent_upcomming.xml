@@ -5,14 +5,16 @@
     android:id="@+id/home_activity_constrint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fui_bgPhone">
+    android:background="@drawable/bg"
+>
+
 
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#fff" />
+            android:background="@drawable/bg" />
 
 
 
@@ -21,6 +23,7 @@
         android:id="@+id/fab_add_trip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:layout_marginEnd="92dp"
         android:src="@drawable/sign_plus"
         android:layout_marginRight="40dp"
