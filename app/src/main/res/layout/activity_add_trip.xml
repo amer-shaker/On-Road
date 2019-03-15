@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,25 +9,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_marginLeft="40dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
                     android:layout_marginTop="5dp"
-                    android:textStyle="bold"
-                    android:textSize="18dp"
+                    android:text="Trip Name"
                     android:textColor="@color/Black"
-                    android:text="Trip Name" />
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/txtTripName"
@@ -38,6 +38,7 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="20dp"
                     android:ems="10" />
+
             </LinearLayout>
 
 
@@ -58,14 +59,12 @@
 
                 <fragment
                     android:id="@+id/txtStartPoint"
-
                     android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
                     android:layout_width="341dp"
                     android:layout_height="44dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="20dp" />
-
 
             </LinearLayout>
 
@@ -75,14 +74,14 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_marginLeft="40dp"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="40dp"
                     android:layout_marginTop="10dp"
-                    android:textStyle="bold"
-                    android:textSize="18dp"
+                    android:text="End Point"
                     android:textColor="@color/Black"
-                    android:text="End Point" />
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
 
                 <fragment
                     android:id="@+id/txtEndPoint"
@@ -111,12 +110,12 @@
                     android:textStyle="bold" />
 
                 <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="30dp"
-                    android:layout_width="match_parent"
-                    android:textSize="20dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:textSize="20dp">
 
                     <Button
                         android:id="@+id/btnAddDate"
@@ -134,28 +133,26 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginRight="30dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="30dp"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_marginLeft="75dp"
+                        android:id="@+id/in_date_add"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
-                        android:textSize="15dp"
+                        android:layout_marginLeft="75dp"
                         android:textColor="@color/Black"
-                        android:id="@+id/in_date_add"
-                        />
+                        android:textSize="15dp" />
 
                     <TextView
-                        android:layout_marginLeft="10dp"
+                        android:id="@+id/in_time_add"
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
-                        android:textSize="15dp"
+                        android:layout_marginLeft="10dp"
                         android:textColor="@color/Black"
-                        android:id="@+id/in_time_add"
-                        />
+                        android:textSize="15dp" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -164,8 +161,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="30dp">
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal">
 
                 <Spinner
                     android:id="@+id/spnRepeat"
@@ -199,14 +196,14 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_marginLeft="40dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
                     android:layout_marginTop="5dp"
-                    android:textStyle="bold"
-                    android:textSize="18dp"
+                    android:text="Add Note"
                     android:textColor="@color/Black"
-                    android:text="Add Note" />
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/txtAddNote"
@@ -216,21 +213,20 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="20dp"
                     android:ems="10" />
+
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="add_note"
+                    android:layout_gravity="center"
                     android:onClick="addNote"
-                    android:layout_gravity="center"/>
+                    android:text="add_note" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/myScrollView_add"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/myScrollView_add">
-            </LinearLayout>
-
+                android:orientation="vertical" />
 
             <Button
                 android:id="@+id/btnAddTrip"

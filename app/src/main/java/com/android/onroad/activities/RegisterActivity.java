@@ -20,13 +20,17 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.onroad.R;
+import com.android.onroad.models.UserModel;
 import com.android.onroad.utils.Utility;
 import com.android.onroad.utils.Validation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -49,6 +53,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     // Firebase
     private FirebaseAuth mFirebaseAuth;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mUsersDatabaseReference;
 
     // Instance variables
     private String username;
@@ -66,6 +72,9 @@ public class RegisterActivity extends AppCompatActivity {
 
         // Initialize Firebase Auth
         mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+
+        mUsersDatabaseReference = mFirebaseDatabase.getReference().child(getString(R.string.users_database_node));
 
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -204,7 +213,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private void createAccount(String email, String password) {
+    private void createAccount(final String email, String password) {
         showProgress(true);
         mFirebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -216,8 +225,31 @@ public class RegisterActivity extends AppCompatActivity {
                             Log.d(TAG, "onComplete(): Auth State: " + mFirebaseAuth.getCurrentUser().getUid());
 
                             sendVerificationEmail();
-                            mFirebaseAuth.signOut();
-                            redirectLoginScreen();
+
+                            UserModel user = new UserModel();
+                            user.setName(email.substring(0, email.indexOf("@")));
+                            user.setPhone("1");
+                            user.setProfile_image("");
+                            user.setSecurity_level("1");
+                            user.setUser_id(mFirebaseAuth.getCurrentUser().getUid());
+
+                            mUsersDatabaseReference.child(mFirebaseAuth.getCurrentUser().getUid())
+                                    .setValue(user)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            mFirebaseAuth.signOut();
+                                            redirectLoginScreen();
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    mFirebaseAuth.signOut();
+                                    redirectLoginScreen();
+                                    Toast.makeText(RegisterActivity.this, "Something, went wrong", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
                         } else {
                             Toast.makeText(RegisterActivity.this, "Unable to register", Toast.LENGTH_SHORT).show();
                         }

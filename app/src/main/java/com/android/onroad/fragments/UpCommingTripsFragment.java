@@ -58,8 +58,7 @@ public class UpCommingTripsFragment extends Fragment {
         for (int i = 0; i < 5; i++) {
             trip = new Trip();
             trip.setTripName("school");
-            trip.setEndDateTime(Calendar.getInstance().getTime());
-            trip.setStartDateTime(Calendar.getInstance().getTime());
+            trip.setDateTime(Calendar.getInstance().getTime());
             trip.setStartPoint("giza");
             trip.setEndPoint("cairo");
             trips.add(trip);
