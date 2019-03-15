@@ -134,7 +134,7 @@ public class AddTripActivity extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         txtTime.setText(selectedHour + ":" + selectedMinute);
-                        Utility.setAlarmTime(AddTripActivity.this,selectedHour,selectedMinute);
+                        Utility.setAlarmTime(AddTripActivity.this, new Trip(),selectedHour,selectedMinute);
                         myTime = new Date();
                         myTime.setHours(selectedHour);
                         myTime.setMinutes(selectedMinute);

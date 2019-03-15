@@ -1,7 +1,9 @@
 package com.android.onroad.adapters;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 import com.android.onroad.R;
 import com.android.onroad.activities.DetailsTripActivity;
 import com.android.onroad.beans.Trip;
+import com.android.onroad.utils.Utility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,16 +108,17 @@ public class UpcommingTripsAdapter extends RecyclerView.Adapter<UpcommingTripsAd
         @OnClick(R.id.btn_start_trip)
         void startTrip(View view) {
             Log.e("position clicked", getAdapterPosition() + "");
+            Utility.launchMap(context,trips.get(getAdapterPosition()));
 
         }
 
 
         @Override
         public void onClick(View v) {
-            Intent intentdetails=new Intent(context, DetailsTripActivity.class);
-            Trip  trip=trips.get(getAdapterPosition());
-            intentdetails.putExtra("trip",trips.get(getAdapterPosition()));
-            Log.i("index",getAdapterPosition()+"");
+            Intent intentdetails = new Intent(context, DetailsTripActivity.class);
+            Trip trip = trips.get(getAdapterPosition());
+            intentdetails.putExtra("trip", trips.get(getAdapterPosition()));
+            Log.i("index", getAdapterPosition() + "");
             Toast.makeText(context, trip.getTripName(), Toast.LENGTH_SHORT).show();
 
             Toast.makeText(context, trips.get(getAdapterPosition()).getStartPoint(), Toast.LENGTH_SHORT).show();
