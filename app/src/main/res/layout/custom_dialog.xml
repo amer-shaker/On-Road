@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/imgTrip"
+        android:layout_width="93dp"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        app:srcCompat="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/tripNameInDialog"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_toRightOf="@id/imgTrip"
+        android:text="Trip Name"
+        android:textColor="@color/Black"
+        android:textSize="35sp" />
+
+    <TextView
+        android:id="@+id/textDialogBody"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_below="@+id/imgTrip"
+        android:layout_marginTop="19dp"
+        android:height="30dp"
+        android:text="@string/text_dialog"
+        android:textSize="18sp"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:id="@+id/btnStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textDialogBody"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
+        android:background="@android:color/white"
+        android:text="Start"
+        android:textColor="@color/colorPrimary"/>
+
+    <Button
+        android:id="@+id/btnLater"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textDialogBody"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="55dp"
+        android:layout_marginTop="50dp"
+        android:layout_toEndOf="@+id/btnStart"
+        android:layout_toRightOf="@+id/btnStart"
+        android:text="Later"
+        android:background="@color/colorWhite"
+        />
+
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textDialogBody"
+        android:layout_marginStart="55dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="20dp"
+        android:layout_toEndOf="@+id/btnLater"
+        android:layout_toRightOf="@+id/btnLater"
+        android:background="@color/colorWhite"
+        android:text="Cancel"
+        android:textColor="@color/colorPrimary" />
+
+
+</RelativeLayout>

@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.android.onroad.R;
 import com.android.onroad.beans.Note;
 import com.android.onroad.beans.Trip;
+import com.android.onroad.utils.Utility;
 import com.google.android.gms.common.api.Status;
 
 
@@ -135,6 +136,7 @@ public class AddTripActivity extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         txtTime.setText(selectedHour + ":" + selectedMinute);
+                        Utility.setAlarmTime(AddTripActivity.this,selectedHour,selectedMinute);
                         myTime = new Date();
                         myTime.setHours(selectedHour);
                         myTime.setMinutes(selectedMinute);
@@ -252,7 +254,6 @@ public class AddTripActivity extends AppCompatActivity {
             });
         else Toast.makeText(this, "Problem with loading page", Toast.LENGTH_LONG).show();
     }
-
 
     public void addNote(View view) {
         if(myNote.getText().toString().equals(""))

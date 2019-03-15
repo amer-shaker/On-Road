@@ -74,7 +74,9 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tab_main_view" />
+            app:layout_constraintTop_toBottomOf="@id/tab_main_view"
+            android:background="@drawable/bg"
+            />
 
     </android.support.constraint.ConstraintLayout>
 

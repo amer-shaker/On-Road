@@ -45,11 +45,11 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_trip);
+        setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
         initViews();
-        Trip trip = getIntent().getParcelableExtra("myTrip");
-        Toast.makeText(this, trip.getStartPoint() + " "+ trip.getTripName(), Toast.LENGTH_SHORT).show();
+//        Trip trip = getIntent().getParcelableExtra("myTrip");
+//        Toast.makeText(this, trip.getStartPoint() + " "+ trip.getTripName(), Toast.LENGTH_SHORT).show();
         imgMenue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
