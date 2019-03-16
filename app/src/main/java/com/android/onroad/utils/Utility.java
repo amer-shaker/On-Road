@@ -10,12 +10,10 @@ import android.net.Uri;
 
 import com.android.onroad.R;
 import com.android.onroad.activities.LoginActivity;
-
-import java.util.Calendar;
-
-
 import com.android.onroad.beans.Trip;
 import com.android.onroad.reciever.MyReciver;
+
+import java.util.Calendar;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 
@@ -32,6 +30,7 @@ public class Utility {
         Intent notificationIntent;
         PendingIntent contentIntent;
 //        if (trip != null) {
+
         notificationIntent = new Intent(context, LoginActivity.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         notificationIntent.putExtra(Constants.TRIP, trip);
@@ -79,6 +78,7 @@ public class Utility {
                     calendar.getTimeInMillis());
         }
     }
+
 
     public static void launchMap(Context context, Trip trip) {
 //            Uri gmmIntentUri = Uri.parse("https://www.google.com/maps/dir/?api=1&origin=18.519513,73.868315&destination=18.518496,

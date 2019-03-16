@@ -1,8 +1,11 @@
 package com.android.onroad;
 
+import android.app.Dialog;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.view.View;
+import android.widget.Button;
 
 
 import com.android.onroad.beans.Trip;
@@ -15,6 +18,7 @@ public class MyService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
 
         Trip trip = intent.getExtras().getParcelable(Constants.TRIP);
         Utility.pushNotification(getApplicationContext(),trip);

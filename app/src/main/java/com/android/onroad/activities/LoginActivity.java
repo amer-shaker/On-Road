@@ -242,7 +242,10 @@ public class LoginActivity extends AppCompatActivity {
                     // Check if the user has a verified email address
                     if (user.isEmailVerified()) {
                         Log.d(TAG, "onAuthStateChanged(): Signed in: " + user.getUid());
+
                         Toast.makeText(LoginActivity.this, "Authenticated with: " + user.getEmail(), Toast.LENGTH_SHORT).show();
+
+
                         redirectHomeScreen();
                     } else {
                         Toast.makeText(LoginActivity.this, "Check you email inbox for a verification link", Toast.LENGTH_SHORT).show();

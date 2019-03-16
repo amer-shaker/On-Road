@@ -218,8 +218,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:onClick="addNote"
-                    android:text="add_note" />
+                    android:onClick="addNote"/>
+
             </LinearLayout>
 
             <LinearLayout

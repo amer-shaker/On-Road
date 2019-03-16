@@ -70,7 +70,7 @@
     <!--Korany-->
     <string name="Trip_prompt">Choose Status Of Trip</string>
     <string-array name="Repetayion">
-        <item>No Repeat</item>
+
         <item>Repeat Daily</item>
         <item>Repeat weekly</item>
         <item>Repeat Monthly</item>
@@ -85,4 +85,5 @@
     <string name="profile_lable">Profile</string>
     <string name="log_out">Log Out</string>
     <string name="sync">Sync</string>
+    <string name="text_dialog">Let\'s Start The Trip</string>
 </resources>

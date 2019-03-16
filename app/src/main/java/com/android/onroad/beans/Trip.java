@@ -12,11 +12,18 @@ import java.util.Date;
 public class Trip implements  Parcelable{
 
     private int tripId;
+    private String startPoint , Year,Month,Day,Hour,Minute;
+    private String endPoint;
+
+
+
+    private  double latStartPoint , langStartPoint ,latEndPoint , langEndPoint;
+    private Date DateTime;
+
+    private String status;
     private String name;
     private String type;
-    private String status;
-    private String startPoint;
-    private String endPoint;
+
     private double startPointLatitude;
     private double startPointLongitude;
     private double endPointLatitude;
@@ -72,6 +79,45 @@ public class Trip implements  Parcelable{
             return new Trip[size];
         }
     };
+    public String getYear() {
+        return Year;
+    }
+
+    public void setYear(String year) {
+        Year = year;
+    }
+
+    public String getMonth() {
+        return Month;
+    }
+
+    public void setMonth(String month) {
+        Month = month;
+    }
+
+    public String getDay() {
+        return Day;
+    }
+
+    public void setDay(String day) {
+        Day = day;
+    }
+
+    public String getHour() {
+        return Hour;
+    }
+
+    public void setHour(String hour) {
+        Hour = hour;
+    }
+
+    public String getMinute() {
+        return Minute;
+    }
+
+    public void setMinute(String minute) {
+        Minute = minute;
+    }
 
     public int getTripId() {
         return tripId;
