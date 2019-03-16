@@ -42,7 +42,7 @@ public class HistoryTripsAdapter  extends RecyclerView.Adapter<HistoryTripsAdapt
 
         Trip trip = trips.get(position);
         Log.e("trips size onBindViewH", trips.size() + "");
-        holder.tvTripName.setText(trip.getTripName());
+        holder.tvTripName.setText(trip.getName());
         holder.tvStartPoint.setText(trip.getStartPoint());
         holder.tvEndPoint.setText(trip.getEndPoint());
     }
@@ -86,8 +86,7 @@ public class HistoryTripsAdapter  extends RecyclerView.Adapter<HistoryTripsAdapt
        @Override
         public void onClick(View v) {
             Intent intentdetails=new Intent(context, DetailsTripActivity.class);
-            intentdetails.putExtra("trip",trips.get(getAdapterPosition()));
-
+//          //  intentdetails.putExtra("trip",trips.get(getAdapterPosition()));
             context.startActivity(intentdetails);
 
         }

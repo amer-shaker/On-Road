@@ -49,7 +49,7 @@ public class UpcommingTripsAdapter extends RecyclerView.Adapter<UpcommingTripsAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Trip trip = trips.get(position);
         Log.e("trips size onBindViewH", trips.size() + "");
-        holder.tvTripName.setText(trip.getTripName());
+        holder.tvTripName.setText(trip.getName());
         holder.tvStartPoint.setText(trip.getStartPoint());
         holder.tvEndPoint.setText(trip.getEndPoint());
     }
@@ -108,6 +108,7 @@ public class UpcommingTripsAdapter extends RecyclerView.Adapter<UpcommingTripsAd
         @OnClick(R.id.btn_start_trip)
         void startTrip(View view) {
             Log.e("position clicked", getAdapterPosition() + "");
+            Utility.launchMap(context,trips.get(getAdapterPosition()));
 
             Intent intentDialog =new Intent(context, DilogActivity.class);
             intentDialog.putExtra("trip",trips.get(getAdapterPosition()));
@@ -117,11 +118,12 @@ public class UpcommingTripsAdapter extends RecyclerView.Adapter<UpcommingTripsAd
 
         @Override
         public void onClick(View v) {
-            Intent intentdetails=new Intent(context, DetailsTripActivity.class);
-            Trip  trip=trips.get(getAdapterPosition());
-            intentdetails.putExtra("trip",trips.get(getAdapterPosition()));
-            Log.i("index",getAdapterPosition()+"");
-            Toast.makeText(context, trip.getTripName(), Toast.LENGTH_SHORT).show();
+
+            Intent intentdetails = new Intent(context, DetailsTripActivity.class);
+            Trip trip = trips.get(getAdapterPosition());
+            intentdetails.putExtra("trip", trips.get(getAdapterPosition()));
+            Log.i("index", getAdapterPosition() + "");
+            Toast.makeText(context, trip.getName(), Toast.LENGTH_SHORT).show();
 
             Toast.makeText(context, trips.get(getAdapterPosition()).getStartPoint(), Toast.LENGTH_SHORT).show();
 

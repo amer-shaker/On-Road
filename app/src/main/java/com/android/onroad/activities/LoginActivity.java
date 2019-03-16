@@ -252,7 +252,7 @@ public class LoginActivity extends AppCompatActivity {
                         firebaseAuth.signOut();
                     }
                 } else {
-                    // User is signed out
+                    // UserModel is signed out
                     Log.d(TAG, "onAuthStateChanged(): Signed out");
                 }
             }

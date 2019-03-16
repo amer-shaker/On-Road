@@ -7,7 +7,9 @@ import android.os.IBinder;
 import android.view.View;
 import android.widget.Button;
 
+
 import com.android.onroad.beans.Trip;
+import com.android.onroad.utils.Constants;
 import com.android.onroad.utils.Utility;
 
 public class MyService extends Service {
@@ -16,11 +18,10 @@ public class MyService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Trip trip = intent.getExtras().getParcelable("");
-        Utility.pushNotification(getApplicationContext(),"");
 
 
-
+        Trip trip = intent.getExtras().getParcelable(Constants.TRIP);
+        Utility.pushNotification(getApplicationContext(),trip);
         return super.onStartCommand(intent, flags, startId);
     }
     @Override

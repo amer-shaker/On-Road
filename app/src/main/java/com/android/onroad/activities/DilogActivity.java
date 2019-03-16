@@ -24,12 +24,12 @@ public class DilogActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dilog);
         Intent myIntent = getIntent();
-        Trip trip = myIntent.getExtras().getParcelable(Constants.TRIP);
+        final Trip trip = myIntent.getExtras().getParcelable(Constants.TRIP);
         btnStart = findViewById(R.id.btnStart);
         btnLater = findViewById(R.id.btnLater);
         btnCancel = findViewById(R.id.btnCancel);
         tvTripName = findViewById(R.id.tripNameInDialog);
-        tvTripName.setText(trip.getTripName());
+        tvTripName.setText(trip.getName());
 
     final MediaPlayer myPlayer=MediaPlayer.create(DilogActivity.this,R.raw.alarm_dialog);
     myPlayer.start();
@@ -45,7 +45,7 @@ myPlayer.stop();
         btnLater.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utility.pushNotification(DilogActivity.this, "Let's Start Trip.");
+                Utility.pushNotification(DilogActivity.this, trip);
                 myPlayer.stop();
                 finish();
 
