@@ -94,13 +94,15 @@ public class UpcommingTripsAdapter extends RecyclerView.Adapter<UpcommingTripsAd
 
         @OnClick(R.id.imv_cancel_trip)
         void nacelTrip(View view) {
+
             Log.e("position clicked", getAdapterPosition() + "");
         }
 
         @OnClick(R.id.imv_edit_trip)
         void editTrip(View view) {
-            Log.e("position clicked", getAdapterPosition() + "");
-
+//            Intent intent=new Intent(context,eddit);
+//            intent.putExtra("trip", trips.get(getAdapterPosition()));
+//            context.startActivity(intent);
         }
 
         @OnClick(R.id.btn_start_trip)
