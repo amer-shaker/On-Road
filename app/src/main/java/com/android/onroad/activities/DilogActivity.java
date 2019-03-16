@@ -33,12 +33,19 @@ public class DilogActivity extends AppCompatActivity {
 
     final MediaPlayer myPlayer=MediaPlayer.create(DilogActivity.this,R.raw.alarm_dialog);
     myPlayer.start();
+    myPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mp) {
+            myPlayer.start();
+        }
+    });
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // adding intent to move to trip and start
 
-myPlayer.stop();
+                Utility.launchMap(DilogActivity.this,trip);
+                myPlayer.stop();
                 finish();
             }
         });
