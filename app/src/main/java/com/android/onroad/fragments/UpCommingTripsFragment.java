@@ -19,6 +19,7 @@ import com.android.onroad.adapters.UpcommingTripsAdapter;
 import com.android.onroad.beans.Trip;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -48,8 +49,8 @@ public class UpCommingTripsFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         for (int i = 0; i < 5; i++) {
             trip = new Trip();
-            trip.setTripName("school");
-
+            trip.setName("school");
+            trip.setDate(Calendar.getInstance().getTime());
             trip.setStartPoint("giza");
             trip.setEndPoint("cairo");
             trips.add(trip);

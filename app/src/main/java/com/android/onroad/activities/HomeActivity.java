@@ -12,11 +12,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.android.onroad.R;
 import com.android.onroad.adapters.ViewPagerAdapter;
-import com.android.onroad.beans.Trip;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

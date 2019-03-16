@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 
 import com.android.onroad.R;
 import com.android.onroad.adapters.HistoryTripsAdapter;
-import com.android.onroad.adapters.UpcommingTripsAdapter;
 import com.android.onroad.beans.Trip;
 
 import java.util.ArrayList;
@@ -48,7 +47,7 @@ public class HisroryTripsFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         for (int i = 0; i < 5; i++) {
             trip = new Trip();
-            trip.setTripName("school");
+            trip.setName("school");
 
             trip.setStartPoint("giza");
             trip.setEndPoint("cairo");

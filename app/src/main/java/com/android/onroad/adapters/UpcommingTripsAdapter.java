@@ -1,9 +1,7 @@
 package com.android.onroad.adapters;
 
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -49,7 +47,7 @@ public class UpcommingTripsAdapter extends RecyclerView.Adapter<UpcommingTripsAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Trip trip = trips.get(position);
         Log.e("trips size onBindViewH", trips.size() + "");
-        holder.tvTripName.setText(trip.getTripName());
+        holder.tvTripName.setText(trip.getName());
         holder.tvStartPoint.setText(trip.getStartPoint());
         holder.tvEndPoint.setText(trip.getEndPoint());
     }
@@ -115,11 +113,12 @@ public class UpcommingTripsAdapter extends RecyclerView.Adapter<UpcommingTripsAd
 
         @Override
         public void onClick(View v) {
+
             Intent intentdetails = new Intent(context, DetailsTripActivity.class);
             Trip trip = trips.get(getAdapterPosition());
             intentdetails.putExtra("trip", trips.get(getAdapterPosition()));
             Log.i("index", getAdapterPosition() + "");
-            Toast.makeText(context, trip.getTripName(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, trip.getName(), Toast.LENGTH_SHORT).show();
 
             Toast.makeText(context, trips.get(getAdapterPosition()).getStartPoint(), Toast.LENGTH_SHORT).show();
 

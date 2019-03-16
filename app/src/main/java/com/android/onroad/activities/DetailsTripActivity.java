@@ -1,9 +1,8 @@
 package com.android.onroad.activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.onroad.R;
 import com.android.onroad.beans.Trip;
@@ -28,11 +27,10 @@ public class DetailsTripActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         Trip trip = getIntent().getParcelableExtra("trip");
         if (trip != null) {
-            tvTripame.setText(trip.getTripName());
-            tvDate.setText(trip.getDateTime()+"");
+            tvTripame.setText(trip.getName());
+            tvDate.setText(trip.getDate() + "");
             tvStartPoint.setText(trip.getStartPoint());
             tvEndPoint.setText(trip.getEndPoint());
-
         }
     }
 }
