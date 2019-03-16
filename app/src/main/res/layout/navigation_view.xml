@@ -10,24 +10,24 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="4"
+        android:layout_weight="5"
         android:layout_marginBottom="20dp"
-        android:background="@color/lightGrey">
+        android:background="@color/colorWhite">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/image_header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_centerInParent="true"
             android:foregroundGravity="center"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/map" />
         <TextView
             android:id="@+id/tv_user_name"
             style="@style/CustomTextViewNavBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/image_header"
-            android:text="name" />
+            android:text="name : " />
 
         <TextView
             android:id="@+id/tv_user_email"
@@ -42,7 +42,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight=".75"
         android:orientation="horizontal"
         android:weightSum="4"
         android:layout_marginStart="8dp"
@@ -52,7 +52,7 @@
         <ImageView
             android:layout_width="0dp"
             android:layout_height="30dp"
-            android:layout_weight=".5"
+            android:layout_weight=".4"
             android:layout_gravity="center"
 
             android:src="@drawable/profile" />
@@ -84,7 +84,7 @@
         <ImageView
             android:layout_width="0dp"
             android:layout_height="30dp"
-            android:layout_weight=".5"
+            android:layout_weight=".4"
             android:layout_gravity="center"
             android:src="@drawable/sync" />
 
@@ -117,7 +117,7 @@
         <ImageView
             android:layout_width="0dp"
             android:layout_height="30dp"
-            android:layout_weight=".5"
+            android:layout_weight=".4"
             android:layout_gravity="center"
             android:src="@drawable/log_out" />
 
