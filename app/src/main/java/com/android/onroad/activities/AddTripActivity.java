@@ -223,6 +223,9 @@ public class AddTripActivity extends AppCompatActivity {
                         myDate.setHours(selectedHour);
                         myDate.setMinutes(selectedMinute);
 
+                        Utility.setAlarmTime(AddTripActivity.this, new Trip(),myDate.getHours(),myDate.getMinutes(),myDate.getMonth());
+
+
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 mTimePicker.setTitle("Select Time");

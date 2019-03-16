@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.android.onroad.R;
+import com.android.onroad.activities.DilogActivity;
 import com.android.onroad.activities.LoginActivity;
 import com.android.onroad.beans.Trip;
 import com.android.onroad.reciever.MyReciver;
@@ -31,7 +32,7 @@ public class Utility {
         PendingIntent contentIntent;
 //        if (trip != null) {
 
-        notificationIntent = new Intent(context, LoginActivity.class);
+        notificationIntent = new Intent(context, DilogActivity.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         notificationIntent.putExtra(Constants.TRIP, trip);
         final int _id = (int) System.currentTimeMillis();
