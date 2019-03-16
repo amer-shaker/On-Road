@@ -3,6 +3,7 @@
     <color name="colorPrimary">#2196F3</color>
     <color name="colorPrimaryDark">#1976D2</color>
     <color name="colorAccent">#03A9F4</color>
+    <color name="colorDarkBlue">#483d8b</color>
     <color name="primaryText">#212121</color>
     <color name="secondaryText">#757575</color>
     <color name="lightGrey">#D3D3D3</color>
@@ -10,6 +11,7 @@
     <color name="darkGrey">#A9A9A9</color>
     <color name="colorWhite">#fff</color>
     <color name="tap_bg_color">#f2f3ed</color>
+    <color name="item_recycler_color">#3E8C84</color>
 
     <color name="Black">#000000</color>
     <color name="White">#FFFFFF</color>

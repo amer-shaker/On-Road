@@ -5,21 +5,30 @@ import com.google.firebase.database.IgnoreExtraProperties;
 @IgnoreExtraProperties
 public class UserModel {
 
+    private String userId;
     private String name;
     private String phone;
-    private String profile_image;
-    private String security_level;
-    private String user_id;
+    private String photoUrl;
+    private String securityLevel;
 
     public UserModel() {
+
     }
 
-    public UserModel(String name, String phone, String profile_image, String security_level, String user_id) {
+    public UserModel(String userId, String name, String phone, String photoUrl, String securityLevel) {
+        this.userId = userId;
         this.name = name;
         this.phone = phone;
-        this.profile_image = profile_image;
-        this.security_level = security_level;
-        this.user_id = user_id;
+        this.photoUrl = photoUrl;
+        this.securityLevel = securityLevel;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getName() {
@@ -38,38 +47,30 @@ public class UserModel {
         this.phone = phone;
     }
 
-    public String getProfile_image() {
-        return profile_image;
+    public String getPhotoUrl() {
+        return photoUrl;
     }
 
-    public void setProfile_image(String profile_image) {
-        this.profile_image = profile_image;
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 
-    public String getSecurity_level() {
-        return security_level;
+    public String getSecurityLevel() {
+        return securityLevel;
     }
 
-    public void setSecurity_level(String security_level) {
-        this.security_level = security_level;
-    }
-
-    public String getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setSecurityLevel(String securityLevel) {
+        this.securityLevel = securityLevel;
     }
 
     @Override
     public String toString() {
         return "UserModel{" +
-                "name='" + name + '\'' +
+                "userId='" + userId + '\'' +
+                ", name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
-                ", profile_image='" + profile_image + '\'' +
-                ", security_level='" + security_level + '\'' +
-                ", user_id='" + user_id + '\'' +
+                ", photoUrl='" + photoUrl + '\'' +
+                ", securityLevel='" + securityLevel + '\'' +
                 '}';
     }
 }

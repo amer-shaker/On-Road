@@ -1,6 +1,7 @@
 package com.android.onroad.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -9,9 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.onroad.R;
-import com.android.onroad.beans.Trip;
+import com.android.onroad.activities.DetailsTripActivity;
+import com.android.onroad.models.TripModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,13 +24,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> {
+public class UpcommingTripsAdapter extends RecyclerView.Adapter<UpcommingTripsAdapter.ViewHolder> {
 
     private Context context;
-    private List<Trip> items;
+    private List<TripModel> trips;
 
-    public TripsAdapter(Context context) {
-        items = new ArrayList<>();
+    public UpcommingTripsAdapter(Context context) {
+        trips = new ArrayList<>();
         this.context = context;
     }
 
@@ -35,35 +38,35 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recycler_trip, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_upcomming_recycler, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Trip trip = items.get(position);
-        Log.e("items size onBindViewH", items.size() + "");
-        holder.tvTripName.setText(trip.getTripName());
+        TripModel trip = trips.get(position);
+        Log.e("trips size onBindViewH", trips.size() + "");
+        holder.tvTripName.setText(trip.getName());
         holder.tvStartPoint.setText(trip.getStartPoint());
         holder.tvEndPoint.setText(trip.getEndPoint());
     }
 
     @Override
     public int getItemCount() {
-        Log.e("items getItemCount", items.size() + "");
+        Log.e("trips getItemCount", trips.size() + "");
 
-        return items.size();
+        return trips.size();
 
     }
 
-    public void setItems(List<Trip> items) {
-        this.items = items;
-        Log.e("items size", items.size() + "");
+    public void setItems(List<TripModel> items) {
+        this.trips = items;
+        Log.e("trips size", items.size() + "");
         notifyDataSetChanged();
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.imv_cancel_trip)
         ImageView imgCancelTrip;
@@ -85,6 +88,7 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
         ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
         }
 
         @OnClick(R.id.imv_cancel_trip)
@@ -105,5 +109,18 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
         }
 
 
+        @Override
+        public void onClick(View v) {
+            Intent intentdetails=new Intent(context, DetailsTripActivity.class);
+            TripModel trip=trips.get(getAdapterPosition());
+            //intentdetails.putExtra("trip",trips.get(getAdapterPosition()));
+            Log.i("index",getAdapterPosition()+"");
+            Toast.makeText(context, trip.getName(), Toast.LENGTH_SHORT).show();
+
+            Toast.makeText(context, trips.get(getAdapterPosition()).getStartPoint(), Toast.LENGTH_SHORT).show();
+
+            context.startActivity(intentdetails);
+
+        }
     }
 }

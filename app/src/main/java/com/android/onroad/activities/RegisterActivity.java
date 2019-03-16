@@ -227,11 +227,11 @@ public class RegisterActivity extends AppCompatActivity {
                             sendVerificationEmail();
 
                             UserModel user = new UserModel();
+                            user.setUserId(mFirebaseAuth.getCurrentUser().getUid());
                             user.setName(email.substring(0, email.indexOf("@")));
                             user.setPhone("1");
-                            user.setProfile_image("");
-                            user.setSecurity_level("1");
-                            user.setUser_id(mFirebaseAuth.getCurrentUser().getUid());
+                            user.setPhotoUrl("");
+                            user.setSecurityLevel("1");
 
                             mUsersDatabaseReference.child(mFirebaseAuth.getCurrentUser().getUid())
                                     .setValue(user)

@@ -4,8 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-import com.android.onroad.beans.Trip;
-import com.android.onroad.utils.App;
+import com.android.onroad.models.TripModel;
 import com.android.onroad.utils.Utility;
 
 public class MyService extends Service {
@@ -14,8 +13,8 @@ public class MyService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Trip trip = intent.getExtras().getParcelable("");
-        Utility.pushNotification("", trip);
+        TripModel trip = intent.getExtras().getParcelable("");
+        Utility.pushNotification(getApplicationContext(),"");
         return super.onStartCommand(intent, flags, startId);
     }
     @Override

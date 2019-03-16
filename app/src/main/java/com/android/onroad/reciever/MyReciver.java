@@ -1,4 +1,4 @@
-package reciever;
+package com.android.onroad.reciever;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

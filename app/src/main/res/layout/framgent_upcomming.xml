@@ -5,7 +5,8 @@
     android:id="@+id/home_activity_constrint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fui_bgPhone">
+    android:background="@drawable/bg"
+>
 
 
 
@@ -13,7 +14,7 @@
             android:id="@+id/recycler_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#fff" />
+            android:background="@drawable/bg" />
 
 
 
