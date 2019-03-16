@@ -222,6 +222,11 @@
                     android:text="add_note"
                     android:onClick="addNote"
                     android:layout_gravity="center"/>
+
+                <ListView
+                    android:id="@+id/lstTrips"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
             </LinearLayout>
 
             <LinearLayout
