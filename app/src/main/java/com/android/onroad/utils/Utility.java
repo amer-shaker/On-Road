@@ -62,11 +62,12 @@ public class Utility {
                 , AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
-    public static void setAlarmTime(Context context, Trip trip, int hourOfDay, int minute) {
+    public static void setAlarmTime(Context context, Trip trip, int hourOfDay, int minute,int day) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.DAY_OF_YEAR,day);
         if (calendar.getTimeInMillis() > Calendar.getInstance()
                 .getTimeInMillis()) {
             Utility.setupAlarmManager(context, MyReciver.class, trip,
