@@ -20,7 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.onroad.R;
-import com.android.onroad.models.UserModel;
+import com.android.onroad.beans.UserModel;
 import com.android.onroad.utils.Utility;
 import com.android.onroad.utils.Validation;
 import com.google.android.gms.tasks.OnCompleteListener;

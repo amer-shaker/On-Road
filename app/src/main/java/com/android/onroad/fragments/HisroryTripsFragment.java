@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 
 import com.android.onroad.R;
 import com.android.onroad.adapters.HistoryTripsAdapter;
-import com.android.onroad.models.TripModel;
+import com.android.onroad.beans.Trip;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +27,8 @@ public class HisroryTripsFragment extends Fragment {
 
     private Unbinder unbinder;
 
-    List<TripModel> trips = new ArrayList<>();
-    TripModel trip = new TripModel();
+    List<Trip> trips = new ArrayList<>();
+    Trip trip = new Trip();
     HistoryTripsAdapter adapter;
 
     @BindView(R.id.fragement_history_constraint)
@@ -46,7 +46,7 @@ public class HisroryTripsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         for (int i = 0; i < 5; i++) {
-            trip = new TripModel();
+            trip = new Trip();
             trip.setName("school");
 
             trip.setStartPoint("giza");

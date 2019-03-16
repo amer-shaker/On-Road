@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.android.onroad.R;
 import com.android.onroad.activities.DetailsTripActivity;
-import com.android.onroad.models.TripModel;
+import com.android.onroad.beans.Trip;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
 
 public class HistoryTripsAdapter  extends RecyclerView.Adapter<HistoryTripsAdapter.ViewHolder> {
     private Context context;
-    private List<TripModel> trips;
+    private List<Trip> trips;
 
     public HistoryTripsAdapter(Context context) {
         trips = new ArrayList<>();
@@ -40,7 +40,7 @@ public class HistoryTripsAdapter  extends RecyclerView.Adapter<HistoryTripsAdapt
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
 
-        TripModel trip = trips.get(position);
+        Trip trip = trips.get(position);
         Log.e("trips size onBindViewH", trips.size() + "");
         holder.tvTripName.setText(trip.getName());
         holder.tvStartPoint.setText(trip.getStartPoint());
@@ -55,7 +55,7 @@ public class HistoryTripsAdapter  extends RecyclerView.Adapter<HistoryTripsAdapt
 
     }
 
-    public void setItems(List<TripModel> items) {
+    public void setItems(List<Trip> items) {
         this.trips = items;
         Log.e("trips size", items.size() + "");
         notifyDataSetChanged();
@@ -87,7 +87,6 @@ public class HistoryTripsAdapter  extends RecyclerView.Adapter<HistoryTripsAdapt
         public void onClick(View v) {
             Intent intentdetails=new Intent(context, DetailsTripActivity.class);
 //          //  intentdetails.putExtra("trip",trips.get(getAdapterPosition()));
-
             context.startActivity(intentdetails);
 
         }

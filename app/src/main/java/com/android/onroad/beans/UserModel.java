@@ -1,4 +1,4 @@
-package com.android.onroad.models;
+package com.android.onroad.beans;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 

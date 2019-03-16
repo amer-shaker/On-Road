@@ -46,7 +46,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
         initViews();
-//        TripModel trip = getIntent().getParcelableExtra("myTrip");
+//        Trip trip = getIntent().getParcelableExtra("myTrip");
 //        Toast.makeText(this, trip.getStartPoint() + " "+ trip.getTripName(), Toast.LENGTH_SHORT).show();
         imgMenue.setOnClickListener(new View.OnClickListener() {
             @Override

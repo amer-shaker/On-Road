@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import com.android.onroad.R;
 import com.android.onroad.activities.AddTripActivity;
 import com.android.onroad.adapters.UpcommingTripsAdapter;
-import com.android.onroad.models.TripModel;
+import com.android.onroad.beans.Trip;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,8 +28,8 @@ import butterknife.OnClick;
 
 
 public class UpCommingTripsFragment extends Fragment {
-    List<TripModel> trips = new ArrayList<>();
-    TripModel trip = new TripModel();
+    List<Trip> trips = new ArrayList<>();
+    Trip trip = new Trip();
     UpcommingTripsAdapter adapter;
 
     @BindView(R.id.home_activity_constrint)
@@ -48,7 +48,7 @@ public class UpCommingTripsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         for (int i = 0; i < 5; i++) {
-            trip = new TripModel();
+            trip = new Trip();
             trip.setName("school");
             trip.setDate(Calendar.getInstance().getTime());
             trip.setStartPoint("giza");

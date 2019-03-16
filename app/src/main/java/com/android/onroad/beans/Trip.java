@@ -1,17 +1,15 @@
-package com.android.onroad.models;
+package com.android.onroad.beans;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.android.onroad.beans.Note;
 import com.google.firebase.database.IgnoreExtraProperties;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 
 @IgnoreExtraProperties
-public class TripModel {
+public class Trip implements  Parcelable{
 
     private int tripId;
     private String name;
@@ -27,13 +25,13 @@ public class TripModel {
     private String time;
     private ArrayList<Note> notes;
 
-    public TripModel() {
+    public Trip() {
 
     }
 
-    public TripModel(int tripId, String name, String type, String status, String startPoint, String endPoint,
-                     double startPointLatitude, double startPointLongitude, double endPointLatitude,
-                     double endPointLongitude, Date date, String time, ArrayList<Note> notes) {
+    public Trip(int tripId, String name, String type, String status, String startPoint, String endPoint,
+                double startPointLatitude, double startPointLongitude, double endPointLatitude,
+                double endPointLongitude, Date date, String time, ArrayList<Note> notes) {
         this.tripId = tripId;
         this.name = name;
         this.type = type;
@@ -48,6 +46,32 @@ public class TripModel {
         this.time = time;
         this.notes = notes;
     }
+
+    protected Trip(Parcel in) {
+        tripId = in.readInt();
+        name = in.readString();
+        type = in.readString();
+        status = in.readString();
+        startPoint = in.readString();
+        endPoint = in.readString();
+        startPointLatitude = in.readDouble();
+        startPointLongitude = in.readDouble();
+        endPointLatitude = in.readDouble();
+        endPointLongitude = in.readDouble();
+        time = in.readString();
+    }
+
+    public static final Creator<Trip> CREATOR = new Creator<Trip>() {
+        @Override
+        public Trip createFromParcel(Parcel in) {
+            return new Trip(in);
+        }
+
+        @Override
+        public Trip[] newArray(int size) {
+            return new Trip[size];
+        }
+    };
 
     public int getTripId() {
         return tripId;
@@ -155,7 +179,7 @@ public class TripModel {
 
     @Override
     public String toString() {
-        return "TripModel{" +
+        return "Trip{" +
                 "tripId=" + tripId +
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +
@@ -172,41 +196,24 @@ public class TripModel {
                 '}';
     }
 
-//    public static Creator<TripModel> getCREATOR() {
-//        return CREATOR;
-//    }
-//
-//    protected TripModel(Parcel in) {
-//        name = in.readString();
-//        tripId = in.readInt();
-//        startPoint = in.readString();
-//        endPoint = in.readString();
-//        status = in.readString();
-//    }
-//
-//    public static final Creator<TripModel> CREATOR = new Creator<TripModel>() {
-//        @Override
-//        public TripModel createFromParcel(Parcel in) {
-//            return new TripModel(in);
-//        }
-//
-//        @Override
-//        public TripModel[] newArray(int size) {
-//            return new TripModel[size];
-//        }
-//    };
-//
-//    @Override
-//    public int describeContents() {
-//        return 0;
-//    }
-//
-//    @Override
-//    public void writeToParcel(Parcel dest, int flags) {
-//        dest.writeInt(tripId);
-//        dest.writeString(name);
-//        dest.writeString(startPoint);
-//        dest.writeString(endPoint);
-//        dest.writeString(status);
-//    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(tripId);
+        dest.writeString(name);
+        dest.writeString(type);
+        dest.writeString(status);
+        dest.writeString(startPoint);
+        dest.writeString(endPoint);
+        dest.writeDouble(startPointLatitude);
+        dest.writeDouble(startPointLongitude);
+        dest.writeDouble(endPointLatitude);
+        dest.writeDouble(endPointLongitude);
+        dest.writeString(time);
+    }
 }

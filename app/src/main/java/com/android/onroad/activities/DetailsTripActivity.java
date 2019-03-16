@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.android.onroad.R;
-import com.android.onroad.models.TripModel;
+import com.android.onroad.beans.Trip;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,7 +25,7 @@ public class DetailsTripActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_trip);
         ButterKnife.bind(this);
-        TripModel trip = getIntent().getParcelableExtra("trip");
+        Trip trip = getIntent().getParcelableExtra("trip");
         if (trip != null) {
             tvTripame.setText(trip.getName());
             tvDate.setText(trip.getDate() + "");

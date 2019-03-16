@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import com.android.onroad.R;
 import com.android.onroad.beans.Note;
-import com.android.onroad.models.TripModel;
+import com.android.onroad.beans.Trip;
 import com.android.onroad.utils.Utility;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
@@ -75,7 +75,7 @@ public class AddTripActivity extends AppCompatActivity {
     private DatabaseReference mTripsDatabaseReference;
     private ChildEventListener mChildEventListener;
 
-    private List<TripModel> trips = new ArrayList<>();
+    private List<Trip> trips = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +101,7 @@ public class AddTripActivity extends AppCompatActivity {
         AddTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TripModel trip = new TripModel();
+                Trip trip = new Trip();
                 myTripName = tripName.getText().toString();
                 trip.setName(myTripName);
                 trip.setDate(myDate);
@@ -173,10 +173,9 @@ public class AddTripActivity extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         txtTime.setText(selectedHour + ":" + selectedMinute);
-                        Utility.setAlarmTime(AddTripActivity.this, selectedHour, selectedMinute);
-                        myTime = new Date();
-                        myTime.setHours(selectedHour);
-                        myTime.setMinutes(selectedMinute);
+
+                        Utility.setAlarmTime(AddTripActivity.this, new Trip(),selectedHour,selectedMinute);
+
                         myDate.setHours(selectedHour);
                         myDate.setMinutes(selectedMinute);
 
@@ -322,7 +321,7 @@ public class AddTripActivity extends AppCompatActivity {
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                     Log.i(TAG, "onChildAdded()");
 
-                    TripModel trip = dataSnapshot.getValue(TripModel.class);
+                    Trip trip = dataSnapshot.getValue(Trip.class);
                     if (trip != null) {
                         trips.add(trip);
                     }
