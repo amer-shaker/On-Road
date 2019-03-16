@@ -91,7 +91,6 @@
                     android:textSize="16sp"
                     tools:targetApi="ice_cream_sandwich" />
 
-
                 <TextView
                     android:id="@+id/forgot_password"
                     android:layout_width="wrap_content"

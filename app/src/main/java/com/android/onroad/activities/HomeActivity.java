@@ -12,11 +12,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.android.onroad.R;
 import com.android.onroad.adapters.ViewPagerAdapter;
-import com.android.onroad.beans.Trip;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,11 +43,11 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_trip);
+        setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
         initViews();
-        Trip trip = getIntent().getParcelableExtra("myTrip");
-        Toast.makeText(this, trip.getStartPoint() + " "+ trip.getTripName(), Toast.LENGTH_SHORT).show();
+//        Trip trip = getIntent().getParcelableExtra("myTrip");
+//        Toast.makeText(this, trip.getStartPoint() + " "+ trip.getTripName(), Toast.LENGTH_SHORT).show();
         imgMenue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,4 +115,6 @@ public class HomeActivity extends AppCompatActivity {
         Snackbar.make(constraint, "syncData", Snackbar.LENGTH_LONG).show();
 
     }
+
+
 }

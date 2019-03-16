@@ -28,7 +28,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-   //autoComplete Fragment
+    //autoComplete Fragment
     implementation 'com.google.android.gms:play-services-places:16.0.0'
     implementation 'com.google.android.gms:play-services-maps:16.1.0'
 //    implementation 'com.google.android.gms:play-services-maps:9.0.1'
@@ -36,10 +36,14 @@ dependencies {
     // Displaying images
     implementation 'com.github.bumptech.glide:glide:3.7.0'
 
-    // Firebase
+    // Firebase Authentication
     implementation 'com.google.firebase:firebase-auth:16.1.0'
-    implementation 'com.google.firebase:firebase-database:16.1.0'
     implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
+
+    // Firebase Database
+    implementation 'com.google.firebase:firebase-database:16.1.0'
+
+    // Firebase Storage
 
     // ButterKnife
     implementation 'com.jakewharton:butterknife:8.8.1'
@@ -48,10 +52,10 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.0.0'
     // get an image and display it
     implementation 'com.squareup.picasso:picasso:2.6.0-SNAPSHOT'
-
-
 }
+
 repositories {
     maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 }
+
 apply plugin: 'com.google.gms.google-services'
