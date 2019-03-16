@@ -14,7 +14,10 @@ import android.widget.Toast;
 
 import com.android.onroad.R;
 import com.android.onroad.activities.DetailsTripActivity;
+import com.android.onroad.activities.DilogActivity;
 import com.android.onroad.beans.Trip;
+import com.android.onroad.fragments.UpCommingTripsFragment;
+import com.android.onroad.utils.Utility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,6 +109,9 @@ public class UpcommingTripsAdapter extends RecyclerView.Adapter<UpcommingTripsAd
         void startTrip(View view) {
             Log.e("position clicked", getAdapterPosition() + "");
 
+            Intent intentDialog =new Intent(context, DilogActivity.class);
+            intentDialog.putExtra("trip",trips.get(getAdapterPosition()));
+            context.startActivity(intentDialog);
         }
 
 

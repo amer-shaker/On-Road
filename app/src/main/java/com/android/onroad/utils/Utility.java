@@ -1,13 +1,19 @@
 package com.android.onroad.utils;
 
 import android.app.AlarmManager;
+import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.android.onroad.R;
+import com.android.onroad.activities.AddTripActivity;
+import com.android.onroad.activities.DilogActivity;
 import com.android.onroad.activities.HomeActivity;
 import com.android.onroad.activities.LoginActivity;
 import com.android.onroad.beans.Trip;
@@ -17,6 +23,7 @@ import java.util.Calendar;
 import reciever.MyReciver;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
+import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 public class Utility {
     
@@ -30,9 +37,9 @@ public class Utility {
         Intent notificationIntent;
         PendingIntent contentIntent;
 //        if (trip != null) {
-            notificationIntent = new Intent(context, LoginActivity.class);
+            notificationIntent = new Intent(context, DilogActivity.class);
             notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            notificationIntent.putExtra(Constants.TRIP, trip);
+      //     notificationIntent.putExtra(Constants.TRIP, trip);
             contentIntent = PendingIntent.getActivity(context, 2, notificationIntent, 0);
             builder.setContentIntent(contentIntent);
 
@@ -77,4 +84,6 @@ public class Utility {
                     calendar.getTimeInMillis());
         }
     }
+
+
 }

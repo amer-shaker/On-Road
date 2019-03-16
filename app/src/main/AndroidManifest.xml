@@ -15,8 +15,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.DetailsTripActivity"></activity>
-        <activity android:name=".activities.AddTripActivity"></activity>
+        <activity android:name=".activities.DilogActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"></activity>
+        <activity android:name=".activities.DetailsTripActivity" />
+        <activity android:name=".activities.AddTripActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
 
         <service
             android:name=".MyService"

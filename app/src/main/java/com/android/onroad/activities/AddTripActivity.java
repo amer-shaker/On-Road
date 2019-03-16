@@ -1,6 +1,7 @@
 package com.android.onroad.activities;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
@@ -91,6 +92,7 @@ public class AddTripActivity extends AppCompatActivity {
                myTrip.setNotes(myArrayNote);
                myTrip.setRepeat(myRepeat);
                myTrip.setStatus(myStatus);
+
 
 //                Intent myIntent = new Intent(AddTripActivity.this,HomeActivity.class);
 //                myIntent.putExtra("myTrip",myTrip);
