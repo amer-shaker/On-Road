@@ -35,7 +35,6 @@ public class UpcommingTripsAdapter extends RecyclerView.Adapter<UpcommingTripsAd
         this.context = context;
     }
 
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -65,7 +64,6 @@ public class UpcommingTripsAdapter extends RecyclerView.Adapter<UpcommingTripsAd
         Log.e("trips size", items.size() + "");
         notifyDataSetChanged();
     }
-
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -106,7 +104,7 @@ public class UpcommingTripsAdapter extends RecyclerView.Adapter<UpcommingTripsAd
         @OnClick(R.id.btn_start_trip)
         void startTrip(View view) {
             Log.e("position clicked", getAdapterPosition() + "");
-            Utility.launchMap(context,trips.get(getAdapterPosition()));
+            Utility.launchMap(context, trips.get(getAdapterPosition()));
 
         }
 

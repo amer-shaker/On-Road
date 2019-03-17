@@ -6,7 +6,6 @@ import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -32,9 +31,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -42,7 +39,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class AddTripActivity extends AppCompatActivity {
@@ -73,9 +69,6 @@ public class AddTripActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mTripsDatabaseReference;
-    private ChildEventListener mChildEventListener;
-
-    private List<Trip> trips = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,7 +108,11 @@ public class AddTripActivity extends AppCompatActivity {
                 trip.setType(myRepeat);
                 trip.setStatus(myStatus);
 
+                String tripId = mTripsDatabaseReference.getRef().push().getKey();
+                trip.setTripId(tripId);
+
                 mTripsDatabaseReference.child(mFirebaseAuth.getCurrentUser().getUid())
+                        .child(tripId)
                         .setValue(trip)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
@@ -174,7 +171,7 @@ public class AddTripActivity extends AppCompatActivity {
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         txtTime.setText(selectedHour + ":" + selectedMinute);
 
-                        Utility.setAlarmTime(AddTripActivity.this, new Trip(),selectedHour,selectedMinute);
+                        Utility.setAlarmTime(AddTripActivity.this, new Trip(), selectedHour, selectedMinute);
 
                         myDate.setHours(selectedHour);
                         myDate.setMinutes(selectedMinute);
@@ -250,8 +247,6 @@ public class AddTripActivity extends AppCompatActivity {
                     mysLong = myLatLong.longitude;
                     sLat = mysLat + "";
                     sLong = mysLong + "";
-
-
                 }
 
                 @Override
@@ -302,59 +297,56 @@ public class AddTripActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        attachDatabaseReadListener();
-    }
+    private void updateTrip(Trip trip) {
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        detachDatabaseReadListener();
-    }
+        FirebaseUser user = mFirebaseAuth.getCurrentUser();
 
-    private void attachDatabaseReadListener() {
-        if (mChildEventListener == null) {
-            mChildEventListener = new ChildEventListener() {
-                @Override
-                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                    Log.i(TAG, "onChildAdded()");
+        if (user != null) {
+            String userId = mFirebaseAuth.getCurrentUser().getUid();
 
-                    Trip trip = dataSnapshot.getValue(Trip.class);
-                    if (trip != null) {
-                        trips.add(trip);
-                    }
-                }
+            mTripsDatabaseReference.child(userId)
+                    .child("name")
+                    .setValue(trip.getName());
 
-                @Override
-                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            mTripsDatabaseReference.child(userId)
+                    .child("date")
+                    .setValue(trip.getDate());
 
-                }
+            mTripsDatabaseReference.child(userId)
+                    .child("startPoint")
+                    .setValue(trip.getStartPoint());
 
-                @Override
-                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+            mTripsDatabaseReference.child(userId)
+                    .child("endPoint")
+                    .setValue(trip.getEndPoint());
 
-                }
+            mTripsDatabaseReference.child(userId)
+                    .child("startPointLatitude")
+                    .setValue(trip.getStartPointLatitude());
 
-                @Override
-                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            mTripsDatabaseReference.child(userId)
+                    .child("startPointLongitude")
+                    .setValue(trip.getStartPointLongitude());
 
-                }
+            mTripsDatabaseReference.child(userId)
+                    .child("endPointLatitude")
+                    .setValue(trip.getEndPointLatitude());
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Toast.makeText(AddTripActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            };
-            mTripsDatabaseReference.addChildEventListener(mChildEventListener);
-        }
-    }
+            mTripsDatabaseReference.child(userId)
+                    .child("endPointLongitude")
+                    .setValue(trip.getEndPointLongitude());
 
-    private void detachDatabaseReadListener() {
-        if (mChildEventListener != null) {
-            mTripsDatabaseReference.removeEventListener(mChildEventListener);
-            mChildEventListener = null;
+            mTripsDatabaseReference.child(userId)
+                    .child("type")
+                    .setValue(trip.getType());
+
+            mTripsDatabaseReference.child(userId)
+                    .child("status")
+                    .setValue(trip.getStatus());
+
+            mTripsDatabaseReference.child(userId)
+                    .child("notes")
+                    .setValue(trip.getNotes());
         }
     }
 }
