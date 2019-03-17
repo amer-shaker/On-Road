@@ -50,6 +50,7 @@ public class UpCommingTripsFragment extends Fragment {
         for (int i = 0; i < 5; i++) {
             trip = new Trip();
 
+
             trip.setName("school");
             trip.setDate(Calendar.getInstance().getTime());
 

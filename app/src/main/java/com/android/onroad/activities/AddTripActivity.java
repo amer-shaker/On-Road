@@ -1,10 +1,13 @@
 package com.android.onroad.activities;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
+import android.support.annotation.RequiresApi;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -90,6 +93,7 @@ public class AddTripActivity extends AppCompatActivity {
         btnTimePicker = findViewById(R.id.btnAddTime);
         txtDate = findViewById(R.id.in_date_add);
         txtTime = findViewById(R.id.in_time_add);
+
 
         tripName = findViewById(R.id.txtTripName);
         AddTrip = findViewById(R.id.btnAddTrip);
@@ -201,6 +205,7 @@ public class AddTripActivity extends AppCompatActivity {
                         Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(), myDate.getMonth());
 
 
+
 //                Intent myIntent = new Intent(AddTripActivity.this,HomeActivity.class);
 //                myIntent.putExtra("myTrip",myTrip);
 //                startActivity(myIntent);
@@ -253,6 +258,9 @@ public class AddTripActivity extends AppCompatActivity {
 
                         myDate.setHours(selectedHour);
                         myDate.setMinutes(selectedMinute);
+
+                        Utility.setAlarmTime(AddTripActivity.this, new Trip(),myDate.getHours(),myDate.getMinutes(),myDate.getMonth());
+
 
                     }
                 }, hour, minute, true);//Yes 24 hour time

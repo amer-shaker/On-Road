@@ -15,9 +15,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activities.DilogActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"></activity>
+        <activity android:name=".activities.DetailsTripActivity" />
+        <activity android:name=".activities.AddTripActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
 
-        <activity android:name=".activities.DetailsTripActivity"></activity>
-        <activity android:name=".activities.AddTripActivity"></activity>
 
         <service
             android:name=".MyService"
@@ -26,18 +29,23 @@
 
         <activity
             android:name=".activities.HomeActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
         <activity
             android:name=".activities.RegisterActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
         <activity
             android:name=".activities.LoginActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <meta-data
