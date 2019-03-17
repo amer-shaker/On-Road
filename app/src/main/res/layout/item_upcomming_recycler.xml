@@ -12,8 +12,7 @@
     android:layout_marginBottom="20dp"
     android:layout_marginRight="15dp"
     >
-
-    <ImageView
+      <ImageView
         android:id="@+id/imv_cancel_trip"
         android:layout_width="30dp"
         android:layout_height="40dp"
