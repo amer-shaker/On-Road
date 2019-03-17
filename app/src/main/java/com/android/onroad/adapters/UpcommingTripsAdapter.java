@@ -13,10 +13,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.onroad.R;
+import com.android.onroad.activities.AddTripActivity;
 import com.android.onroad.activities.DetailsTripActivity;
 import com.android.onroad.activities.DilogActivity;
 import com.android.onroad.beans.Trip;
 import com.android.onroad.fragments.UpCommingTripsFragment;
+import com.android.onroad.utils.Constants;
 import com.android.onroad.utils.Utility;
 
 import java.util.ArrayList;
@@ -102,9 +104,9 @@ public class UpcommingTripsAdapter extends RecyclerView.Adapter<UpcommingTripsAd
 
         @OnClick(R.id.imv_edit_trip)
         void editTrip(View view) {
-//            Intent intent=new Intent(context,eddit);
-//            intent.putExtra("trip", trips.get(getAdapterPosition()));
-//            context.startActivity(intent);
+            Intent intent=new Intent(context, AddTripActivity.class);
+            intent.putExtra(Constants.TRIP, trips.get(getAdapterPosition()));
+            context.startActivity(intent);
         }
 
         @OnClick(R.id.btn_start_trip)
