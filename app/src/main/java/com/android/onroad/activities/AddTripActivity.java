@@ -2,14 +2,15 @@ package com.android.onroad.activities;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.icu.text.DateFormat;
-import android.icu.text.SimpleDateFormat;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -35,7 +36,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -52,6 +55,7 @@ public class AddTripActivity extends AppCompatActivity {
     EditText tripName, myNote;
     Date date;
     Date myDateCheck;
+    boolean isUsed = false;
 
     String myStartPoint = "", myEndPoint = "", sLat = "", sLong = "", ePoint = "", eLat = "", eLong = "";
     double mysLat, mysLong, myeLat, myeLong;
@@ -59,6 +63,7 @@ public class AddTripActivity extends AppCompatActivity {
 
     Date myDate = new Date();
 
+    Trip editObj;
     Date myTime;
     String myStatus, myRepeat;
 
@@ -79,11 +84,41 @@ public class AddTripActivity extends AppCompatActivity {
         txtDate = findViewById(R.id.in_date_add);
         txtTime = findViewById(R.id.in_time_add);
 
+
         tripName = findViewById(R.id.txtTripName);
         AddTrip = findViewById(R.id.btnAddTrip);
         spnRepeat = findViewById(R.id.spnRepeat);
         spnStatus = findViewById(R.id.spnStatus);
         myNote = findViewById(R.id.txtAddNote);
+        PlaceAutocompleteFragment autocompleteFragment1 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.txtStartPoint);
+        PlaceAutocompleteFragment autocompleteFragment2 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.txtEndPoint);
+
+        editObj = getIntent().getParcelableExtra("myTrip");
+        if (editObj != null) {
+            isUsed = true;
+            // putDataInFields();
+            AddTrip.setText("Update Trip");
+            tripName.setText(editObj.getName());
+            autocompleteFragment1.setText(editObj.getStartPoint());
+            autocompleteFragment2.setText(editObj.getEndPoint());
+            myDate = editObj.getDate();
+
+            String editStatus = "Round Trip";//editObj.getStatus(); //the value you want the position for
+            ArrayAdapter myAdap;
+            myAdap = (ArrayAdapter) spnStatus.getAdapter(); //cast to an ArrayAdapter
+            int spinnerPosition;
+            spinnerPosition = myAdap.getPosition(editStatus);
+            spnStatus.setSelection(spinnerPosition);
+
+            String editRepeat = editObj.getType(); //the value you want the position for
+            myAdap = (ArrayAdapter) spnRepeat.getAdapter(); //cast to an ArrayAdapter
+            spinnerPosition = myAdap.getPosition(editRepeat);
+            spnStatus.setSelection(spinnerPosition);
+
+            txtDate.setText(myDate.getDay() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getYear());
+            txtTime.setText(myDate.getHours() + ":" + myDate.getMinutes());
+
+        }
 
         // Initialize Firebase Auth
         mFirebaseAuth = FirebaseAuth.getInstance();
@@ -94,7 +129,41 @@ public class AddTripActivity extends AppCompatActivity {
         AddTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Trip trip = new Trip();
+
+
+                if (tripName.getText().toString().equals("")) {
+                    Toast.makeText(AddTripActivity.this, "enter the trip name", Toast.LENGTH_SHORT).show();
+                }
+
+                if (myStartPoint.equals(""))
+                    Toast.makeText(AddTripActivity.this, "enter Start Point", Toast.LENGTH_SHORT).
+
+                            show();
+
+                if (myEndPoint.equals(""))
+                    Toast.makeText(AddTripActivity.this, "enter end Point", Toast.LENGTH_SHORT).
+
+                            show();
+
+                if (txtDate.getText().
+
+                        equals(""))
+                    Toast.makeText(AddTripActivity.this, "enter Date", Toast.LENGTH_SHORT).
+
+                            show();
+
+                if (txtTime.getText().
+
+                        equals(""))
+                    Toast.makeText(AddTripActivity.this, "enter Time", Toast.LENGTH_SHORT).
+
+                            show();
+
+
                 Trip trip = new Trip();
+                String tripId = mTripsDatabaseReference.getRef().push().getKey();
+                trip.setTripId(tripId);
                 myTripName = tripName.getText().toString();
                 trip.setName(myTripName);
                 trip.setDate(myDate);
@@ -107,9 +176,6 @@ public class AddTripActivity extends AppCompatActivity {
                 trip.setNotes(myArrayNote);
                 trip.setType(myRepeat);
                 trip.setStatus(myStatus);
-
-                String tripId = mTripsDatabaseReference.getRef().push().getKey();
-                trip.setTripId(tripId);
 
                 mTripsDatabaseReference.child(mFirebaseAuth.getCurrentUser().getUid())
                         .child(tripId)
@@ -126,15 +192,22 @@ public class AddTripActivity extends AppCompatActivity {
                     }
                 });
 
+                Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(), myDate.getMonth());
+
+
 //                Intent myIntent = new Intent(AddTripActivity.this,HomeActivity.class);
 //                myIntent.putExtra("myTrip",myTrip);
 //                startActivity(myIntent);
+
             }
+
+
         });
 
         spnStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position,
+                                       long id) {
                 myStatus = spnStatus.getItemAtPosition(position).toString();
                 Toast.makeText(AddTripActivity.this, myStatus, Toast.LENGTH_SHORT).show();
             }
@@ -146,7 +219,8 @@ public class AddTripActivity extends AppCompatActivity {
         });
         spnRepeat.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position,
+                                       long id) {
                 myRepeat = spnRepeat.getItemAtPosition(position).toString();
                 Toast.makeText(AddTripActivity.this, myRepeat, Toast.LENGTH_SHORT).show();
             }
@@ -171,10 +245,15 @@ public class AddTripActivity extends AppCompatActivity {
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         txtTime.setText(selectedHour + ":" + selectedMinute);
 
-                        Utility.setAlarmTime(AddTripActivity.this, new Trip(), selectedHour, selectedMinute);
+
+//                Utility.setAlarmTime(AddTripActivity.this, new Trip(), selectedHour, selectedMinute);
+
 
                         myDate.setHours(selectedHour);
                         myDate.setMinutes(selectedMinute);
+
+                        Utility.setAlarmTime(AddTripActivity.this, new Trip(), myDate.getHours(), myDate.getMinutes(), myDate.getMonth());
+
 
                     }
                 }, hour, minute, true);//Yes 24 hour time
@@ -195,6 +274,7 @@ public class AddTripActivity extends AppCompatActivity {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(),
                         new DatePickerDialog.OnDateSetListener() {
 
+                            @RequiresApi(api = Build.VERSION_CODES.N)
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                                 String mySDate = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;

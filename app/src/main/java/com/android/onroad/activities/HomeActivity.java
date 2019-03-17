@@ -115,4 +115,6 @@ public class HomeActivity extends AppCompatActivity {
         Snackbar.make(constraint, "syncData", Snackbar.LENGTH_LONG).show();
 
     }
+
+
 }

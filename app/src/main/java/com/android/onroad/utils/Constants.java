@@ -16,4 +16,5 @@ public interface Constants {
     public String TRIP_USER="trip_user";
 
     String TRIP = "trip";
+    String FIRE_SOUND_STATUS = "fire_sounds";
 }

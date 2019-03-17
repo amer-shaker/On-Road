@@ -9,13 +9,12 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.android.onroad.R;
+import com.android.onroad.activities.DilogActivity;
 import com.android.onroad.activities.LoginActivity;
-
-import java.util.Calendar;
-
-
 import com.android.onroad.beans.Trip;
 import com.android.onroad.reciever.MyReciver;
+
+import java.util.Calendar;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 
@@ -32,7 +31,8 @@ public class Utility {
         Intent notificationIntent;
         PendingIntent contentIntent;
 //        if (trip != null) {
-        notificationIntent = new Intent(context, LoginActivity.class);
+
+        notificationIntent = new Intent(context, DilogActivity.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         notificationIntent.putExtra(Constants.TRIP, trip);
         final int _id = (int) System.currentTimeMillis();
@@ -63,11 +63,12 @@ public class Utility {
                 , AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
-    public static void setAlarmTime(Context context, Trip trip, int hourOfDay, int minute) {
+    public static void setAlarmTime(Context context, Trip trip, int hourOfDay, int minute,int day) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.DAY_OF_YEAR,day);
         if (calendar.getTimeInMillis() > Calendar.getInstance()
                 .getTimeInMillis()) {
             Utility.setupAlarmManager(context, MyReciver.class, trip,
@@ -78,6 +79,7 @@ public class Utility {
                     calendar.getTimeInMillis());
         }
     }
+
 
     public static void launchMap(Context context, Trip trip) {
 //            Uri gmmIntentUri = Uri.parse("https://www.google.com/maps/dir/?api=1&origin=18.519513,73.868315&destination=18.518496,
