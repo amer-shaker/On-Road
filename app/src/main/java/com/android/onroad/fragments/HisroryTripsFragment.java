@@ -59,7 +59,5 @@ public class HisroryTripsFragment extends Fragment {
         adapter = new HistoryTripsAdapter(getActivity());
         adapter.setItems(trips);
         recyclerView.setAdapter(adapter);
-
     }
-
 }

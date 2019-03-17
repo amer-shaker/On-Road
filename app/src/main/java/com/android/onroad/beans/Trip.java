@@ -9,21 +9,16 @@ import java.util.ArrayList;
 import java.util.Date;
 
 @IgnoreExtraProperties
-public class Trip implements  Parcelable{
+public class Trip implements Parcelable {
 
-    private int tripId;
-    private String startPoint , Year,Month,Day,Hour,Minute;
+    private String tripId;
+    private String startPoint, Year, Month, Day, Hour, Minute;
     private String endPoint;
-
-
-
-    private  double latStartPoint , langStartPoint ,latEndPoint , langEndPoint;
+    private double latStartPoint, langStartPoint, latEndPoint, langEndPoint;
     private Date DateTime;
-
     private String status;
     private String name;
     private String type;
-
     private double startPointLatitude;
     private double startPointLongitude;
     private double endPointLatitude;
@@ -36,7 +31,7 @@ public class Trip implements  Parcelable{
 
     }
 
-    public Trip(int tripId, String name, String type, String status, String startPoint, String endPoint,
+    public Trip(String tripId, String name, String type, String status, String startPoint, String endPoint,
                 double startPointLatitude, double startPointLongitude, double endPointLatitude,
                 double endPointLongitude, Date date, String time, ArrayList<Note> notes) {
         this.tripId = tripId;
@@ -55,7 +50,7 @@ public class Trip implements  Parcelable{
     }
 
     protected Trip(Parcel in) {
-        tripId = in.readInt();
+        tripId = in.readString();
         name = in.readString();
         type = in.readString();
         status = in.readString();
@@ -79,6 +74,7 @@ public class Trip implements  Parcelable{
             return new Trip[size];
         }
     };
+
     public String getYear() {
         return Year;
     }
@@ -119,11 +115,11 @@ public class Trip implements  Parcelable{
         Minute = minute;
     }
 
-    public int getTripId() {
+    public String getTripId() {
         return tripId;
     }
 
-    public void setTripId(int tripId) {
+    public void setTripId(String tripId) {
         this.tripId = tripId;
     }
 
@@ -250,7 +246,7 @@ public class Trip implements  Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(tripId);
+        dest.writeString(tripId);
         dest.writeString(name);
         dest.writeString(type);
         dest.writeString(status);
