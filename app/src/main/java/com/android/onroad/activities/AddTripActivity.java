@@ -62,6 +62,7 @@ public class AddTripActivity extends AppCompatActivity {
     EditText tripName, myNote;
     Date date;
     Date myDateCheck;
+    boolean isUsed = false;
 
     String myStartPoint = "", myEndPoint = "", sLat = "", sLong = "", ePoint = "", eLat = "", eLong = "";
     double mysLat, mysLong, myeLat, myeLong;
@@ -69,6 +70,7 @@ public class AddTripActivity extends AppCompatActivity {
 
     Date myDate = new Date();
 
+    Trip editObj;
     Date myTime;
     String myStatus, myRepeat;
 
@@ -101,9 +103,10 @@ public class AddTripActivity extends AppCompatActivity {
         PlaceAutocompleteFragment autocompleteFragment1 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.txtStartPoint);
         PlaceAutocompleteFragment autocompleteFragment2 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.txtEndPoint);
 
-        Trip editObj = getIntent().getParcelableExtra("myTrip");
+         editObj = getIntent().getParcelableExtra("myTrip");
         if(editObj!=null)
         {
+            isUsed = true;
             // putDataInFields();
             AddTrip.setText("Update Trip");
             tripName.setText(editObj.getName());
@@ -138,43 +141,76 @@ public class AddTripActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                if (tripName.getText().toString().equals(""))
 
+                    Toast.makeText(AddTripActivity.this, "enter the trip name", Toast.LENGTH_SHORT).show();
 
-                Trip trip = new Trip();
-                myTripName = tripName.getText().toString();
-                trip.setName(myTripName);
-                trip.setDate(myDate);
-                trip.setEndPoint(myEndPoint);
-                trip.setStartPoint(myStartPoint);
-                trip.setEndPointLatitude(myeLat);
-                trip.setEndPointLongitude(myeLong);
-                trip.setStartPointLatitude(mysLat);
-                trip.setStartPointLongitude(mysLong);
-                trip.setNotes(myArrayNote);
-                trip.setType(myRepeat);
-                trip.setStatus(myStatus);
+                if (myStartPoint.equals(""))
+                    Toast.makeText(AddTripActivity.this, "enter Start Point", Toast.LENGTH_SHORT).show();
 
-                mTripsDatabaseReference.child(mFirebaseAuth.getCurrentUser().getUid())
-                        .setValue(trip)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                if (myEndPoint.equals(""))
+                    Toast.makeText(AddTripActivity.this, "enter end Point", Toast.LENGTH_SHORT).show();
+
+                if (txtDate.getText().equals(""))
+                    Toast.makeText(AddTripActivity.this, "enter Date", Toast.LENGTH_SHORT).show();
+
+                if (txtTime.getText().equals(""))
+                    Toast.makeText(AddTripActivity.this, "enter Time", Toast.LENGTH_SHORT).show();
+                else {
+
+                    if (isUsed) {
+                        Trip trip = editObj;
+                        myTripName = tripName.getText().toString();
+                        trip.setName(myTripName);
+                        trip.setDate(myDate);
+                        trip.setEndPoint(myEndPoint);
+                        trip.setStartPoint(myStartPoint);
+                        trip.setEndPointLatitude(myeLat);
+                        trip.setEndPointLongitude(myeLong);
+                        trip.setStartPointLatitude(mysLat);
+                        trip.setStartPointLongitude(mysLong);
+                        trip.setNotes(myArrayNote);
+                        trip.setType(myRepeat);
+                        trip.setStatus(myStatus);
+
+                    } else {
+                        Trip trip = new Trip();
+                        myTripName = tripName.getText().toString();
+                        trip.setName(myTripName);
+                        trip.setDate(myDate);
+                        trip.setEndPoint(myEndPoint);
+                        trip.setStartPoint(myStartPoint);
+                        trip.setEndPointLatitude(myeLat);
+                        trip.setEndPointLongitude(myeLong);
+                        trip.setStartPointLatitude(mysLat);
+                        trip.setStartPointLongitude(mysLong);
+                        trip.setNotes(myArrayNote);
+                        trip.setType(myRepeat);
+                        trip.setStatus(myStatus);
+
+                        mTripsDatabaseReference.child(mFirebaseAuth.getCurrentUser().getUid())
+                                .setValue(trip)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        Toast.makeText(AddTripActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
                             @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(AddTripActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(AddTripActivity.this, "Something, went wrong", Toast.LENGTH_SHORT).show();
                             }
-                        }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(AddTripActivity.this, "Something, went wrong", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        });
 
-                Utility.setAlarmTime(AddTripActivity.this, trip,myDate.getHours(),myDate.getMinutes(),myDate.getMonth());
+                        Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(), myDate.getMonth());
 
 
 
 //                Intent myIntent = new Intent(AddTripActivity.this,HomeActivity.class);
 //                myIntent.putExtra("myTrip",myTrip);
 //                startActivity(myIntent);
+                    }
+                }
             }
         });
 
