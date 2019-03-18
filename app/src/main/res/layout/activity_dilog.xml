@@ -10,13 +10,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:background="@color/colorWhite">
+        android:background="@color/colorWhite"
+        >
 
 
         <ImageView
             android:id="@+id/imgTrip"
-            android:layout_width="107dp"
-            android:layout_height="88dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
 
             android:layout_alignParentTop="true"
             android:layout_marginStart="5dp"
@@ -25,7 +26,7 @@
             android:layout_marginEnd="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
-            app:srcCompat="@drawable/worldwide" />
+            app:srcCompat="@drawable/anothermap" />
 
         <TextView
             android:id="@+id/tripNameInDialog"
@@ -48,8 +49,11 @@
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_below="@+id/imgTrip"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="21dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="122dp"
+            android:layout_marginLeft="122dp"
+            android:layout_marginTop="18dp"
             android:height="30dp"
             android:text="@string/text_dialog"
             android:textSize="20sp" />
