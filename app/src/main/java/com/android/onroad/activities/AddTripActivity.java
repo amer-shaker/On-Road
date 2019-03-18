@@ -168,7 +168,7 @@ public class AddTripActivity extends AppCompatActivity {
                     }
                 });
 
-                Utility.setAlarmTime(AddTripActivity.this, trip,myDate.getHours(),myDate.getMinutes(),myDate.getMonth());
+//                Utility.setAlarmTime(AddTripActivity.this, trip,myDate.getHours(),myDate.getMinutes(),myDate.getMonth());
 
 
 
@@ -223,7 +223,7 @@ public class AddTripActivity extends AppCompatActivity {
                         myDate.setHours(selectedHour);
                         myDate.setMinutes(selectedMinute);
 
-                        Utility.setAlarmTime(AddTripActivity.this, new Trip(),myDate.getHours(),myDate.getMinutes(),myDate.getMonth());
+                        Utility.setAlarmTime(AddTripActivity.this, new Trip(),myDate.getHours(),myDate.getMinutes(),myDate.getMonth(),0);
 
 
                     }

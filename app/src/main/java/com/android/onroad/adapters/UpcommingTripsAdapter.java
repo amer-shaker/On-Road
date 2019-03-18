@@ -1,8 +1,10 @@
 package com.android.onroad.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -98,6 +100,15 @@ public class UpcommingTripsAdapter extends RecyclerView.Adapter<UpcommingTripsAd
         void nacelTrip(View view) {
 
             Log.e("position clicked", getAdapterPosition() + "");
+            new AlertDialog.Builder(context)
+                    .setTitle("Confirmation")
+                    .setMessage("Do you really want to delete trip ?")
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            Toast.makeText(context, " invoke delete trip  here ", Toast.LENGTH_SHORT).show();
+                        }})
+                    .setNegativeButton(android.R.string.no, null).show();
         }
 
         @OnClick(R.id.imv_edit_trip)
