@@ -25,15 +25,15 @@ public class Trip implements Parcelable {
     private double endPointLongitude;
     private Date date;
     private String time;
-    private long alarmId;
+    private int alarmId;
 
 
 
-    public long getAlarmId() {
+    public int getAlarmId() {
         return alarmId;
     }
 
-    public void setAlarmId(long alarmId) {
+    public void setAlarmId(int alarmId) {
         this.alarmId = alarmId;
     }
 
