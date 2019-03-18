@@ -3,15 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/recycler_shape"
     android:layout_marginStart="15dp"
     android:layout_marginTop="10dp"
     android:layout_marginEnd="15dp"
     android:layout_marginRight="15dp"
-    android:layout_marginBottom="20dp"
-    android:background="@color/lightGrey"
-    android:elevation="10dp">
+
+    >
+
 
     <ImageView
+
         android:id="@+id/imv_cancel_trip"
         android:layout_width="30dp"
         android:layout_height="40dp"
@@ -29,7 +31,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:src="@drawable/edit_icon"
+        android:src="@drawable/settings"
         app:layout_constraintEnd_toStartOf="@id/imv_cancel_trip"
         app:layout_constraintTop_toTopOf="parent" />
 
