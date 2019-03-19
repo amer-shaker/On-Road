@@ -14,7 +14,7 @@ public class MyReciver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Trip  trip=intent.getExtras().getParcelable(Constants.TRIP);
         Intent intentDialouge=new Intent(context, DilogActivity.class);
-        intentDialouge.  putExtra(Constants.TRIP, trip);
+        intentDialouge.putExtra(Constants.TRIP, trip);
         intentDialouge.putExtra(Constants.FIRE_SOUND_STATUS,"fired");
         intentDialouge.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intentDialouge);

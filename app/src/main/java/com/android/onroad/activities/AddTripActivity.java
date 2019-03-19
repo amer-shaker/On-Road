@@ -5,6 +5,9 @@ import android.app.TimePickerDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+
+import android.support.annotation.Nullable;
+
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -22,6 +25,7 @@ import android.widget.Toast;
 import com.android.onroad.R;
 import com.android.onroad.beans.Note;
 import com.android.onroad.beans.Trip;
+import com.android.onroad.utils.Constants;
 import com.android.onroad.utils.Utility;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
@@ -33,16 +37,17 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
+import java.util.List;
+
+
 
 public class AddTripActivity extends AppCompatActivity {
 
@@ -61,7 +66,7 @@ public class AddTripActivity extends AppCompatActivity {
     double mysLat, mysLong, myeLat, myeLong;
     ArrayList<Note> myArrayNote = new ArrayList<>();
 
-    Date myDate = new Date();
+    Date myDate ;
 
     Trip editObj;
     Date myTime;
@@ -70,10 +75,15 @@ public class AddTripActivity extends AppCompatActivity {
 
     String myTripName;
 
-    // Firebase instance variables
     private FirebaseAuth mFirebaseAuth;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mTripsDatabaseReference;
+
+    private ChildEventListener mChildEventListener;
+    PlaceAutocompleteFragment autocompleteFragment1,autocompleteFragment2;
+
+    private List<Trip> trips = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,19 +100,26 @@ public class AddTripActivity extends AppCompatActivity {
         spnRepeat = findViewById(R.id.spnRepeat);
         spnStatus = findViewById(R.id.spnStatus);
         myNote = findViewById(R.id.txtAddNote);
-        PlaceAutocompleteFragment autocompleteFragment1 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.txtStartPoint);
-        PlaceAutocompleteFragment autocompleteFragment2 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.txtEndPoint);
+        myDate = new Date();
+         autocompleteFragment1 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.txtStartPoint);
+         autocompleteFragment2 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.txtEndPoint);
 
-        editObj = getIntent().getParcelableExtra("myTrip");
-        if (editObj != null) {
+         editObj = getIntent().getParcelableExtra(Constants.TRIP);
+        if(editObj!=null)
+        {
             isUsed = true;
             // putDataInFields();
             AddTrip.setText("Update Trip");
             tripName.setText(editObj.getName());
             autocompleteFragment1.setText(editObj.getStartPoint());
             autocompleteFragment2.setText(editObj.getEndPoint());
+            if (myDate!=null)
+                Toast.makeText(this, "my date not null", Toast.LENGTH_SHORT).show();
             myDate = editObj.getDate();
-
+            if (myDate!=null)
+                Toast.makeText(this, "my date not null", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(this, "my date is null ", Toast.LENGTH_SHORT).show();
             String editStatus = "Round Trip";//editObj.getStatus(); //the value you want the position for
             ArrayAdapter myAdap;
             myAdap = (ArrayAdapter) spnStatus.getAdapter(); //cast to an ArrayAdapter
@@ -114,9 +131,12 @@ public class AddTripActivity extends AppCompatActivity {
             myAdap = (ArrayAdapter) spnRepeat.getAdapter(); //cast to an ArrayAdapter
             spinnerPosition = myAdap.getPosition(editRepeat);
             spnStatus.setSelection(spinnerPosition);
+            if (myDate!=null){
+                txtDate.setText(myDate.getDay() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getYear()+" ");
+                txtTime.setText(myDate.getHours() + ":" + myDate.getMinutes()+" ");
 
-            txtDate.setText(myDate.getDay() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getYear());
-            txtTime.setText(myDate.getHours() + ":" + myDate.getMinutes());
+            }
+
 
         }
 
@@ -129,8 +149,6 @@ public class AddTripActivity extends AppCompatActivity {
         AddTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Trip trip = new Trip();
-
 
                 if (tripName.getText().toString().equals("")) {
                     Toast.makeText(AddTripActivity.this, "enter the trip name", Toast.LENGTH_SHORT).show();
@@ -142,25 +160,14 @@ public class AddTripActivity extends AppCompatActivity {
                             show();
 
                 if (myEndPoint.equals(""))
-                    Toast.makeText(AddTripActivity.this, "enter end Point", Toast.LENGTH_SHORT).
+                    Toast.makeText(AddTripActivity.this, "enter end Point", Toast.LENGTH_SHORT).show();
 
-                            show();
+                if (txtDate.getText().equals(""))
+                    Toast.makeText(AddTripActivity.this, "enter Date", Toast.LENGTH_SHORT).show();
 
-                if (txtDate.getText().
-
-                        equals(""))
-                    Toast.makeText(AddTripActivity.this, "enter Date", Toast.LENGTH_SHORT).
-
-                            show();
-
-                if (txtTime.getText().
-
-                        equals(""))
-                    Toast.makeText(AddTripActivity.this, "enter Time", Toast.LENGTH_SHORT).
-
-                            show();
-
-
+                if (txtTime.getText().equals(""))
+                    Toast.makeText(AddTripActivity.this, "enter Time", Toast.LENGTH_SHORT).show();
+                else {
                 Trip trip = new Trip();
                 String tripId = mTripsDatabaseReference.getRef().push().getKey();
                 trip.setTripId(tripId);
@@ -176,12 +183,22 @@ public class AddTripActivity extends AppCompatActivity {
                 trip.setNotes(myArrayNote);
                 trip.setType(myRepeat);
                 trip.setStatus(myStatus);
+                int id= (int) (myDate.getTime()+myDate.getMonth()+myDate.getYear()+myDate.getSeconds());
+                trip.setAlarmId(id);
+                if (isUsed){
+                    Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(), myDate.getMonth(), trip.getAlarmId());
 
+                }
+                else {
+                    Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(), myDate.getMonth(), id);
+
+                }
+                    //  myDate.getTime()+myDate.getMonth()+myDate.getYear()+myDate.getSeconds();
                 mTripsDatabaseReference.child(mFirebaseAuth.getCurrentUser().getUid())
                         .child(tripId)
                         .setValue(trip)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
+                         @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 Toast.makeText(AddTripActivity.this, "Success", Toast.LENGTH_SHORT).show();
                             }
@@ -192,12 +209,7 @@ public class AddTripActivity extends AppCompatActivity {
                     }
                 });
 
-                Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(), myDate.getMonth());
-
-
-//                Intent myIntent = new Intent(AddTripActivity.this,HomeActivity.class);
-//                myIntent.putExtra("myTrip",myTrip);
-//                startActivity(myIntent);
+                                }
 
             }
 
@@ -244,22 +256,14 @@ public class AddTripActivity extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         txtTime.setText(selectedHour + ":" + selectedMinute);
-
-
-//                Utility.setAlarmTime(AddTripActivity.this, new Trip(), selectedHour, selectedMinute);
-
-
-                        myDate.setHours(selectedHour);
-                        myDate.setMinutes(selectedMinute);
-
-                        Utility.setAlarmTime(AddTripActivity.this, new Trip(), myDate.getHours(), myDate.getMinutes(), myDate.getMonth());
-
+                        myDate=new Date();
+                            myDate.setHours(selectedHour);
+                            myDate.setMinutes(selectedMinute);
 
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 mTimePicker.setTitle("Select Time");
                 mTimePicker.show();
-
             }
         });
 
@@ -274,36 +278,14 @@ public class AddTripActivity extends AppCompatActivity {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(),
                         new DatePickerDialog.OnDateSetListener() {
 
-                            @RequiresApi(api = Build.VERSION_CODES.N)
+                           //g` @RequiresApi(api = Build.VERSION_CODES.N)
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                String mySDate = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
-                                String timeStamp = new SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().getTime());
-                                DateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
-                                try {
-                                    date = format.parse(timeStamp);
-                                    myDateCheck = format.parse(mySDate);
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
-                                if (myDateCheck.equals(null)) {
-                                    try {
-                                        myDateCheck = format.parse(timeStamp);
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
-                                    }
-                                } else {
-                                    if (myDateCheck.before(date)) {
-                                        Toast.makeText(view.getContext(), "Enter Valid Date", Toast.LENGTH_SHORT).show();
-                                    } else {
                                         txtDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
 
                                         myDate.setMonth(monthOfYear + 1);
                                         myDate.setYear(year);
                                         myDate.setDate(dayOfMonth);
-
-                                    }
-                                }
                             }
                         }, mYear, mMonth, mDay);
                 datePickerDialog.show();
@@ -314,7 +296,7 @@ public class AddTripActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        PlaceAutocompleteFragment autocompleteFragment1 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.txtStartPoint);
+        autocompleteFragment1 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.txtStartPoint);
         if (autocompleteFragment1 != null)
             autocompleteFragment1.setOnPlaceSelectedListener(new PlaceSelectionListener() {
                 @Override
@@ -338,7 +320,7 @@ public class AddTripActivity extends AppCompatActivity {
         else Toast.makeText(this, "Problem with loading page", Toast.LENGTH_LONG).show();
 
 
-        PlaceAutocompleteFragment autocompleteFragment2 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.txtEndPoint);
+         autocompleteFragment2 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.txtEndPoint);
         if (autocompleteFragment2 != null)
             autocompleteFragment2.setOnPlaceSelectedListener(new PlaceSelectionListener() {
                 @Override

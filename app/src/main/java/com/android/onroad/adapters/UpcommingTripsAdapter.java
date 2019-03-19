@@ -1,8 +1,10 @@
 package com.android.onroad.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,10 +15,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.onroad.R;
+import com.android.onroad.activities.AddTripActivity;
 import com.android.onroad.activities.DetailsTripActivity;
 import com.android.onroad.activities.DilogActivity;
 import com.android.onroad.beans.Trip;
 import com.android.onroad.fragments.UpCommingTripsFragment;
+import com.android.onroad.utils.Constants;
 import com.android.onroad.utils.Utility;
 
 import java.util.ArrayList;
@@ -96,13 +100,22 @@ public class UpcommingTripsAdapter extends RecyclerView.Adapter<UpcommingTripsAd
         void nacelTrip(View view) {
 
             Log.e("position clicked", getAdapterPosition() + "");
+            new AlertDialog.Builder(context)
+                    .setTitle("Confirmation")
+                    .setMessage("Do you really want to delete trip ?")
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            Toast.makeText(context, " invoke delete trip  here ", Toast.LENGTH_SHORT).show();
+                        }})
+                    .setNegativeButton(android.R.string.no, null).show();
         }
 
         @OnClick(R.id.imv_edit_trip)
         void editTrip(View view) {
-//            Intent intent=new Intent(context,eddit);
-//            intent.putExtra("trip", trips.get(getAdapterPosition()));
-//            context.startActivity(intent);
+            Intent intent=new Intent(context, AddTripActivity.class);
+            intent.putExtra(Constants.TRIP, trips.get(getAdapterPosition()));
+            context.startActivity(intent);
         }
 
         @OnClick(R.id.btn_start_trip)

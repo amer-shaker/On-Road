@@ -21,7 +21,10 @@ public class MyService extends Service {
 
 
         Trip trip = intent.getExtras().getParcelable(Constants.TRIP);
+        intent.  putExtra(Constants.TRIP, trip);
+        intent.putExtra(Constants.FIRE_SOUND_STATUS,"fired");
         Utility.pushNotification(getApplicationContext(),trip);
+
         return super.onStartCommand(intent, flags, startId);
     }
     @Override
@@ -29,6 +32,5 @@ public class MyService extends Service {
         // TODO: Return the communication channel to the service.
         return null;
     }
-
 
 }
