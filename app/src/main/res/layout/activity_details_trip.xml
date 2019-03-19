@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+
     tools:context=".activities.DetailsTripActivity">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:layout_marginTop="10dp"
         android:id="@+id/img_trip_details"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
         android:src="@drawable/map_detail"
         />
 
@@ -19,88 +21,112 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/img_trip_details"
-
-        android:layout_marginTop="30dp">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-
-</LinearLayout>
+        android:layout_marginTop="20dp">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:orientation="vertical"
-
-            >
+            android:orientation="vertical">
 
 
-            <TextView
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="30dp"
-                android:text="trip name : "
-                android:textSize="20sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
 
-                android:layout_marginRight="30dp"
-                android:text="start point : "
-                android:textSize="20sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="30dp"
-                android:text="end point : "
-                android:textSize="20sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="30dp"
-                android:text=" date : "
 
-                android:textSize="20sp" />
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:layout_marginRight="5dp"
+    android:layout_marginLeft="20dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="30dp"
-                android:text=" Time : "
-                android:drawableLeft="@drawable/time_img"
-                android:textSize="20sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="status  : "
-                android:textSize="20sp" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="-5dp"
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="notes  : "
-                android:textSize="20sp" />
-        </LinearLayout>
+        android:orientation="vertical">
+
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="30dp"
+            android:drawableLeft="@drawable/trip_name_img"
+            android:text="trip name : "
+            android:textSize="20sp" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="30dp"
+            android:drawableLeft="@drawable/trip_name_img"
+            android:text="Type : "
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginRight="30dp"
+            android:drawableLeft="@drawable/start_point_img"
+            android:text="start point : "
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="30dp"
+            android:drawableLeft="@drawable/end_point_img"
+            android:text="end point : "
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="30dp"
+            android:drawableLeft="@drawable/date_img"
+            android:text=" date : "
+
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="30dp"
+            android:drawableLeft="@drawable/time_img"
+            android:text=" Time : "
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/status_img"
+            android:text="status  : "
+
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/notes_img"
+            android:text="notes  : "
+            android:textSize="20sp" />
+    </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="193dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             android:orientation="vertical">
 
 
@@ -109,34 +135,44 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="trip name"
-                android:textSize="12sp" />
+                android:textSize="20sp" />
 
+            <TextView
+                android:id="@+id/trip_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="type"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/tv_start_point_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="start point" />
+                android:text="start point"
+                android:textSize="20sp" />
 
 
             <TextView
                 android:id="@+id/tv_end_point_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="end point" />
+                android:text="end point"
+                android:textSize="20sp" />
 
 
             <TextView
                 android:id="@+id/tv_start_date_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="start date" />
+                android:text="start date"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/start_time_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" time text" />
+                android:text=" time text"
+                android:textSize="20sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -149,7 +185,8 @@
                     android:id="@+id/map_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="status text" />
+                    android:text="status text"
+                    android:textSize="20sp" />
 
                 <CheckBox
                     android:id="@+id/done_checkbox"
@@ -157,52 +194,49 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:checked="false"
-                    android:clickable="false"
-                    android:text="Done" />
+                    android:clickable="false" />
 
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_notes_details"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="notes ..." />
-
+<ListView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/noteList"
+    ></ListView>
 
         </LinearLayout>
 
 
     </LinearLayout>
 
+            <LinearLayout
+                android:layout_margin="20dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:weightSum="2">
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="Start"
+                    android:id="@+id/start_btn_details"
+                    android:background="@drawable/start_button"
+                    android:layout_marginRight="10dp"
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:padding="10dp"
-            android:weightSum="2">
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/start_button"
-                android:text="Start"
-                android:layout_marginRight="20dp"
-                android:layout_weight="1"
-                />
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Edit"
-                android:layout_weight="1"
-                android:layout_marginLeft="20dp"
-                android:background="@drawable/button_shape"/>
+
+                    android:layout_height="wrap_content" />
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="edit "
+                    android:background="@drawable/button_shape"
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/edit_trip_details"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
 
         </LinearLayout>
-
-
-
     </ScrollView>
-</RelativeLayout>
+</LinearLayout>

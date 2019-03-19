@@ -86,7 +86,7 @@ public class HistoryTripsAdapter  extends RecyclerView.Adapter<HistoryTripsAdapt
        @Override
         public void onClick(View v) {
             Intent intentdetails=new Intent(context, DetailsTripActivity.class);
-//          //  intentdetails.putExtra("trip",trips.get(getAdapterPosition()));
+           intentdetails.putExtra("trip",trips.get(getAdapterPosition()));
             context.startActivity(intentdetails);
 
         }
