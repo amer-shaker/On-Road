@@ -55,6 +55,7 @@ public class UpcommingTripsAdapter extends RecyclerView.Adapter<UpcommingTripsAd
         holder.tvTripName.setText(trip.getName());
         holder.tvStartPoint.setText(trip.getStartPoint());
         holder.tvEndPoint.setText(trip.getEndPoint());
+
     }
 
     @Override
@@ -134,11 +135,15 @@ public class UpcommingTripsAdapter extends RecyclerView.Adapter<UpcommingTripsAd
 
             Intent intentdetails = new Intent(context, DetailsTripActivity.class);
             Trip trip = trips.get(getAdapterPosition());
-            intentdetails.putExtra("trip", trips.get(getAdapterPosition()));
-            Log.i("index", getAdapterPosition() + "");
             Toast.makeText(context, trip.getName(), Toast.LENGTH_SHORT).show();
 
             Toast.makeText(context, trips.get(getAdapterPosition()).getStartPoint(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "size of notes : "+trips.get(getAdapterPosition()).getNotes().size(), Toast.LENGTH_SHORT).show();
+            Log.i("index", getAdapterPosition() + "");
+
+
+            intentdetails.putExtra("trip", trip);
+            intentdetails.putExtra("notes",trip.getNotes());
 
             context.startActivity(intentdetails);
 

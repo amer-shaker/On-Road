@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.android.onroad.R;
 import com.android.onroad.adapters.HistoryTripsAdapter;
+import com.android.onroad.beans.Note;
 import com.android.onroad.beans.Trip;
 
 import java.util.ArrayList;
@@ -45,12 +46,21 @@ public class HisroryTripsFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        ArrayList<Note> myNotes=new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             trip = new Trip();
             trip.setName("school");
+            myNotes.add(new Note(1,"mmmm"));
+            myNotes.add(new Note(2,"llll"));
+            myNotes.add(new Note(3,"ssss"));
 
+            trip.setNotes(myNotes);
             trip.setStartPoint("giza");
             trip.setEndPoint("cairo");
+            trip.setStatus("done");
+            trip.setType("one way");
+
+
             trips.add(trip);
         }
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());

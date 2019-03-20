@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.android.onroad.R;
 import com.android.onroad.activities.DetailsTripActivity;
+import com.android.onroad.beans.Note;
 import com.android.onroad.beans.Trip;
 
 import java.util.ArrayList;
@@ -45,6 +46,8 @@ public class HistoryTripsAdapter  extends RecyclerView.Adapter<HistoryTripsAdapt
         holder.tvTripName.setText(trip.getName());
         holder.tvStartPoint.setText(trip.getStartPoint());
         holder.tvEndPoint.setText(trip.getEndPoint());
+
+
     }
 
     @Override
@@ -87,6 +90,7 @@ public class HistoryTripsAdapter  extends RecyclerView.Adapter<HistoryTripsAdapt
         public void onClick(View v) {
             Intent intentdetails=new Intent(context, DetailsTripActivity.class);
            intentdetails.putExtra("trip",trips.get(getAdapterPosition()));
+           intentdetails.putExtra("notes",trips.get(getAdapterPosition()).getNotes());
             context.startActivity(intentdetails);
 
         }

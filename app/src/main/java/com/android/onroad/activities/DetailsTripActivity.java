@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.onroad.R;
 import com.android.onroad.beans.Note;
@@ -53,18 +54,23 @@ public class DetailsTripActivity extends AppCompatActivity {
             tvEndPoint.setText(trip.getEndPoint());
             startTimeTxt.setText(trip.getTime());
             type.setText(trip.getStatus());
-            ArrayList<Note> arrayOfNotes =trip.getNotes();
-          String  notes[]=new String[arrayOfNotes.size()];
 
-          for(int i=0;i<arrayOfNotes.size();i++)
+
+            ArrayList<Note> arrayOfNotes=getIntent().getParcelableArrayListExtra("notes");
+           // Toast.makeText(this, arrayOfNotes.get(0).getNote()+" size of notes ", Toast.LENGTH_SHORT).show();
+
+               ArrayList<String> myNotes=new ArrayList<>();
+
+////
+         for(int i=0;i<arrayOfNotes.size();i++)
           {
-              notes[i]=arrayOfNotes.get(i).getNote();
-              System.out.print(notes[i]);
+             myNotes.add(arrayOfNotes.get(i).getNote());
+
        }
 
-//
-//            ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_list_item_1,notes);
-//            noteList.setAdapter(adapter);
+
+            ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_list_item_1,myNotes);
+            noteList.setAdapter(adapter);
 
             startTripDetailsBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
