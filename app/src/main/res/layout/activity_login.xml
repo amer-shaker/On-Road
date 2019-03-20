@@ -116,6 +116,14 @@
                     android:textSize="16sp"
                     tools:targetApi="ice_cream_sandwich" />
 
+                <com.google.android.gms.common.SignInButton
+                    android:id="@+id/google_sign_in_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/resend_verification_email"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp" />
+
             </RelativeLayout>
 
         </LinearLayout>

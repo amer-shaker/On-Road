@@ -1,120 +1,183 @@
 package com.android.onroad.activities;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.onroad.R;
-import com.android.onroad.adapters.ViewPagerAdapter;
+import com.android.onroad.fragments.PastTripsFragment;
+import com.android.onroad.fragments.UpComingTripsFragment;
+import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+import java.util.ArrayList;
+import java.util.List;
 
-public class HomeActivity extends AppCompatActivity {
-    @BindView(R.id.tab_main_view)
-    TabLayout tabLayout;
+public class HomeActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
 
-    @BindView(R.id.main_pager)
-    ViewPager pager;
-    @BindView(R.id.menu_img)
-    ImageView imgMenue;
-    @BindView(R.id.nav_view)
-    NavigationView navigationView;
-    @BindView(R.id.constrint)
-    ConstraintLayout constraint;
-    @BindView(R.id.drawer_layout)
-    DrawerLayout drawer;
+    private static final String TAG = "HomeActivity";
 
-
-    FragmentManager manager;
-    ViewPagerAdapter adapter;
-
+    // Firebase instance variables
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseUser mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        ButterKnife.bind(this);
-        initViews();
-//        Trip trip = getIntent().getParcelableExtra("myTrip");
-//        Toast.makeText(this, trip.getStartPoint() + " "+ trip.getTripName(), Toast.LENGTH_SHORT).show();
-        imgMenue.setOnClickListener(new View.OnClickListener() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // Initialize Firebase Auth
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mUser = mFirebaseAuth.getCurrentUser();
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
-                if (drawer.isDrawerVisible(Gravity.LEFT)) {
-                    drawer.closeDrawer(Gravity.LEFT);
-                } else {
-                    drawer.openDrawer(Gravity.LEFT);
-                }
-                Snackbar.make(constraint, "", Snackbar.LENGTH_LONG).show();
-
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this, AddTripActivity.class));
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
         });
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                pager.setCurrentItem(tab.getPosition());
-            }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
 
-            }
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
+        View header = navigationView.getHeaderView(0);
 
-            }
-        });
+        TextView usernameTextView = (TextView) header.findViewById(R.id.username_text_view);
+        TextView emailTextView = (TextView) header.findViewById(R.id.email_text_view);
+
+        if (mUser != null) {
+            usernameTextView.setText(mUser.getDisplayName());
+            emailTextView.setText(mUser.getEmail());
+        }
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
+        setupViewPager(viewPager);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setSelectedTabIndicatorColor(Color.WHITE);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     @Override
     public void onBackPressed() {
-        if (drawer.isDrawerOpen(Gravity.LEFT)) {
-            drawer.closeDrawer(Gravity.LEFT);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
     }
 
-    void initViews() {
-        manager = getSupportFragmentManager();
-        adapter = new ViewPagerAdapter(manager);
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.upcomming_string_key));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.history_trips));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        pager.setAdapter(adapter);
-        pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.home_menu, menu);
+        return true;
     }
 
-    @OnClick(R.id.linear_logout)
-    void logout(View view) {
-        Snackbar.make(constraint, "logout", Snackbar.LENGTH_LONG).show();
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
 
+        switch (id) {
+            case R.id.sign_out_menu:
+                // sign out
+                AuthUI.getInstance().signOut(this);
+                redirectLoginScreen();
+                return true;
+            case R.id.action_settings:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
-    @OnClick(R.id.linear_profile)
-    void showProfile(View view) {
-        Snackbar.make(constraint, "showProfile", Snackbar.LENGTH_LONG).show();
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
 
+        if (id == R.id.nav_camera) {
+            // Handle the camera action
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
-    @OnClick(R.id.linear_sync)
-    void syncData(View view) {
-        Snackbar.make(constraint, "syncData", Snackbar.LENGTH_LONG).show();
-
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new UpComingTripsFragment(), getString(R.string.upcoming_trips_fragment));
+        adapter.addFragment(new PastTripsFragment(), getString(R.string.past_trips_fragment));
+        viewPager.setAdapter(adapter);
     }
 
+    private void redirectLoginScreen() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
+    }
 }

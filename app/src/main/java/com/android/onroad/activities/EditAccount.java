@@ -9,10 +9,6 @@ import android.view.ViewGroup;
 
 import com.android.onroad.R;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class EditAccount extends Fragment {
 
 

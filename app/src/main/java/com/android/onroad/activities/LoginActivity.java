@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -22,16 +23,23 @@ import android.widget.Toast;
 
 import com.android.onroad.R;
 import com.android.onroad.utils.Validation;
+import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private static final String TAG = "LoginActivity";
+    private static final String TAG = "MainActivity";
+
+    public static final String ANONYMOUS = "anonymous";
+    public static final int RC_SIGN_IN = 1;
 
     // UI references
     private View mLoginFormView;
@@ -44,9 +52,12 @@ public class LoginActivity extends AppCompatActivity {
     private Button mSignInButton;
     private ProgressBar mProgressBar;
 
+    private String mUsername;
+
     // Firebase instance variables
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
+    private FirebaseDatabase mFirebaseDatabase;
 
     // Instance variables
     private String email;
@@ -57,12 +68,17 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Initialize UI
-        initializeViews();
-
         // Initialize Firebase Auth
         mFirebaseAuth = FirebaseAuth.getInstance();
+
+        // Initialize Firebase Database
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mFirebaseDatabase.setPersistenceEnabled(true);
+
         setupFirebaseAuth();
+
+        // Initialize UI
+        initializeViews();
 
         mSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +113,20 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         hideSoftKeyboard();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.e(TAG, "onActivityResult()");
+        if (requestCode == RC_SIGN_IN) {
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(this, "Signed in!", Toast.LENGTH_SHORT).show();
+            } else if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(this, "Signed in cancelled", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }
     }
 
     @Override
@@ -238,25 +268,44 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
+
                 if (user != null) {
                     // Check if the user has a verified email address
+                    // user is signed in
+                    onSignedInInitialize(user.getDisplayName());
+
                     if (user.isEmailVerified()) {
                         Log.d(TAG, "onAuthStateChanged(): Signed in: " + user.getUid());
-
                         Toast.makeText(LoginActivity.this, "Authenticated with: " + user.getEmail(), Toast.LENGTH_SHORT).show();
-
-
                         redirectHomeScreen();
                     } else {
-                        Toast.makeText(LoginActivity.this, "Check you email inbox for a verification link", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Check you email inbox for a verification link!", Toast.LENGTH_SHORT).show();
                         firebaseAuth.signOut();
                     }
                 } else {
-                    // UserModel is signed out
+                    // user is signed out
                     Log.d(TAG, "onAuthStateChanged(): Signed out");
+                    // user is signed out
+                    onSignedOutCleanUp();
+                    startActivityForResult(
+                            AuthUI.getInstance()
+                                    .createSignInIntentBuilder()
+                                    .setIsSmartLockEnabled(false)
+                                    .setAvailableProviders(Arrays.asList(
+                                            new AuthUI.IdpConfig.GoogleBuilder().build(),
+                                            new AuthUI.IdpConfig.EmailBuilder().build()))
+                                    .build(), RC_SIGN_IN);
                 }
             }
         };
+    }
+
+    private void onSignedInInitialize(String username) {
+        mUsername = username;
+    }
+
+    private void onSignedOutCleanUp() {
+        mUsername = ANONYMOUS;
     }
 
     private void redirectHomeScreen() {

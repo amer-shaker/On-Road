@@ -1,6 +1,5 @@
 package com.android.onroad.activities;
 
-import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -75,8 +74,6 @@ public class DilogActivity extends AppCompatActivity {
                     myPlayer.stop();
                 }
                 finish();
-
-
             }
         });
 

@@ -41,7 +41,6 @@
 
             </LinearLayout>
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -218,7 +217,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:onClick="addNote"/>
+                    android:onClick="addNote" />
 
             </LinearLayout>
 
@@ -237,12 +236,12 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginRight="50dp"
                 android:layout_marginBottom="20dp"
-                android:background="@drawable/mybutton"
-                android:elevation="10dp"
+                android:background="@color/colorAccent"
                 android:text="Add Trip"
                 android:textColor="@color/White" />
 
         </LinearLayout>
+
     </ScrollView>
 
 </LinearLayout>

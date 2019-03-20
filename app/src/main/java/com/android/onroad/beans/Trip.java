@@ -11,20 +11,22 @@ import java.util.Date;
 @IgnoreExtraProperties
 public class Trip implements Parcelable {
 
+    public static final String UPCOMING_TRIP = "Upcoming";
+    public static final String HISTORY_TRIP = "History";
+    public static final String CANCELED_TRIP = "Canceled";
+
     private String tripId;
-    private String startPoint, Year, Month, Day, Hour, Minute;
-    private String endPoint;
-    private double latStartPoint, langStartPoint, latEndPoint, langEndPoint;
-    private Date DateTime;
-    private String status;
     private String name;
     private String type;
+    private String status;
+    private String startPoint;
+    private String endPoint;
     private double startPointLatitude;
     private double startPointLongitude;
     private double endPointLatitude;
     private double endPointLongitude;
     private Date date;
-    private String time;
+    private long time;
     private ArrayList<Note> notes;
 
     public Trip() {
@@ -32,8 +34,8 @@ public class Trip implements Parcelable {
     }
 
     public Trip(String tripId, String name, String type, String status, String startPoint, String endPoint,
-                double startPointLatitude, double startPointLongitude, double endPointLatitude,
-                double endPointLongitude, Date date, String time, ArrayList<Note> notes) {
+                double startPointLatitude, double startPointLongitude, double endPointLatitude, double endPointLongitude,
+                Date date, long time, ArrayList<Note> notes) {
         this.tripId = tripId;
         this.name = name;
         this.type = type;
@@ -60,7 +62,7 @@ public class Trip implements Parcelable {
         startPointLongitude = in.readDouble();
         endPointLatitude = in.readDouble();
         endPointLongitude = in.readDouble();
-        time = in.readString();
+        time = in.readLong();
     }
 
     public static final Creator<Trip> CREATOR = new Creator<Trip>() {
@@ -74,46 +76,6 @@ public class Trip implements Parcelable {
             return new Trip[size];
         }
     };
-
-    public String getYear() {
-        return Year;
-    }
-
-    public void setYear(String year) {
-        Year = year;
-    }
-
-    public String getMonth() {
-        return Month;
-    }
-
-    public void setMonth(String month) {
-        Month = month;
-    }
-
-    public String getDay() {
-        return Day;
-    }
-
-    public void setDay(String day) {
-        Day = day;
-    }
-
-    public String getHour() {
-        return Hour;
-    }
-
-    public void setHour(String hour) {
-        Hour = hour;
-    }
-
-    public String getMinute() {
-        return Minute;
-    }
-
-    public void setMinute(String minute) {
-        Minute = minute;
-    }
 
     public String getTripId() {
         return tripId;
@@ -203,11 +165,11 @@ public class Trip implements Parcelable {
         this.date = date;
     }
 
-    public String getTime() {
+    public long getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(long time) {
         this.time = time;
     }
 
@@ -222,7 +184,7 @@ public class Trip implements Parcelable {
     @Override
     public String toString() {
         return "Trip{" +
-                "tripId=" + tripId +
+                "tripId='" + tripId + '\'' +
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +
                 ", status='" + status + '\'' +
@@ -237,7 +199,6 @@ public class Trip implements Parcelable {
                 ", notes=" + notes +
                 '}';
     }
-
 
     @Override
     public int describeContents() {
@@ -256,6 +217,6 @@ public class Trip implements Parcelable {
         dest.writeDouble(startPointLongitude);
         dest.writeDouble(endPointLatitude);
         dest.writeDouble(endPointLongitude);
-        dest.writeString(time);
+        dest.writeLong(time);
     }
 }

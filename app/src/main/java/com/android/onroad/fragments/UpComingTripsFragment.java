@@ -1,10 +1,8 @@
 package com.android.onroad.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,10 +14,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.android.onroad.R;
-import com.android.onroad.activities.AddTripActivity;
-import com.android.onroad.adapters.UpcommingTripsAdapter;
+import com.android.onroad.adapters.UpcomingTripsAdapter;
 import com.android.onroad.beans.Trip;
+import com.android.onroad.delegates.DeleteTripDelegate;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,24 +26,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-public class UpCommingTripsFragment extends Fragment {
-    List<Trip> trips = new ArrayList<>();
-    Trip trip = new Trip();
-    UpcommingTripsAdapter adapter;
+public class UpComingTripsFragment extends Fragment implements DeleteTripDelegate {
 
-    @BindView(R.id.home_activity_constrint)
-    ConstraintLayout constraint;
-    @BindView(R.id.recycler_main)
+    private List<Trip> trips = new ArrayList<>();
+    private UpcomingTripsAdapter adapter;
+
+    @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
-    private static final String TAG = "HomeActivity";
+    private static final String TAG = "UpComingTripsFragment";
 
     // Firebase instance variables
     private FirebaseAuth mFirebaseAuth;
@@ -54,15 +49,17 @@ public class UpCommingTripsFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.framgent_upcomming, container, false);
+        View view = inflater.inflate(R.layout.framgent_upcoming, container, false);
         ButterKnife.bind(this, view);
 
         // Initialize Firebase Auth
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
 
-        mTripsDatabaseReference = mFirebaseDatabase.getReference().child(getString(R.string.trips_database_node))
-                .child(mFirebaseAuth.getCurrentUser().getUid());
+        if (mFirebaseAuth.getCurrentUser() != null) {
+            mTripsDatabaseReference = mFirebaseDatabase.getReference().child(getString(R.string.trips_database_node))
+                    .child(mFirebaseAuth.getCurrentUser().getUid());
+        }
 
         return view;
     }
@@ -70,28 +67,24 @@ public class UpCommingTripsFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        adapter = new UpcommingTripsAdapter(getActivity());
-    }
-
-    @OnClick(R.id.fab_add_trip)
-    public void add(View view) {
-        startActivity(new Intent(getActivity(), AddTripActivity.class));
-//                Utility.pushNotification(getActivity(),"");
+        adapter = new UpcomingTripsAdapter(getActivity(), trips, this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        Log.i(TAG, "onResume()");
         attachDatabaseReadListener();
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        Log.i(TAG, "onPause()");
+        trips.clear();
         detachDatabaseReadListener();
     }
 
@@ -103,14 +96,13 @@ public class UpCommingTripsFragment extends Fragment {
                     Log.i(TAG, "onChildAdded()");
 
                     Trip trip = dataSnapshot.getValue(Trip.class);
-                   // if (trip != null) {
-                   //    Date date = new Date();
-                   //     if (trip.getDate().compareTo(date) > 0) {
+                    if (trip != null) {
+                        if (trip.getStatus().equals(Trip.UPCOMING_TRIP)) {
                             trips.add(trip);
-                    adapter.setItems(trips);
-                    recyclerView.setAdapter(adapter);
-                    //    }
-                   //}
+                            adapter.updateList(trips);
+                            recyclerView.setAdapter(adapter);
+                        }
+                    }
                 }
 
                 @Override
@@ -134,9 +126,6 @@ public class UpCommingTripsFragment extends Fragment {
                 }
             };
             mTripsDatabaseReference.addChildEventListener(mChildEventListener);
-
-
-
         }
     }
 
@@ -144,6 +133,16 @@ public class UpCommingTripsFragment extends Fragment {
         if (mChildEventListener != null) {
             mTripsDatabaseReference.removeEventListener(mChildEventListener);
             mChildEventListener = null;
+        }
+    }
+
+    @Override
+    public void onDeleteTrip(Trip trip) {
+        FirebaseUser user = mFirebaseAuth.getCurrentUser();
+        if (user != null) {
+            mFirebaseDatabase.getReference(getString(R.string.trips_database_node)).child(user.getUid())
+                    .child(trip.getTripId())
+                    .removeValue();
         }
     }
 }

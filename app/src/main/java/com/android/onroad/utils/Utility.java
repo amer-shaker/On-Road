@@ -10,9 +10,8 @@ import android.net.Uri;
 
 import com.android.onroad.R;
 import com.android.onroad.activities.DilogActivity;
-import com.android.onroad.activities.LoginActivity;
 import com.android.onroad.beans.Trip;
-import com.android.onroad.reciever.MyReciver;
+import com.android.onroad.reciever.MyReceiver;
 
 import java.util.Calendar;
 
@@ -71,11 +70,11 @@ public class Utility {
         calendar.set(Calendar.DAY_OF_YEAR,day);
         if (calendar.getTimeInMillis() > Calendar.getInstance()
                 .getTimeInMillis()) {
-            Utility.setupAlarmManager(context, MyReciver.class, trip,
+            Utility.setupAlarmManager(context, MyReceiver.class, trip,
                     calendar.getTimeInMillis());
         } else {
             calendar.add(Calendar.DAY_OF_YEAR, 1);
-            Utility.setupAlarmManager(context, MyReciver.class, trip,
+            Utility.setupAlarmManager(context, MyReceiver.class, trip,
                     calendar.getTimeInMillis());
         }
     }

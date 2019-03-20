@@ -8,19 +8,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.onroad.R;
 import com.android.onroad.activities.DetailsTripActivity;
 import com.android.onroad.beans.Trip;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HistoryTripsAdapter  extends RecyclerView.Adapter<HistoryTripsAdapter.ViewHolder> {
+public class HistoryTripsAdapter extends RecyclerView.Adapter<HistoryTripsAdapter.ViewHolder> {
     private Context context;
     private List<Trip> trips;
 
@@ -32,19 +36,25 @@ public class HistoryTripsAdapter  extends RecyclerView.Adapter<HistoryTripsAdapt
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_history_trips_recycler, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_trip, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
-
         Trip trip = trips.get(position);
         Log.e("trips size onBindViewH", trips.size() + "");
-        holder.tvTripName.setText(trip.getName());
-        holder.tvStartPoint.setText(trip.getStartPoint());
-        holder.tvEndPoint.setText(trip.getEndPoint());
+
+        holder.tripControlsLinearLayout.setVisibility(View.GONE);
+        holder.tripNameTextView.setText(trip.getName());
+        DateFormat formatter = new SimpleDateFormat("dd / MM / yy");
+
+        long now = trip.getTime();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(now);
+
+        holder.tripDateTextView.setText(formatter.format(calendar.getTime()));
+        holder.tripStatusTextView.setText(trip.getStatus());
     }
 
     @Override
@@ -55,27 +65,24 @@ public class HistoryTripsAdapter  extends RecyclerView.Adapter<HistoryTripsAdapt
 
     }
 
-    public void setItems(List<Trip> items) {
-        this.trips = items;
-        Log.e("trips size", items.size() + "");
-        notifyDataSetChanged();
+    public void updateList(List<Trip> trips) {
+        this.trips = trips;
+        this.notifyDataSetChanged();
     }
 
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        @BindView(R.id.trip_controls_linear_layout)
+        LinearLayout tripControlsLinearLayout;
 
+        @BindView(R.id.trip_name_text_view)
+        TextView tripNameTextView;
 
+        @BindView(R.id.trip_date_text_view)
+        TextView tripDateTextView;
 
-
-        @BindView(R.id.tv_trip_name_history)
-        TextView tvTripName;
-
-        @BindView(R.id.tv_start_point_history)
-        TextView tvStartPoint;
-        @BindView(R.id.tv_end_point_history)
-        TextView tvEndPoint;
-
-
+        @BindView(R.id.trip_status_text_view)
+        TextView tripStatusTextView;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -83,12 +90,11 @@ public class HistoryTripsAdapter  extends RecyclerView.Adapter<HistoryTripsAdapt
             itemView.setOnClickListener(this);
         }
 
-       @Override
+        @Override
         public void onClick(View v) {
-            Intent intentdetails=new Intent(context, DetailsTripActivity.class);
+            Intent intentdetails = new Intent(context, DetailsTripActivity.class);
 //          //  intentdetails.putExtra("trip",trips.get(getAdapterPosition()));
             context.startActivity(intentdetails);
-
         }
     }
 }
