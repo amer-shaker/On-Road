@@ -20,7 +20,7 @@
             android:name=".activities.DilogActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
 
-        <activity android:name=".activities.DetailsTripActivity" />
+        <activity android:name=".activities.TripDetailsActivity" />
 
         <activity
             android:name=".activities.AddTripActivity"
@@ -43,6 +43,11 @@
         <activity
             android:name=".activities.LoginActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

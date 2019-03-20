@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.android.onroad.R;
 import com.android.onroad.activities.AddTripActivity;
 import com.android.onroad.beans.Trip;
-import com.android.onroad.fragments.UpComingTripsFragment;
+import com.android.onroad.fragments.UpcomingTripsFragment;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -29,13 +29,13 @@ import butterknife.OnClick;
 public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdapter.ViewHolder> {
 
     private Context mContext;
-    private UpComingTripsFragment upComingTripsFragment;
+    private UpcomingTripsFragment upcomingTripsFragment;
     private List<Trip> trips;
 
-    public UpcomingTripsAdapter(Context mContext, List<Trip> trips, UpComingTripsFragment upComingTripsFragment) {
+    public UpcomingTripsAdapter(Context mContext, List<Trip> trips, UpcomingTripsFragment upcomingTripsFragment) {
         this.mContext = mContext;
         this.trips = trips;
-        this.upComingTripsFragment = upComingTripsFragment;
+        this.upcomingTripsFragment = upcomingTripsFragment;
     }
 
     public void updateList(List<Trip> trips) {
@@ -114,7 +114,7 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
 
         @OnClick(R.id.delete_trip_button)
         void deleteTrip(View view) {
-            upComingTripsFragment.onDeleteTrip(trips.get(getAdapterPosition()));
+            upcomingTripsFragment.onDeleteTrip(trips.get(getAdapterPosition()));
             trips.remove(trips.get(getAdapterPosition()));
             updateList(trips);
         }

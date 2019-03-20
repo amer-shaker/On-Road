@@ -23,7 +23,7 @@ import android.widget.TextView;
 
 import com.android.onroad.R;
 import com.android.onroad.fragments.PastTripsFragment;
-import com.android.onroad.fragments.UpComingTripsFragment;
+import com.android.onroad.fragments.UpcomingTripsFragment;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -141,7 +141,7 @@ public class HomeActivity extends AppCompatActivity
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new UpComingTripsFragment(), getString(R.string.upcoming_trips_fragment));
+        adapter.addFragment(new UpcomingTripsFragment(), getString(R.string.upcoming_trips_fragment));
         adapter.addFragment(new PastTripsFragment(), getString(R.string.past_trips_fragment));
         viewPager.setAdapter(adapter);
     }

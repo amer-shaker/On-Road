@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.onroad.R;
-import com.android.onroad.activities.DetailsTripActivity;
+import com.android.onroad.activities.TripDetailsActivity;
 import com.android.onroad.beans.Trip;
 
 import java.text.DateFormat;
@@ -24,11 +24,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HistoryTripsAdapter extends RecyclerView.Adapter<HistoryTripsAdapter.ViewHolder> {
+public class PastTripsAdapter extends RecyclerView.Adapter<PastTripsAdapter.ViewHolder> {
     private Context context;
     private List<Trip> trips;
 
-    public HistoryTripsAdapter(Context context) {
+    public PastTripsAdapter(Context context) {
         trips = new ArrayList<>();
         this.context = context;
     }
@@ -92,7 +92,7 @@ public class HistoryTripsAdapter extends RecyclerView.Adapter<HistoryTripsAdapte
 
         @Override
         public void onClick(View v) {
-            Intent intentdetails = new Intent(context, DetailsTripActivity.class);
+            Intent intentdetails = new Intent(context, TripDetailsActivity.class);
 //          //  intentdetails.putExtra("trip",trips.get(getAdapterPosition()));
             context.startActivity(intentdetails);
         }

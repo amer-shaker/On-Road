@@ -7,6 +7,9 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.SystemClock;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.android.onroad.R;
 import com.android.onroad.activities.DilogActivity;
@@ -49,36 +52,40 @@ public class Utility {
         nm.notify((int) System.currentTimeMillis(), notification);
     }
 
-    public static void setupAlarmManager(Context context, Class MyReciver, Trip trip, long timeInMillis) {
-        AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-
-        Intent intent = new Intent(context, MyReciver);
+    public static void setupAlarmManager(Context context, Trip trip, long timeInMillis, int id) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, MyReceiver.class);
         intent.putExtra(Constants.TRIP, trip);
-        final int _id = (int) System.currentTimeMillis();
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, _id, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, timeInMillis
+        Toast.makeText(context, "calendar.getTimeInMillis :  " + SystemClock.elapsedRealtime() + timeInMillis, Toast.LENGTH_SHORT).show();
+        Log.e("time", " " + SystemClock.elapsedRealtime() + timeInMillis);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, timeInMillis
                 , AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
-    public static void setAlarmTime(Context context, Trip trip, int hourOfDay, int minute,int day) {
+    public static void setAlarmTime(Context context, Trip trip, int hourOfDay, int minute, int day, int id) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.DAY_OF_YEAR,day);
+//        calendar.set(Calendar.DAY_OF_YEAR,day);
         if (calendar.getTimeInMillis() > Calendar.getInstance()
                 .getTimeInMillis()) {
-            Utility.setupAlarmManager(context, MyReceiver.class, trip,
-                    calendar.getTimeInMillis());
+//            Utility.setupAlarmManager(context, MyReceiver.class, trip,
+//                    calendar.getTimeInMillis());
         } else {
             calendar.add(Calendar.DAY_OF_YEAR, 1);
-            Utility.setupAlarmManager(context, MyReceiver.class, trip,
-                    calendar.getTimeInMillis());
+//            Utility.setupAlarmManager(context, MyReceiver.class, trip,
+//                    calendar.getTimeInMillis());
+
+            Utility.setupAlarmManager(context, trip,
+                    calendar.getTimeInMillis(), id);
+
+            Toast.makeText(context, "calendar.getTimeInMillis :  " + calendar.getTimeInMillis(), Toast.LENGTH_SHORT).show();
         }
     }
-
 
     public static void launchMap(Context context, Trip trip) {
 //            Uri gmmIntentUri = Uri.parse("https://www.google.com/maps/dir/?api=1&origin=18.519513,73.868315&destination=18.518496,

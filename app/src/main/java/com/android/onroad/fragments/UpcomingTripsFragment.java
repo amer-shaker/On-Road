@@ -31,7 +31,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class UpComingTripsFragment extends Fragment implements DeleteTripDelegate {
+public class UpcomingTripsFragment extends Fragment implements DeleteTripDelegate {
 
     private List<Trip> trips = new ArrayList<>();
     private UpcomingTripsAdapter adapter;

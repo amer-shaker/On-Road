@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.android.onroad.R;
-import com.android.onroad.adapters.HistoryTripsAdapter;
+import com.android.onroad.adapters.PastTripsAdapter;
 import com.android.onroad.beans.Trip;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -35,7 +35,7 @@ public class PastTripsFragment extends Fragment {
     private Unbinder unbinder;
     List<Trip> trips = new ArrayList<>();
 
-    HistoryTripsAdapter adapter;
+    PastTripsAdapter adapter;
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -72,7 +72,7 @@ public class PastTripsFragment extends Fragment {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        adapter = new HistoryTripsAdapter(getActivity());
+        adapter = new PastTripsAdapter(getActivity());
     }
 
     @Override
@@ -99,7 +99,7 @@ public class PastTripsFragment extends Fragment {
 
                     Trip trip = dataSnapshot.getValue(Trip.class);
                     if (trip != null) {
-                        if (trip.getStatus().equals(Trip.HISTORY_TRIP)) {
+                        if (trip.getStatus().equals(Trip.PAST_TRIP)) {
                             trips.add(trip);
                             adapter.updateList(trips);
                             recyclerView.setAdapter(adapter);

@@ -12,7 +12,7 @@ import java.util.Date;
 public class Trip implements Parcelable {
 
     public static final String UPCOMING_TRIP = "Upcoming";
-    public static final String HISTORY_TRIP = "History";
+    public static final String PAST_TRIP = "Past";
     public static final String CANCELED_TRIP = "Canceled";
 
     private String tripId;
@@ -26,6 +26,7 @@ public class Trip implements Parcelable {
     private double endPointLatitude;
     private double endPointLongitude;
     private Date date;
+    private int alarmId;
     private long time;
     private ArrayList<Note> notes;
 
@@ -35,7 +36,7 @@ public class Trip implements Parcelable {
 
     public Trip(String tripId, String name, String type, String status, String startPoint, String endPoint,
                 double startPointLatitude, double startPointLongitude, double endPointLatitude, double endPointLongitude,
-                Date date, long time, ArrayList<Note> notes) {
+                Date date, int alarmId, long time, ArrayList<Note> notes) {
         this.tripId = tripId;
         this.name = name;
         this.type = type;
@@ -47,6 +48,7 @@ public class Trip implements Parcelable {
         this.endPointLatitude = endPointLatitude;
         this.endPointLongitude = endPointLongitude;
         this.date = date;
+        this.alarmId = alarmId;
         this.time = time;
         this.notes = notes;
     }
@@ -62,7 +64,9 @@ public class Trip implements Parcelable {
         startPointLongitude = in.readDouble();
         endPointLatitude = in.readDouble();
         endPointLongitude = in.readDouble();
+        alarmId = in.readInt();
         time = in.readLong();
+        notes = in.createTypedArrayList(Note.CREATOR);
     }
 
     public static final Creator<Trip> CREATOR = new Creator<Trip>() {
@@ -165,6 +169,14 @@ public class Trip implements Parcelable {
         this.date = date;
     }
 
+    public int getAlarmId() {
+        return alarmId;
+    }
+
+    public void setAlarmId(int alarmId) {
+        this.alarmId = alarmId;
+    }
+
     public long getTime() {
         return time;
     }
@@ -179,25 +191,6 @@ public class Trip implements Parcelable {
 
     public void setNotes(ArrayList<Note> notes) {
         this.notes = notes;
-    }
-
-    @Override
-    public String toString() {
-        return "Trip{" +
-                "tripId='" + tripId + '\'' +
-                ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                ", status='" + status + '\'' +
-                ", startPoint='" + startPoint + '\'' +
-                ", endPoint='" + endPoint + '\'' +
-                ", startPointLatitude=" + startPointLatitude +
-                ", startPointLongitude=" + startPointLongitude +
-                ", endPointLatitude=" + endPointLatitude +
-                ", endPointLongitude=" + endPointLongitude +
-                ", date=" + date +
-                ", time=" + time +
-                ", notes=" + notes +
-                '}';
     }
 
     @Override
@@ -217,6 +210,8 @@ public class Trip implements Parcelable {
         dest.writeDouble(startPointLongitude);
         dest.writeDouble(endPointLatitude);
         dest.writeDouble(endPointLongitude);
+        dest.writeInt(alarmId);
         dest.writeLong(time);
+        dest.writeTypedList(notes);
     }
 }
