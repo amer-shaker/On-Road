@@ -158,7 +158,7 @@ public class AddTripActivity extends AppCompatActivity {
                     trip.setTripId(tripId);
                     myTripName = tripName.getText().toString();
                     trip.setName(myTripName);
-                    trip.setTime(myDate.getTime());
+                    trip.setTime(String.valueOf(myDate.getTime()));
                     trip.setEndPoint(myEndPoint);
                     trip.setStartPoint(myStartPoint);
                     trip.setEndPointLatitude(myeLat);
