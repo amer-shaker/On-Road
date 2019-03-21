@@ -176,9 +176,12 @@ public class AddTripActivity extends AppCompatActivity {
                     int id = (int) (myDate.getTime() + myDate.getMonth() + myDate.getYear() + myDate.getSeconds());
                     trip.setAlarmId(id);
                     if (isUsed) {
-                        Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(),
-                                myDate.getDate()-Calendar.getInstance().get(Calendar.DAY_OF_YEAR), trip.getAlarmId());
+                        if (trip!=null) {
+                            Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(),
+                                    myDate.getDate() - Calendar.getInstance().get(Calendar.DAY_OF_YEAR), trip.getAlarmId());
+                        }
                     } else {
+                        if(trip!=null)
                         Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(),
                                 myDate.getDate(), id);
 

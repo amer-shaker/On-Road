@@ -27,7 +27,7 @@ public class DilogActivity extends AppCompatActivity {
         btnCancel = findViewById(R.id.btnCancel);
         tvTripName = findViewById(R.id.tripNameInDialog);
         String status = getIntent().getStringExtra(Constants.FIRE_SOUND_STATUS);
-//        tvTripName.setText(trip.getName());
+        tvTripName.setText(trip.getName());
 
         if (status != null) {
             myPlayer = MediaPlayer.create(DilogActivity.this, R.raw.alarm_dialog);

@@ -41,7 +41,7 @@ public class Utility {
         contentIntent = PendingIntent.getActivity(context, _id, notificationIntent, 0);
         builder.setContentIntent(contentIntent);
         builder.setSmallIcon(R.mipmap.ic_launcher);
-//        builder.setContentText(trip.getTripName());
+        builder.setContentText(trip.getName());
         builder.setContentTitle(context.getString(R.string.app_name));
         builder.setAutoCancel(true);
         builder.setOngoing(true);
@@ -55,6 +55,7 @@ public class Utility {
     public static void setupAlarmManager(Context context, Trip trip, long timeInMillis, int id) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, MyReceiver.class);
+        Log.i("trip_name setupAlarm",trip.getName());
         intent.putExtra(Constants.TRIP, trip);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -71,6 +72,8 @@ public class Utility {
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.DATE,day);
+        Log.i("trip_name setAlarmTime",trip.getName());
+
 
         if (calendar.getTimeInMillis() > Calendar.getInstance()
                 .getTimeInMillis()) {
