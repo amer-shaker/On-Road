@@ -169,12 +169,16 @@ public class AddTripActivity extends AppCompatActivity {
                     trip.setType(myRepeat);
                     trip.setStatus(Trip.UPCOMING_TRIP);
 
+
                     int id = (int) (myDate.getTime() + myDate.getMonth() + myDate.getYear() + myDate.getSeconds());
                     trip.setAlarmId(id);
                     if (isUsed) {
-                        Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(), myDate.getMonth(), trip.getAlarmId());
+                        Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(),
+                                myDate.getDate()-Calendar.getInstance().get(Calendar.DAY_OF_YEAR), trip.getAlarmId());
                     } else {
-                        Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(), myDate.getMonth(), id);
+                        Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(),
+                                myDate.getDate(), id);
+
                     }
 
                     mTripsDatabaseReference.child(mFirebaseAuth.getCurrentUser().getUid())
