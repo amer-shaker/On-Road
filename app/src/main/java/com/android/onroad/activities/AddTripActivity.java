@@ -103,9 +103,10 @@ public class AddTripActivity extends AppCompatActivity {
             tripName.setText(editObj.getName());
             autocompleteFragment1.setText(editObj.getStartPoint());
             autocompleteFragment2.setText(editObj.getEndPoint());
-            if (myDate != null)
-                Toast.makeText(this, "my date not null", Toast.LENGTH_SHORT).show();
-            myDate = editObj.getDate();
+            editObj.setDate(new Date(editObj.getTime()));
+
+            Log.e("DDDDDDDDDDDDDDDDDD", editObj.getDate()+ "");
+
             if (myDate != null)
                 Toast.makeText(this, "my date not null", Toast.LENGTH_SHORT).show();
             else
@@ -159,6 +160,7 @@ public class AddTripActivity extends AppCompatActivity {
                     myTripName = tripName.getText().toString();
                     trip.setName(myTripName);
                     trip.setTime(myDate.getTime());
+
                     trip.setEndPoint(myEndPoint);
                     trip.setStartPoint(myStartPoint);
                     trip.setEndPointLatitude(myeLat);
@@ -178,20 +180,29 @@ public class AddTripActivity extends AppCompatActivity {
 
                     }
 
-                    mTripsDatabaseReference.child(mFirebaseAuth.getCurrentUser().getUid())
-                            .child(tripId)
-                            .setValue(trip)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    Toast.makeText(AddTripActivity.this, "Success", Toast.LENGTH_SHORT).show();
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(AddTripActivity.this, "Something, went wrong", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    if(!isUsed){
+
+
+                        mTripsDatabaseReference.child(mFirebaseAuth.getCurrentUser().getUid())
+                                .child(tripId)
+                                .setValue(trip)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        Toast.makeText(AddTripActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(AddTripActivity.this, "Something, went wrong", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+
+                    else{
+
+                        updateTrip(trip);
+                    }
                 }
             }
         });
