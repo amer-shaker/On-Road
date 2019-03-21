@@ -158,7 +158,7 @@ public class AddTripActivity extends AppCompatActivity {
                     trip.setTripId(tripId);
                     myTripName = tripName.getText().toString();
                     trip.setName(myTripName);
-                    trip.setTime(myDate.getTime());
+                    trip.setTime(String.valueOf(myDate.getTime()));
                     trip.setEndPoint(myEndPoint);
                     trip.setStartPoint(myStartPoint);
                     trip.setEndPointLatitude(myeLat);
@@ -169,12 +169,16 @@ public class AddTripActivity extends AppCompatActivity {
                     trip.setType(myRepeat);
                     trip.setStatus(Trip.UPCOMING_TRIP);
 
+
                     int id = (int) (myDate.getTime() + myDate.getMonth() + myDate.getYear() + myDate.getSeconds());
                     trip.setAlarmId(id);
                     if (isUsed) {
-                        Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(), myDate.getMonth(), trip.getAlarmId());
+                        Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(),
+                                myDate.getDate()-Calendar.getInstance().get(Calendar.DAY_OF_YEAR), trip.getAlarmId());
                     } else {
-                        Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(), myDate.getMonth(), id);
+                        Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(),
+                                myDate.getDate(), id);
+
                     }
 
                     mTripsDatabaseReference.child(mFirebaseAuth.getCurrentUser().getUid())
@@ -284,7 +288,7 @@ public class AddTripActivity extends AppCompatActivity {
                                 }
                             }
                         }, mYear, mMonth, mDay);
-                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+//                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
                 datePickerDialog.show();
             }
         });

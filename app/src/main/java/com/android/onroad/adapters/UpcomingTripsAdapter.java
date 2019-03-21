@@ -17,6 +17,7 @@ import com.android.onroad.activities.TripDetailsActivity;
 import com.android.onroad.beans.Trip;
 import com.android.onroad.fragments.UpcomingTripsFragment;
 import com.android.onroad.utils.Constants;
+import com.android.onroad.utils.Utility;
 
 import java.util.List;
 
@@ -100,6 +101,7 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
         @OnClick(R.id.delete_trip_image_view)
         void deleteTrip(View view) {
             upcomingTripsFragment.onDeleteTrip(trips.get(getAdapterPosition()));
+            Utility.cancelAlarm(mContext,trips.get(getAdapterPosition()).getAlarmId());
             trips.remove(trips.get(getAdapterPosition()));
             updateList(trips);
         }

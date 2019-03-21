@@ -70,7 +70,8 @@ public class Utility {
         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, 0);
-//        calendar.set(Calendar.DAY_OF_YEAR,day);
+        calendar.set(Calendar.DATE,day);
+
         if (calendar.getTimeInMillis() > Calendar.getInstance()
                 .getTimeInMillis()) {
             Utility.setupAlarmManager(context, trip,
@@ -80,7 +81,7 @@ public class Utility {
             Utility.setupAlarmManager(context, trip,
                     calendar.getTimeInMillis(), id);
 
-            Toast.makeText(context, "calendar.getTimeInMillis :  " + calendar.getTimeInMillis(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "calendar.getTimeInMillis :  " + calendar.getTimeInMillis()/(60*1000), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -103,5 +104,13 @@ public class Utility {
                 Uri.parse("http://maps.google.com/maps/dir?saddr=" + trip.getStartPoint() + "&daddr=" + trip.getEndPoint()));
         intent.setPackage("com.google.android.apps.maps");
         context.startActivity(intent);
+    }
+
+    public static void cancelAlarm(Context context, int alarmId) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent myIntent = new Intent(context, MyReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                context, alarmId, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.cancel(pendingIntent);
     }
 }

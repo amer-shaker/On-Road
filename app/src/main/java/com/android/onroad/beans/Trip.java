@@ -21,13 +21,13 @@ public class Trip implements Parcelable {
     private String status;
     private String startPoint;
     private String endPoint;
+    private String time;
     private double startPointLatitude;
     private double startPointLongitude;
     private double endPointLatitude;
     private double endPointLongitude;
     private Date date;
     private int alarmId;
-    private long time;
     private ArrayList<Note> notes;
 
     public Trip() {
@@ -35,21 +35,21 @@ public class Trip implements Parcelable {
     }
 
     public Trip(String tripId, String name, String type, String status, String startPoint, String endPoint,
-                double startPointLatitude, double startPointLongitude, double endPointLatitude, double endPointLongitude,
-                Date date, int alarmId, long time, ArrayList<Note> notes) {
+                double startPointLatitude, double startPointLongitude, double endPointLatitude, String time,
+                double endPointLongitude, Date date, int alarmId, ArrayList<Note> notes) {
         this.tripId = tripId;
         this.name = name;
         this.type = type;
         this.status = status;
         this.startPoint = startPoint;
         this.endPoint = endPoint;
+        this.time = time;
         this.startPointLatitude = startPointLatitude;
         this.startPointLongitude = startPointLongitude;
         this.endPointLatitude = endPointLatitude;
         this.endPointLongitude = endPointLongitude;
         this.date = date;
         this.alarmId = alarmId;
-        this.time = time;
         this.notes = notes;
     }
 
@@ -60,12 +60,12 @@ public class Trip implements Parcelable {
         status = in.readString();
         startPoint = in.readString();
         endPoint = in.readString();
+        time = in.readString();
         startPointLatitude = in.readDouble();
         startPointLongitude = in.readDouble();
         endPointLatitude = in.readDouble();
         endPointLongitude = in.readDouble();
         alarmId = in.readInt();
-        time = in.readLong();
         notes = in.createTypedArrayList(Note.CREATOR);
     }
 
@@ -129,6 +129,14 @@ public class Trip implements Parcelable {
         this.endPoint = endPoint;
     }
 
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
     public double getStartPointLatitude() {
         return startPointLatitude;
     }
@@ -177,14 +185,6 @@ public class Trip implements Parcelable {
         this.alarmId = alarmId;
     }
 
-    public long getTime() {
-        return time;
-    }
-
-    public void setTime(long time) {
-        this.time = time;
-    }
-
     public ArrayList<Note> getNotes() {
         return notes;
     }
@@ -206,12 +206,12 @@ public class Trip implements Parcelable {
         dest.writeString(status);
         dest.writeString(startPoint);
         dest.writeString(endPoint);
+        dest.writeString(time);
         dest.writeDouble(startPointLatitude);
         dest.writeDouble(startPointLongitude);
         dest.writeDouble(endPointLatitude);
         dest.writeDouble(endPointLongitude);
         dest.writeInt(alarmId);
-        dest.writeLong(time);
         dest.writeTypedList(notes);
     }
 }
