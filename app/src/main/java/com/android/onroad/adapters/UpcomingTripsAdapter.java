@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.onroad.R;
 import com.android.onroad.activities.AddTripActivity;
@@ -126,6 +127,7 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
         public void onClick(View v) {
             Intent intent = new Intent(mContext, TripDetailsActivity.class);
             intent.putExtra(Constants.TRIP_EXTRA, trips.get(getAdapterPosition()));
+            Toast.makeText(mContext, ""+trips.get(getAdapterPosition()).getName(), Toast.LENGTH_SHORT).show();
             mContext.startActivity(intent);
         }
     }
