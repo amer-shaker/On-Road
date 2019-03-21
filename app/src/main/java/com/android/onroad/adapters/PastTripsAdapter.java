@@ -53,16 +53,14 @@ public class PastTripsAdapter extends RecyclerView.Adapter<PastTripsAdapter.View
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(now);
 
-        holder.tripDateTextView.setText(formatter.format(calendar.getTime()));
-        holder.tripStatusTextView.setText(trip.getStatus());
-    }
+        holder.tripStartPointTextView.setText(trip.getStartPoint());
+        holder.tripEndPointTextView.setText(trip.getEndPoint());
+6    }
 
     @Override
     public int getItemCount() {
         Log.e("trips getItemCount", trips.size() + "");
-
         return trips.size();
-
     }
 
     public void updateList(List<Trip> trips) {
@@ -78,11 +76,13 @@ public class PastTripsAdapter extends RecyclerView.Adapter<PastTripsAdapter.View
         @BindView(R.id.trip_name_text_view)
         TextView tripNameTextView;
 
-        @BindView(R.id.trip_date_text_view)
-        TextView tripDateTextView;
+        @BindView(R.id.trip_start_point_text_view)
+        TextView tripStartPointTextView;
 
-        @BindView(R.id.trip_status_text_view)
-        TextView tripStatusTextView;
+        @BindView(R.id.trip_end_point_text_view)
+        TextView tripEndPointTextView;
+
+
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -92,9 +92,9 @@ public class PastTripsAdapter extends RecyclerView.Adapter<PastTripsAdapter.View
 
         @Override
         public void onClick(View v) {
-            Intent intentdetails = new Intent(context, TripDetailsActivity.class);
-//          //  intentdetails.putExtra("trip",trips.get(getAdapterPosition()));
-            context.startActivity(intentdetails);
+            Intent intent = new Intent(context, TripDetailsActivity.class);
+            intent.putExtra("trip", trips.get(getAdapterPosition()));
+            context.startActivity(intent);
         }
     }
 }

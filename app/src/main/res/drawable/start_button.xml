@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:state_pressed="true"
-        android:drawable="@drawable/start_button_pressed"
-        /> <!-- pressed -->
-    <item android:state_focused="true"
-        android:drawable="@drawable/start_button_unpressed" >
+    <item android:drawable="@drawable/start_button_pressed" android:state_pressed="true" /> <!-- pressed -->
+    <item android:drawable="@drawable/start_button_unpressed" android:state_focused="true">
 
     </item><!-- focused -->
-    <item android:state_hovered="true"
-        android:drawable="@drawable/start_button_unpressed" /> <!-- hovered -->
-    <item android:drawable="@drawable/start_button_pressed"
-        >
+    <item android:drawable="@drawable/start_button_unpressed" android:state_hovered="true" /> <!-- hovered -->
+    <item android:drawable="@drawable/start_button_pressed">
 
     </item><!-- default -->
 

@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Initialize Firebase Database
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mFirebaseDatabase.setPersistenceEnabled(true);
+       // mFirebaseDatabase.setPersistenceEnabled(true);
 
         setupFirebaseAuth();
 
@@ -287,14 +287,14 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d(TAG, "onAuthStateChanged(): Signed out");
                     // user is signed out
                     onSignedOutCleanUp();
-                    startActivityForResult(
-                            AuthUI.getInstance()
-                                    .createSignInIntentBuilder()
-                                    .setIsSmartLockEnabled(false)
-                                    .setAvailableProviders(Arrays.asList(
-                                            new AuthUI.IdpConfig.GoogleBuilder().build(),
-                                            new AuthUI.IdpConfig.EmailBuilder().build()))
-                                    .build(), RC_SIGN_IN);
+//                    startActivityForResult(
+//                            AuthUI.getInstance()
+//                                    .createSignInIntentBuilder()
+//                                    .setIsSmartLockEnabled(false)
+//                                    .setAvailableProviders(Arrays.asList(
+//                                            new AuthUI.IdpConfig.GoogleBuilder().build(),
+//                                            new AuthUI.IdpConfig.EmailBuilder().build()))
+//                                    .build(), RC_SIGN_IN);
                 }
             }
         };

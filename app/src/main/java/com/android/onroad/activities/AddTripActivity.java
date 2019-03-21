@@ -42,7 +42,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 
@@ -78,13 +77,11 @@ public class AddTripActivity extends AppCompatActivity {
     private ChildEventListener mChildEventListener;
     PlaceAutocompleteFragment autocompleteFragment1, autocompleteFragment2;
 
-    private List<Trip> trips = new ArrayList<>();
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_trip);
+
         btnDatePicker = findViewById(R.id.btnAddDate);
         btnTimePicker = findViewById(R.id.btnAddTime);
         txtDate = findViewById(R.id.in_date_add);
@@ -127,10 +124,7 @@ public class AddTripActivity extends AppCompatActivity {
             if (myDate != null) {
                 txtDate.setText(myDate.getDay() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getYear() + " ");
                 txtTime.setText(myDate.getHours() + ":" + myDate.getMinutes() + " ");
-
             }
-
-
         }
 
         // Initialize Firebase Auth
@@ -148,9 +142,7 @@ public class AddTripActivity extends AppCompatActivity {
                 }
 
                 if (myStartPoint.equals(""))
-                    Toast.makeText(AddTripActivity.this, "enter Start Point", Toast.LENGTH_SHORT).
-
-                            show();
+                    Toast.makeText(AddTripActivity.this, "enter Start Point", Toast.LENGTH_SHORT).show();
 
                 if (myEndPoint.equals(""))
                     Toast.makeText(AddTripActivity.this, "enter end Point", Toast.LENGTH_SHORT).show();
@@ -185,7 +177,7 @@ public class AddTripActivity extends AppCompatActivity {
                         Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(), myDate.getMonth(), id);
 
                     }
-                    //  myDate.getTime()+myDate.getMonth()+myDate.getYear()+myDate.getSeconds();
+
                     mTripsDatabaseReference.child(mFirebaseAuth.getCurrentUser().getUid())
                             .child(tripId)
                             .setValue(trip)
@@ -200,12 +192,8 @@ public class AddTripActivity extends AppCompatActivity {
                             Toast.makeText(AddTripActivity.this, "Something, went wrong", Toast.LENGTH_SHORT).show();
                         }
                     });
-
                 }
-
             }
-
-
         });
 
         spnStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -269,8 +257,6 @@ public class AddTripActivity extends AppCompatActivity {
 
                 DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(),
                         new DatePickerDialog.OnDateSetListener() {
-
-                            //g` @RequiresApi(api = Build.VERSION_CODES.N)
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                                 String mySDate = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
@@ -314,7 +300,6 @@ public class AddTripActivity extends AppCompatActivity {
             autocompleteFragment1.setOnPlaceSelectedListener(new PlaceSelectionListener() {
                 @Override
                 public void onPlaceSelected(Place place) {
-                    // TODO: Get info about the selected place.
                     Log.i(TAG, "Place: " + place.getName());
                     myStartPoint = place.getName().toString();
                     LatLng myLatLong = place.getLatLng();
@@ -326,7 +311,6 @@ public class AddTripActivity extends AppCompatActivity {
 
                 @Override
                 public void onError(com.google.android.gms.common.api.Status status) {
-                    // TODO: Handle the error.
                     Log.i(TAG, "An error occurred: " + status);
                 }
             });
@@ -338,7 +322,6 @@ public class AddTripActivity extends AppCompatActivity {
             autocompleteFragment2.setOnPlaceSelectedListener(new PlaceSelectionListener() {
                 @Override
                 public void onPlaceSelected(Place place) {
-                    // TODO: Get info about the selected place./
                     Log.i(TAG, "Place: " + place.getName());
                     String placeName = place.getName().toString();
                     Toast.makeText(AddTripActivity.this, "the place is " + placeName, Toast.LENGTH_SHORT).show();

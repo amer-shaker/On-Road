@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.onroad.R;
@@ -69,8 +70,8 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(now);
 
-            holder.tripDateTextView.setText(formatter.format(calendar.getTime()));
-            holder.tripStatusTextView.setText(trip.getStatus());
+            holder.tripStartPointTextView.setText(trip.getStartPoint());
+            holder.tripEndPointTextView.setText(trip.getEndPoint());
 
 //            Glide
 //                    .with(mContext)
@@ -94,17 +95,18 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
         @BindView(R.id.trip_name_text_view)
         TextView tripNameTextView;
 
-        @BindView(R.id.trip_date_text_view)
-        TextView tripDateTextView;
+        @BindView(R.id.trip_start_point_text_view)
+        TextView tripStartPointTextView;
 
-        @BindView(R.id.trip_status_text_view)
-        TextView tripStatusTextView;
+        @BindView(R.id.trip_end_point_text_view)
+        TextView tripEndPointTextView;
+
 
         @BindView(R.id.edit_image_view)
         ImageView editTripImageView;
 
         @BindView(R.id.delete_trip_button)
-        ImageButton deleteTripImageButton;
+        ImageView deleteTripButton;
 
         ViewHolder(View itemView) {
             super(itemView);
