@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -26,20 +25,20 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class PastTripsFragment extends Fragment {
 
+    private View view;
     private Unbinder unbinder;
     List<Trip> trips = new ArrayList<>();
 
-    PastTripsAdapter adapter;
 
-    @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
 
+    private RecyclerView recyclerView;
+    private PastTripsAdapter pastTripsAdapter;
+    private RecyclerView.LayoutManager layoutManager;
     private static final String TAG = "PastTripsFragment";
 
     // Firebase instance variables
@@ -51,8 +50,8 @@ public class PastTripsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_past, container, false);
-        unbinder = ButterKnife.bind(this, view);
+        view = inflater.inflate(R.layout.fragment_past, container, false);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
         // Initialize Firebase Auth
         mFirebaseAuth = FirebaseAuth.getInstance();
@@ -69,10 +68,13 @@ public class PastTripsFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        adapter = new PastTripsAdapter(getActivity());
+        // use a linear layout manager
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+
+        // specify an adapter (see also next example)
+        pastTripsAdapter = new PastTripsAdapter(getActivity(), trips);
+        recyclerView.setAdapter(pastTripsAdapter);
     }
 
     @Override
@@ -96,13 +98,11 @@ public class PastTripsFragment extends Fragment {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                     Log.i(TAG, "onChildAdded()");
-
                     Trip trip = dataSnapshot.getValue(Trip.class);
                     if (trip != null) {
                         if (trip.getStatus().equals(Trip.PAST_TRIP)) {
                             trips.add(trip);
-                            adapter.updateList(trips);
-                            recyclerView.setAdapter(adapter);
+                            pastTripsAdapter.updateList(trips);
                         }
                     }
                 }

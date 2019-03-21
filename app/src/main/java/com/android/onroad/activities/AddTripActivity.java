@@ -175,7 +175,6 @@ public class AddTripActivity extends AppCompatActivity {
                         Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(), myDate.getMonth(), trip.getAlarmId());
                     } else {
                         Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(), myDate.getMonth(), id);
-
                     }
 
                     mTripsDatabaseReference.child(mFirebaseAuth.getCurrentUser().getUid())
@@ -242,7 +241,6 @@ public class AddTripActivity extends AppCompatActivity {
 
                     }
                 }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Select Time");
                 mTimePicker.show();
             }
         });
@@ -300,6 +298,7 @@ public class AddTripActivity extends AppCompatActivity {
             autocompleteFragment1.setOnPlaceSelectedListener(new PlaceSelectionListener() {
                 @Override
                 public void onPlaceSelected(Place place) {
+
                     Log.i(TAG, "Place: " + place.getName());
                     myStartPoint = place.getName().toString();
                     LatLng myLatLong = place.getLatLng();
