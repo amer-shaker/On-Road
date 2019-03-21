@@ -104,4 +104,9 @@ public class Utility {
         intent.setPackage("com.google.android.apps.maps");
         context.startActivity(intent);
     }
+
+//    public static void startActivity(Context mContext, Activity mActivity) {
+//        Intent intent = new Intent(mContext, mActivity.);
+//        startActivity(intent);
+//    }
 }

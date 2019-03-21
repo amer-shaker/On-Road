@@ -70,8 +70,10 @@
     <string name="Edit_Profile">Edit Profile</string>
     <string name="edit_photo">Edit Photo</string>
 
+    <!-- Strings related to fragments -->
     <string name="upcoming_trips_fragment">Upcoming</string>
     <string name="past_trips_fragment">Past</string>
+    <string name="canceled_trips_fragments">Canceled</string>
 
     <!--Korany-->
     <string name="Trip_prompt">Choose Status Of Trip</string>
@@ -92,4 +94,7 @@
     <string name="log_out">Log Out</string>
     <string name="sync">Sync</string>
     <string name="text_dialog">Let\'s Start The Trip</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

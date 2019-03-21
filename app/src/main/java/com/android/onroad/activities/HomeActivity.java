@@ -3,6 +3,7 @@ package com.android.onroad.activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -22,6 +23,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.android.onroad.R;
+import com.android.onroad.fragments.CanceledFragment;
 import com.android.onroad.fragments.PastTripsFragment;
 import com.android.onroad.fragments.UpcomingTripsFragment;
 import com.google.firebase.auth.FirebaseAuth;
@@ -114,7 +116,7 @@ public class HomeActivity extends AppCompatActivity
         switch (id) {
             case R.id.sign_out_menu:
                 // sign out
-                mFirebaseAuth.getInstance().signOut();
+                mFirebaseAuth.signOut();
                 redirectLoginScreen();
                 return true;
             case R.id.action_settings:
@@ -125,11 +127,13 @@ public class HomeActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_account) {
+            startActivity(new Intent(this, EditAccount.class));
+        } else if (id == R.id.nav_camera) {
             // Handle the camera action
         }
 
@@ -142,6 +146,7 @@ public class HomeActivity extends AppCompatActivity
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new UpcomingTripsFragment(), getString(R.string.upcoming_trips_fragment));
         adapter.addFragment(new PastTripsFragment(), getString(R.string.past_trips_fragment));
+        adapter.addFragment(new CanceledFragment(), getString(R.string.canceled_trips_fragments));
         viewPager.setAdapter(adapter);
     }
 
@@ -151,7 +156,7 @@ public class HomeActivity extends AppCompatActivity
         finish();
     }
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
+    private class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 

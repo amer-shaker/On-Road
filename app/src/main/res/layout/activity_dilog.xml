@@ -4,19 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent">
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:background="@color/colorWhite"
-        >
-
+        android:background="@color/colorWhite">
 
         <ImageView
             android:id="@+id/imgTrip"
             android:layout_width="100dp"
             android:layout_height="100dp"
-
             android:layout_alignParentTop="true"
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
@@ -86,7 +84,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-
                 android:background="@color/colorWhite"
                 android:text="Cancel"
                 android:textColor="@color/colorPrimary" />

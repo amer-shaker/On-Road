@@ -25,15 +25,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class PastTripsFragment extends Fragment {
 
     private View view;
-    private Unbinder unbinder;
     List<Trip> trips = new ArrayList<>();
-
 
 
     private RecyclerView recyclerView;
@@ -50,7 +47,7 @@ public class PastTripsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_past, container, false);
+        view = inflater.inflate(R.layout.fragment_trip, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
         // Initialize Firebase Auth

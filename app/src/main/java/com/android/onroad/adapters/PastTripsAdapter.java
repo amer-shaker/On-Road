@@ -20,14 +20,14 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PastTripsAdapter extends RecyclerView.Adapter<PastTripsAdapter.ViewHolder> {
+public class PastTripsAdapter extends RecyclerView.Adapter<PastTripsAdapter.TripsViewHolder> {
 
     private Context mContext;
     private List<Trip> trips;
 
     public PastTripsAdapter(Context mContext, List<Trip> trips) {
-        this.trips = trips;
         this.mContext = mContext;
+        this.trips = trips;
     }
 
     public void updateList(List<Trip> trips) {
@@ -37,13 +37,13 @@ public class PastTripsAdapter extends RecyclerView.Adapter<PastTripsAdapter.View
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public TripsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_trip, parent, false);
-        return new ViewHolder(view);
+        return new TripsViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TripsViewHolder holder, int position) {
         final Trip trip = trips.get(position);
 
         if (trip != null) {
@@ -59,7 +59,7 @@ public class PastTripsAdapter extends RecyclerView.Adapter<PastTripsAdapter.View
         return trips.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class TripsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.trip_controls_linear_layout)
         LinearLayout tripControlsLinearLayout;
@@ -74,7 +74,7 @@ public class PastTripsAdapter extends RecyclerView.Adapter<PastTripsAdapter.View
         TextView tripEndPointTextView;
 
 
-        ViewHolder(View itemView) {
+        private TripsViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
