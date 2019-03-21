@@ -19,7 +19,6 @@ import com.android.onroad.reciever.MyReceiver;
 import java.util.Calendar;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
-import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 public class Utility {
 
