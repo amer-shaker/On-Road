@@ -18,6 +18,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/trip_image_view"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/trip_controls_linear_layout"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_baseline_trip" />
+
         <LinearLayout
             android:id="@+id/trip_controls_linear_layout"
             android:layout_width="wrap_content"
@@ -33,7 +41,7 @@
                 android:src="@drawable/ic_baseline_edit" />
 
             <ImageView
-                android:id="@+id/delete_trip_button"
+                android:id="@+id/delete_trip_image_view"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginStart="8dp"
@@ -42,14 +50,6 @@
                 android:src="@drawable/ic_baseline_delete" />
 
         </LinearLayout>
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/trip_image_view"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_below="@id/trip_controls_linear_layout"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_baseline_trip" />
 
         <TextView
             android:id="@+id/trip_name_text_view"
@@ -86,6 +86,7 @@
                 android:id="@+id/trip_start_point_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:textColor="#232F34"
                 android:textSize="14sp"
@@ -93,19 +94,34 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/trip_end_point_text_view"
+        <LinearLayout
+            android:id="@+id/trip_end_point_linear_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/trip_start_point_text_view"
+            android:layout_below="@id/trip_start_point_linear_layout"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@id/trip_image_view"
-            android:layout_toRightOf="@id/trip_image_view"
-            android:textColor="#232F34"
-            android:textSize="14sp"
-            tools:text="Trip End Point" />
+            android:layout_toRightOf="@id/trip_image_view">
+
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_round_lens" />
+
+            <TextView
+                android:id="@+id/trip_end_point_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:textColor="#232F34"
+                android:textSize="14sp"
+                tools:text="Trip End Point" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,16 +14,14 @@ import com.android.onroad.R;
 import com.android.onroad.activities.TripDetailsActivity;
 import com.android.onroad.beans.Trip;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class PastTripsAdapter extends RecyclerView.Adapter<PastTripsAdapter.ViewHolder> {
+
     private Context context;
     private List<Trip> trips;
 
@@ -42,24 +39,18 @@ public class PastTripsAdapter extends RecyclerView.Adapter<PastTripsAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Trip trip = trips.get(position);
-        Log.e("trips size onBindViewH", trips.size() + "");
+        final Trip trip = trips.get(position);
 
-        holder.tripControlsLinearLayout.setVisibility(View.GONE);
-        holder.tripNameTextView.setText(trip.getName());
-        DateFormat formatter = new SimpleDateFormat("dd / MM / yy");
-
-        long now = trip.getTime();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(now);
-
-        holder.tripStartPointTextView.setText(trip.getStartPoint());
-        holder.tripEndPointTextView.setText(trip.getEndPoint());
-6    }
+        if (trip != null) {
+            holder.tripControlsLinearLayout.setVisibility(View.GONE);
+            holder.tripNameTextView.setText(trip.getName());
+            holder.tripStartPointTextView.setText(trip.getStartPoint());
+            holder.tripEndPointTextView.setText(trip.getEndPoint());
+        }
+    }
 
     @Override
     public int getItemCount() {
-        Log.e("trips getItemCount", trips.size() + "");
         return trips.size();
     }
 
@@ -81,7 +72,6 @@ public class PastTripsAdapter extends RecyclerView.Adapter<PastTripsAdapter.View
 
         @BindView(R.id.trip_end_point_text_view)
         TextView tripEndPointTextView;
-
 
 
         ViewHolder(View itemView) {

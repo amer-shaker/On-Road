@@ -20,7 +20,9 @@
             android:name=".activities.DilogActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
 
-        <activity android:name=".activities.TripDetailsActivity" />
+        <activity
+            android:name=".activities.TripDetailsActivity"
+            android:parentActivityName=".activities.HomeActivity" />
 
         <activity
             android:name=".activities.AddTripActivity"

@@ -37,7 +37,7 @@ public class TripDetailsActivity extends AppCompatActivity {
     TextView editTripDetailsBtn;
     @BindView(R.id.start_btn_details)
     TextView startTripDetailsBtn;
-          @BindView(R.id.noteList)
+    @BindView(R.id.noteList)
     ListView noteList;
 
     @Override
@@ -55,41 +55,34 @@ public class TripDetailsActivity extends AppCompatActivity {
             type.setText(trip.getStatus());
 
 
-            ArrayList<Note> arrayOfNotes=getIntent().getParcelableArrayListExtra("notes");
-           // Toast.makeText(this, arrayOfNotes.get(0).getNote()+" size of notes ", Toast.LENGTH_SHORT).show();
+            ArrayList<Note> arrayOfNotes = getIntent().getParcelableArrayListExtra("notes");
+            // Toast.makeText(this, arrayOfNotes.get(0).getNote()+" size of notes ", Toast.LENGTH_SHORT).show();
 
-               ArrayList<String> myNotes=new ArrayList<>();
+            ArrayList<String> myNotes = new ArrayList<>();
 
-////
-         for(int i=0;i<arrayOfNotes.size();i++)
-          {
-             myNotes.add(arrayOfNotes.get(i).getNote());
+//            for (int i = 0; i < arrayOfNotes.size(); i++) {
+//                myNotes.add(arrayOfNotes.get(i).getNote());
+//            }
 
-       }
-
-
-            ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_list_item_1,myNotes);
+            ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, myNotes);
             noteList.setAdapter(adapter);
 
             startTripDetailsBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    Utility.launchMap(TripDetailsActivity.this,trip);
+                    Utility.launchMap(TripDetailsActivity.this, trip);
                 }
             });
+
             editTripDetailsBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent editIntent=new Intent(TripDetailsActivity.this,AddTripActivity.class);
-                    editIntent.putExtra("trip",trip);
+                    Intent editIntent = new Intent(TripDetailsActivity.this, AddTripActivity.class);
+                    editIntent.putExtra("trip", trip);
                     startActivity(editIntent);
-
                 }
             });
-
-
-
         }
     }
 }

@@ -7,25 +7,20 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.onroad.R;
 import com.android.onroad.activities.AddTripActivity;
+import com.android.onroad.activities.TripDetailsActivity;
 import com.android.onroad.beans.Trip;
 import com.android.onroad.fragments.UpcomingTripsFragment;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
 
 public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdapter.ViewHolder> {
 
@@ -57,19 +52,6 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
 
         if (trip != null) {
             holder.tripNameTextView.setText(trip.getName());
-
-            // Create a DateFormatter object for displaying date information.
-            DateFormat formatter = new SimpleDateFormat("dd / MM / yy");
-
-            // Get date and time information in milliseconds
-            long now = trip.getTime();
-
-            // Create a calendar object that will convert the date and time value
-            // in milliseconds to date. We use the setTimeInMillis() method of the
-            // Calendar object.
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(now);
-
             holder.tripStartPointTextView.setText(trip.getStartPoint());
             holder.tripEndPointTextView.setText(trip.getEndPoint());
 
@@ -101,12 +83,11 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
         @BindView(R.id.trip_end_point_text_view)
         TextView tripEndPointTextView;
 
-
         @BindView(R.id.edit_image_view)
         ImageView editTripImageView;
 
-        @BindView(R.id.delete_trip_button)
-        ImageView deleteTripButton;
+        @BindView(R.id.delete_trip_image_view)
+        ImageView deleteTripImageView;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -114,7 +95,7 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
             itemView.setOnClickListener(this);
         }
 
-        @OnClick(R.id.delete_trip_button)
+        @OnClick(R.id.delete_trip_image_view)
         void deleteTrip(View view) {
             upcomingTripsFragment.onDeleteTrip(trips.get(getAdapterPosition()));
             trips.remove(trips.get(getAdapterPosition()));
@@ -140,13 +121,9 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
 
         @Override
         public void onClick(View v) {
-//            Intent intentdetails = new Intent(context, DetailsTripActivity.class);
-//            Trip trip = trips.get(getAdapterPosition());
-//            intentdetails.putExtra("trip", trips.get(getAdapterPosition()));
-//            Log.i("index", getAdapterPosition() + "");
-//            Toast.makeText(context, trip.getName(), Toast.LENGTH_SHORT).show();
-//            Toast.makeText(context, trips.get(getAdapterPosition()).getStartPoint(), Toast.LENGTH_SHORT).show();
-//            context.startActivity(intentdetails);
+            Intent intent = new Intent(mContext, TripDetailsActivity.class);
+            intent.putExtra("trip", trips.get(getAdapterPosition()));
+            mContext.startActivity(intent);
         }
     }
 }
