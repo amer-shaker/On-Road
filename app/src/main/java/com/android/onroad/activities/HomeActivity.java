@@ -24,7 +24,6 @@ import android.widget.TextView;
 import com.android.onroad.R;
 import com.android.onroad.fragments.PastTripsFragment;
 import com.android.onroad.fragments.UpcomingTripsFragment;
-import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -83,7 +82,7 @@ public class HomeActivity extends AppCompatActivity
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         setupViewPager(viewPager);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setSelectedTabIndicatorColor(Color.WHITE);
         tabLayout.setupWithViewPager(viewPager);
     }
@@ -115,7 +114,7 @@ public class HomeActivity extends AppCompatActivity
         switch (id) {
             case R.id.sign_out_menu:
                 // sign out
-                AuthUI.getInstance().signOut(this);
+                mFirebaseAuth.getInstance().signOut();
                 redirectLoginScreen();
                 return true;
             case R.id.action_settings:

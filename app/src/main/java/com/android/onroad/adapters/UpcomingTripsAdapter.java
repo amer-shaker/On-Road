@@ -15,6 +15,7 @@ import com.android.onroad.activities.AddTripActivity;
 import com.android.onroad.activities.TripDetailsActivity;
 import com.android.onroad.beans.Trip;
 import com.android.onroad.fragments.UpcomingTripsFragment;
+import com.android.onroad.utils.Constants;
 
 import java.util.List;
 
@@ -25,8 +26,8 @@ import butterknife.OnClick;
 public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdapter.ViewHolder> {
 
     private Context mContext;
-    private UpcomingTripsFragment upcomingTripsFragment;
     private List<Trip> trips;
+    private UpcomingTripsFragment upcomingTripsFragment;
 
     public UpcomingTripsAdapter(Context mContext, List<Trip> trips, UpcomingTripsFragment upcomingTripsFragment) {
         this.mContext = mContext;
@@ -122,7 +123,7 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(mContext, TripDetailsActivity.class);
-            intent.putExtra("trip", trips.get(getAdapterPosition()));
+            intent.putExtra(Constants.TRIP_EXTRA, trips.get(getAdapterPosition()));
             mContext.startActivity(intent);
         }
     }

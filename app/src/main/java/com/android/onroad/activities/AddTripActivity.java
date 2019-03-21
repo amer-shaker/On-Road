@@ -23,6 +23,7 @@ import com.android.onroad.beans.Trip;
 import com.android.onroad.utils.Constants;
 import com.android.onroad.utils.Utility;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
@@ -49,10 +50,11 @@ public class AddTripActivity extends AppCompatActivity {
 
     private static final String TAG = "AddTripActivity";
 
+
     private Button btnTimePicker, btnDatePicker, addTripButton;
     private TextView txtDate, txtTime;
     private Spinner spnRepeat, spnStatus;
-
+    PlaceAutocompleteFragment autocompleteFragment1,autocompleteFragment2;
     private EditText tripName, myNote;
     private Date date;
     private Date myDateCheck;
@@ -69,13 +71,14 @@ public class AddTripActivity extends AppCompatActivity {
 
 
     private String myTripName;
+    AutocompleteFilter autocompleteFilter;
 
+    // Firebase instance variables
     private FirebaseAuth mFirebaseAuth;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mTripsDatabaseReference;
 
-    private ChildEventListener mChildEventListener;
-    PlaceAutocompleteFragment autocompleteFragment1, autocompleteFragment2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,8 +95,7 @@ public class AddTripActivity extends AppCompatActivity {
         spnStatus = findViewById(R.id.spnStatus);
         myNote = findViewById(R.id.txtAddNote);
         myDate = new Date();
-        autocompleteFragment1 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.txtStartPoint);
-        autocompleteFragment2 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.txtEndPoint);
+
 
         editObj = getIntent().getParcelableExtra(Constants.TRIP);
         if (editObj != null) {
@@ -103,7 +105,7 @@ public class AddTripActivity extends AppCompatActivity {
             tripName.setText(editObj.getName());
             autocompleteFragment1.setText(editObj.getStartPoint());
             autocompleteFragment2.setText(editObj.getEndPoint());
-            editObj.setDate(new Date(editObj.getTime()));
+            editObj.setDate(new Date(Long.parseLong(editObj.getTime())));
 
             Log.e("DDDDDDDDDDDDDDDDDD", editObj.getDate()+ "");
 
@@ -159,8 +161,7 @@ public class AddTripActivity extends AppCompatActivity {
                     trip.setTripId(tripId);
                     myTripName = tripName.getText().toString();
                     trip.setName(myTripName);
-                    trip.setTime(myDate.getTime());
-
+                    trip.setTime(String.valueOf(myDate.getTime()));
                     trip.setEndPoint(myEndPoint);
                     trip.setStartPoint(myStartPoint);
                     trip.setEndPointLatitude(myeLat);
@@ -177,7 +178,6 @@ public class AddTripActivity extends AppCompatActivity {
                         Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(), myDate.getMonth(), trip.getAlarmId());
                     } else {
                         Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(), myDate.getMonth(), id);
-
                     }
 
                     if(!isUsed){
@@ -253,7 +253,6 @@ public class AddTripActivity extends AppCompatActivity {
 
                     }
                 }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Select Time");
                 mTimePicker.show();
             }
         });
@@ -307,10 +306,24 @@ public class AddTripActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         autocompleteFragment1 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.txtStartPoint);
+        autocompleteFragment2 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.txtEndPoint);
+        autocompleteFilter = new AutocompleteFilter.Builder()
+                .setTypeFilter(Place.TYPE_COUNTRY)
+                .setCountry("EG")
+                .build();
+
+        autocompleteFragment1.setFilter(autocompleteFilter);
+
+
+
         if (autocompleteFragment1 != null)
+
             autocompleteFragment1.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+
+
                 @Override
                 public void onPlaceSelected(Place place) {
+                    // TODO: Get info about the selected place.
                     Log.i(TAG, "Place: " + place.getName());
                     myStartPoint = place.getName().toString();
                     LatLng myLatLong = place.getLatLng();
@@ -322,17 +335,21 @@ public class AddTripActivity extends AppCompatActivity {
 
                 @Override
                 public void onError(com.google.android.gms.common.api.Status status) {
+                    // TODO: Handle the error.
                     Log.i(TAG, "An error occurred: " + status);
                 }
             });
         else Toast.makeText(this, "Problem with loading page", Toast.LENGTH_LONG).show();
 
 
-        autocompleteFragment2 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.txtEndPoint);
+
+
+        autocompleteFragment2.setFilter(autocompleteFilter);
         if (autocompleteFragment2 != null)
             autocompleteFragment2.setOnPlaceSelectedListener(new PlaceSelectionListener() {
                 @Override
                 public void onPlaceSelected(Place place) {
+                    // TODO: Get info about the selected place./
                     Log.i(TAG, "Place: " + place.getName());
                     String placeName = place.getName().toString();
                     Toast.makeText(AddTripActivity.this, "the place is " + placeName, Toast.LENGTH_SHORT).show();
