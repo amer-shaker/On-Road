@@ -73,13 +73,10 @@ public class Utility {
 //        calendar.set(Calendar.DAY_OF_YEAR,day);
         if (calendar.getTimeInMillis() > Calendar.getInstance()
                 .getTimeInMillis()) {
-//            Utility.setupAlarmManager(context, MyReceiver.class, trip,
-//                    calendar.getTimeInMillis());
+            Utility.setupAlarmManager(context, trip,
+                    calendar.getTimeInMillis(), id);
         } else {
             calendar.add(Calendar.DAY_OF_YEAR, 1);
-//            Utility.setupAlarmManager(context, MyReceiver.class, trip,
-//                    calendar.getTimeInMillis());
-
             Utility.setupAlarmManager(context, trip,
                     calendar.getTimeInMillis(), id);
 
