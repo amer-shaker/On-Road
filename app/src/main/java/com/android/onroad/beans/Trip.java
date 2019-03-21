@@ -193,6 +193,15 @@ public class Trip implements Parcelable {
         this.notes = notes;
     }
 
+    public String getStartCoordinates() {
+        return startPointLatitude + "," + startPointLongitude;
+    }
+
+    public String getDestinationCoordinates() {
+        return endPointLatitude + "," + endPointLongitude;
+    }
+
+
     @Override
     public int describeContents() {
         return 0;

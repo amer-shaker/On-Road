@@ -3,6 +3,7 @@ package com.android.onroad.reciever;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.android.onroad.activities.DilogActivity;
 import com.android.onroad.beans.Trip;
@@ -14,6 +15,7 @@ public class MyReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Trip trip = intent.getExtras().getParcelable(Constants.TRIP);
         Intent intentDialogue = new Intent(context, DilogActivity.class);
+        Log.i("trip_name onReceive",trip.getName());
         intentDialogue.putExtra(Constants.TRIP, trip);
         intentDialogue.putExtra(Constants.FIRE_SOUND_STATUS, "fired");
         intentDialogue.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

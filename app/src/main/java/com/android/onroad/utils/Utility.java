@@ -41,7 +41,7 @@ public class Utility {
         contentIntent = PendingIntent.getActivity(context, _id, notificationIntent, 0);
         builder.setContentIntent(contentIntent);
         builder.setSmallIcon(R.mipmap.ic_launcher);
-//        builder.setContentText(trip.getTripName());
+        builder.setContentText(trip.getName());
         builder.setContentTitle(context.getString(R.string.app_name));
         builder.setAutoCancel(true);
         builder.setOngoing(true);
@@ -55,6 +55,7 @@ public class Utility {
     public static void setupAlarmManager(Context context, Trip trip, long timeInMillis, int id) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, MyReceiver.class);
+        Log.i("trip_name setupAlarm",trip.getName());
         intent.putExtra(Constants.TRIP, trip);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -70,7 +71,10 @@ public class Utility {
         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, 0);
-//        calendar.set(Calendar.DAY_OF_YEAR,day);
+        calendar.set(Calendar.DATE,day);
+        Log.i("trip_name setAlarmTime",trip.getName());
+
+
         if (calendar.getTimeInMillis() > Calendar.getInstance()
                 .getTimeInMillis()) {
             Utility.setupAlarmManager(context, trip,
@@ -80,7 +84,7 @@ public class Utility {
             Utility.setupAlarmManager(context, trip,
                     calendar.getTimeInMillis(), id);
 
-            Toast.makeText(context, "calendar.getTimeInMillis :  " + calendar.getTimeInMillis(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "calendar.getTimeInMillis :  " + calendar.getTimeInMillis()/(60*1000), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -105,8 +109,18 @@ public class Utility {
         context.startActivity(intent);
     }
 
+<<<<<<< HEAD
 //    public static void startActivity(Context mContext, Activity mActivity) {
 //        Intent intent = new Intent(mContext, mActivity.);
 //        startActivity(intent);
 //    }
+=======
+    public static void cancelAlarm(Context context, int alarmId) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent myIntent = new Intent(context, MyReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                context, alarmId, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.cancel(pendingIntent);
+    }
+>>>>>>> b1398c18ba2da3788343befc2d10c4c63020f96f
 }

@@ -13,43 +13,43 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/trip_name_img"
+                android:layout_gravity="center"/>
+
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="5dp"
                 android:gravity="center"
+
                 android:orientation="horizontal">
 
 
                 <LinearLayout
-                    android:layout_width="138dp"
-                    android:layout_height="match_parent"
+
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/trip_name_img"
-                        android:text="trip name : "
+                        android:text="name : "
                         android:textSize="20sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/start_point_img"
-                        android:text="start point : "
-                        android:textSize="20sp" />
-
-                    <TextView
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/trip_name_img"
-                        android:text="Type : "
+                        android:text="start point:"
                         android:textSize="20sp" />
 
                     <TextView
@@ -58,6 +58,15 @@
                         android:drawableLeft="@drawable/end_point_img"
                         android:text="end point : "
                         android:textSize="20sp" />
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/trip_name_img"
+                        android:text="Type : "
+                        android:textSize="20sp" />
+
+
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -80,21 +89,23 @@
                         android:drawableLeft="@drawable/status_img"
                         android:text="status  : "
                         android:textSize="20sp" />
-
                     <TextView
                         android:layout_width="wrap_content"
+
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/notes_img"
                         android:text="notes  : "
+
                         android:textSize="20sp" />
 
                 </LinearLayout>
 
 
                 <LinearLayout
-                    android:layout_width="199dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="201dp"
+                    android:layout_height="220dp"
                     android:layout_gravity="center"
+                    android:layout_weight="2"
                     android:orientation="vertical">
 
                     <TextView
@@ -114,20 +125,18 @@
 
 
                     <TextView
-                        android:id="@+id/trip_type"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="type"
-                        android:textSize="20sp" />
-
-
-                    <TextView
                         android:id="@+id/tv_end_point_details"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="end point"
                         android:textSize="20sp" />
 
+                    <TextView
+                        android:id="@+id/trip_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="type"
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/tv_start_date_details"
@@ -162,7 +171,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:checked="false"
-                            android:clickable="false" />
+                            android:clickable="false"
+                            android:visibility="gone" />
 
 
                     </LinearLayout>
@@ -173,13 +183,20 @@
 
             </LinearLayout>
 
-            <ListView
-                android:id="@+id/noteList"
-                android:layout_width="match_parent"
-                android:layout_height="221dp"
-                android:layout_gravity="center"
 
-                ></ListView>
+
+
+    <ListView
+        android:background="@drawable/list_notes_shap"
+        android:id="@+id/noteList"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="200dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:theme="@style/AppTheme"></ListView>
+
+
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -202,6 +219,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_shape"
                     android:text="edit " />

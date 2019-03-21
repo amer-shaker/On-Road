@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.onroad.R;
 import com.android.onroad.activities.TripDetailsActivity;
@@ -83,8 +84,10 @@ public class PastTripsAdapter extends RecyclerView.Adapter<PastTripsAdapter.Trip
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(mContext, TripDetailsActivity.class);
+            Toast.makeText(mContext, ""+trips.get(getAdapterPosition()).getName(), Toast.LENGTH_SHORT).show();
             intent.putExtra(Constants.TRIP_EXTRA, trips.get(getAdapterPosition()));
             mContext.startActivity(intent);
         }
+
     }
 }

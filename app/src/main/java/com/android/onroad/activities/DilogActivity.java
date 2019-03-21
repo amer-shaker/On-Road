@@ -11,11 +11,21 @@ import com.android.onroad.R;
 import com.android.onroad.beans.Trip;
 import com.android.onroad.utils.Constants;
 import com.android.onroad.utils.Utility;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class DilogActivity extends AppCompatActivity {
     Button btnStart, btnLater, btnCancel;
     TextView tvTripName;
     MediaPlayer myPlayer;
+
+
+
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mTripsDatabaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +37,8 @@ public class DilogActivity extends AppCompatActivity {
         btnCancel = findViewById(R.id.btnCancel);
         tvTripName = findViewById(R.id.tripNameInDialog);
         String status = getIntent().getStringExtra(Constants.FIRE_SOUND_STATUS);
-//        tvTripName.setText(trip.getName());
+
+        tvTripName.setText(trip.getName());
 
         if (status != null) {
             myPlayer = MediaPlayer.create(DilogActivity.this, R.raw.alarm_dialog);
@@ -84,5 +95,61 @@ public class DilogActivity extends AppCompatActivity {
 
 
     }
+     // TODO Update
+    private void updateTrip(Trip trip) {
+
+        FirebaseUser user = mFirebaseAuth.getCurrentUser();
+
+        if (user != null) {
+            String userId = mFirebaseAuth.getCurrentUser().getUid();
+
+            mTripsDatabaseReference.child(userId)
+                    .child("name")
+                    .setValue(trip.getName());
+
+            mTripsDatabaseReference.child(userId)
+                    .child("date")
+                    .setValue(trip.getDate());
+
+            mTripsDatabaseReference.child(userId)
+                    .child("startPoint")
+                    .setValue(trip.getStartPoint());
+
+            mTripsDatabaseReference.child(userId)
+                    .child("endPoint")
+                    .setValue(trip.getEndPoint());
+
+            mTripsDatabaseReference.child(userId)
+                    .child("startPointLatitude")
+                    .setValue(trip.getStartPointLatitude());
+
+            mTripsDatabaseReference.child(userId)
+                    .child("startPointLongitude")
+                    .setValue(trip.getStartPointLongitude());
+
+            mTripsDatabaseReference.child(userId)
+                    .child("endPointLatitude")
+                    .setValue(trip.getEndPointLatitude());
+
+            mTripsDatabaseReference.child(userId)
+                    .child("endPointLongitude")
+                    .setValue(trip.getEndPointLongitude());
+
+            mTripsDatabaseReference.child(userId)
+                    .child("type")
+                    .setValue(trip.getType());
+
+            mTripsDatabaseReference.child(userId)
+                    .child("status")
+                    .setValue(trip.getStatus());
+
+            mTripsDatabaseReference.child(userId)
+                    .child("notes")
+                    .setValue(trip.getNotes());
+        }
+    }
+
+
+
 }
 

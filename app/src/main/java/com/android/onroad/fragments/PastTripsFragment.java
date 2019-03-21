@@ -53,6 +53,7 @@ public class PastTripsFragment extends Fragment {
         // Initialize Firebase Auth
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mFirebaseDatabase.setPersistenceEnabled(true);
 
         if (mFirebaseAuth.getCurrentUser() != null) {
             mTripsDatabaseReference = mFirebaseDatabase.getReference().child(getString(R.string.trips_database_node))
