@@ -13,8 +13,8 @@ import android.widget.TextView;
 import com.android.onroad.R;
 import com.android.onroad.activities.TripDetailsActivity;
 import com.android.onroad.beans.Trip;
+import com.android.onroad.utils.Constants;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -22,12 +22,17 @@ import butterknife.ButterKnife;
 
 public class PastTripsAdapter extends RecyclerView.Adapter<PastTripsAdapter.ViewHolder> {
 
-    private Context context;
+    private Context mContext;
     private List<Trip> trips;
 
-    public PastTripsAdapter(Context context) {
-        trips = new ArrayList<>();
-        this.context = context;
+    public PastTripsAdapter(Context mContext, List<Trip> trips) {
+        this.trips = trips;
+        this.mContext = mContext;
+    }
+
+    public void updateList(List<Trip> trips) {
+        this.trips = trips;
+        this.notifyDataSetChanged();
     }
 
     @NonNull
@@ -54,11 +59,6 @@ public class PastTripsAdapter extends RecyclerView.Adapter<PastTripsAdapter.View
         return trips.size();
     }
 
-    public void updateList(List<Trip> trips) {
-        this.trips = trips;
-        this.notifyDataSetChanged();
-    }
-
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.trip_controls_linear_layout)
@@ -82,9 +82,9 @@ public class PastTripsAdapter extends RecyclerView.Adapter<PastTripsAdapter.View
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(context, TripDetailsActivity.class);
-            intent.putExtra("trip", trips.get(getAdapterPosition()));
-            context.startActivity(intent);
+            Intent intent = new Intent(mContext, TripDetailsActivity.class);
+            intent.putExtra(Constants.TRIP_EXTRA, trips.get(getAdapterPosition()));
+            mContext.startActivity(intent);
         }
     }
 }
