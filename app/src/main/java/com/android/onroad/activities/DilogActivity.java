@@ -3,6 +3,7 @@ package com.android.onroad.activities;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -50,8 +51,6 @@ public class DilogActivity extends AppCompatActivity {
                 }
             });
         }
-
-
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,6 +69,8 @@ public class DilogActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Utility.pushNotification(DilogActivity.this, trip);
+                Log.i("trip_name dialoyge", trip.getName());
+
                 if (myPlayer != null) {
                     myPlayer.stop();
                 }

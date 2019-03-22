@@ -28,14 +28,11 @@
     </style>
 
     <style name="CustomTextViewNavBar" parent="@android:style/TextAppearance.Widget.TextView">
-
         <item name="android:layout_gravity">center</item>
         <item name="android:gravity">center</item>
         <item name="android:shadowDx">1</item>
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">2</item>
-
-
     </style>
 
 </resources>

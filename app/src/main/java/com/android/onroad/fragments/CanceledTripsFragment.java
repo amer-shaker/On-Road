@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.android.onroad.R;
 import com.android.onroad.adapters.PastTripsAdapter;
 import com.android.onroad.beans.Trip;
-import com.crashlytics.android.Crashlytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -26,9 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Unbinder;
-
-public class PastTripsFragment extends Fragment {
+public class CanceledTripsFragment extends Fragment {
 
     private View view;
     List<Trip> trips = new ArrayList<>();
@@ -98,7 +95,7 @@ public class PastTripsFragment extends Fragment {
                     Log.i(TAG, "onChildAdded()");
                     Trip trip = dataSnapshot.getValue(Trip.class);
                     if (trip != null) {
-                        if (trip.getStatus().equals(Trip.PAST_TRIP)) {
+                        if (trip.getStatus().equals(Trip.CANCELED_TRIP)) {
                             trips.add(trip);
                             pastTripsAdapter.updateList(trips);
                         }

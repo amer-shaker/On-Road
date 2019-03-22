@@ -30,20 +30,21 @@
                     android:orientation="vertical">
 
                     <android.support.design.widget.TextInputLayout
+                        android:id="@+id/confirm_password_text_input"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp">
 
 
-                    <EditText
-                        android:id="@+id/txtTripName"
-                        android:hint="Trip Name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginBottom="20dp"
-                        android:ems="10" />
+                        <EditText
+                            android:id="@+id/trip_name_edit_text"
+                            android:hint="Trip Name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:ems="10" />
                     </android.support.design.widget.TextInputLayout>
 
 
@@ -65,7 +66,7 @@
                         android:textStyle="bold" />
 
                     <fragment
-                        android:id="@+id/txtStartPoint"
+                        android:id="@+id/start_point_fragment"
                         android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
                         android:layout_width="341dp"
                         android:layout_height="44dp"
@@ -79,7 +80,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-            </LinearLayout>
+                </LinearLayout>
 
 
 
@@ -94,7 +95,7 @@
                     android:textStyle="bold" />
 
                 <fragment
-                    android:id="@+id/txtEndPoint"
+                    android:id="@+id/end_point_fragment"
                     android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
                     android:layout_width="342dp"
                     android:layout_height="46dp"
@@ -234,15 +235,15 @@
                         android:layout_marginTop="20dp"
                         android:layout_weight="3.5">
 
-                    <EditText
-                        android:id="@+id/txtAddNote"
-                        android:layout_width="match_parent"
-                        android:hint="Enter Note"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginBottom="20dp"
-                        android:ems="10" />
+                        <EditText
+                            android:id="@+id/add_note_edit_text"
+                            android:layout_width="match_parent"
+                            android:hint="Enter Note"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:ems="10" />
                     </android.support.design.widget.TextInputLayout>
 
                     <Button
@@ -272,9 +273,12 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginRight="50dp"
                 android:layout_marginBottom="20dp"
+                android:textStyle="bold"
+                android:textColor="@color/White"
                 android:background="@drawable/mybutton"
                 android:text="Add Trip"
-                android:textColor="@color/White" />
+
+                />
 
         </LinearLayout>
 

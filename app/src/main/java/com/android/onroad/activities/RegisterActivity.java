@@ -20,13 +20,16 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.onroad.R;
-import com.android.onroad.beans.UserModel;
+import com.android.onroad.beans.UserBean;
 import com.android.onroad.utils.Utility;
 import com.android.onroad.utils.Validation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -73,7 +76,8 @@ public class RegisterActivity extends AppCompatActivity {
         // Initialize Firebase Auth
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-
+        mFirebaseDatabase.setPersistenceEnabled(true);
+        
         mUsersDatabaseReference = mFirebaseDatabase.getReference().child(getString(R.string.users_database_node));
 
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
@@ -226,7 +230,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                             sendVerificationEmail();
 
-                            UserModel user = new UserModel();
+                            UserBean user = new UserBean();
                             user.setUserId(mFirebaseAuth.getCurrentUser().getUid());
                             user.setName(email.substring(0, email.indexOf("@")));
                             user.setPhone("1");

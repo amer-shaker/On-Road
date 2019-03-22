@@ -21,30 +21,26 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAluiqmBBsMrnJnpodYT7BPG_MYjZrihfE" />
+
         <activity
             android:name=".activities.HistoryTripsMapActivty"
-            android:label="@string/title_activity_history_trips_map_activty">
+            android:label="@string/title_activity_history_trips_map_activty" />
 
-
-
-        </activity>
         <activity
             android:name=".activities.DilogActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
+
         <activity
             android:name=".activities.TripDetailsActivity"
             android:parentActivityName=".activities.HomeActivity" />
+
         <activity
             android:name=".activities.AddTripActivity"
             android:parentActivityName=".activities.HomeActivity"
-            android:theme="@style/AppTheme" >
-
-
-        </activity>
+            android:theme="@style/AppTheme" />
 
         <service
             android:name=".MyService"
@@ -54,9 +50,11 @@
         <activity
             android:name=".activities.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".activities.RegisterActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
+
         <activity
             android:name=".activities.LoginActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
@@ -70,6 +68,7 @@
         </activity>
 
         <receiver android:name=".reciever.MyReceiver" />
+
     </application>
 
 </manifest>

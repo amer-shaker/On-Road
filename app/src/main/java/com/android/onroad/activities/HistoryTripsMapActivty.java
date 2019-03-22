@@ -2,6 +2,7 @@ package com.android.onroad.activities;
 
 import android.app.ProgressDialog;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -39,9 +40,8 @@ public class HistoryTripsMapActivty extends FragmentActivity implements OnMapRea
     private RequestQueue mRequestQueue;
 
 
-//should replaced with  array of history trips
+    //should replaced with  array of history trips
     ArrayList<Trip> trips = new ArrayList<>();
-
 
 
     @Override
@@ -55,8 +55,8 @@ public class HistoryTripsMapActivty extends FragmentActivity implements OnMapRea
         //dummy data
 
         mapFragment.getMapAsync(this);
-        Trip t1=new Trip();
-        Trip t2=new Trip();
+        Trip t1 = new Trip();
+        Trip t2 = new Trip();
 
         t1.setStartPointLatitude(30.109760);
         t1.setStartPointLongitude(31.247240);
@@ -95,13 +95,13 @@ public class HistoryTripsMapActivty extends FragmentActivity implements OnMapRea
 
         mMap = googleMap;
 
-        for (final Trip trip:trips) {
+        for (final Trip trip : trips) {
 
             mRequestQueue.add(
                     new JsonObjectRequest(
                             "https://maps.googleapis.com/maps/api/directions/json?origin="
 
-                                    +trip.getStartCoordinates()
+                                    + trip.getStartCoordinates()
                                     + "&destination="
                                     + trip.getDestinationCoordinates()
                                     + "&key=AIzaSyC4X5tDaquLpuYFDXRsxYAxcl26I1E_KSs",
@@ -146,12 +146,11 @@ public class HistoryTripsMapActivty extends FragmentActivity implements OnMapRea
         }
 
 
-
         mRequestQueue.addRequestFinishedListener(new RequestQueue.RequestFinishedListener<Object>() {
             @Override
             public void onRequestFinished(Request<Object> request) {
                 mRequests--;
-                if (mRequests == 0){
+                if (mRequests == 0) {
 
                     if( mProgressDialog != null)
                         mProgressDialog.dismiss();

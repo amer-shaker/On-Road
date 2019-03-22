@@ -1,6 +1,5 @@
 package com.android.onroad.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.onroad.R;
 import com.android.onroad.activities.TripDetailsActivity;
@@ -22,12 +20,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PastTripsAdapter extends RecyclerView.Adapter<PastTripsAdapter.TripsViewHolder> {
+public class CanceledTripsAdapter extends RecyclerView.Adapter<CanceledTripsAdapter.TripsViewHolder> {
 
     private Context mContext;
     private List<Trip> trips;
 
-    public PastTripsAdapter(Context mContext, List<Trip> trips) {
+    public CanceledTripsAdapter(Context mContext, List<Trip> trips) {
         this.mContext = mContext;
         this.trips = trips;
     }
@@ -85,10 +83,8 @@ public class PastTripsAdapter extends RecyclerView.Adapter<PastTripsAdapter.Trip
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(mContext, TripDetailsActivity.class);
-            Toast.makeText(mContext, ""+trips.get(getAdapterPosition()).getName(), Toast.LENGTH_SHORT).show();
             intent.putExtra(Constants.TRIP_EXTRA, trips.get(getAdapterPosition()));
             mContext.startActivity(intent);
         }
-
     }
 }

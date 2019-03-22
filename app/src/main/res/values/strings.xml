@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">3al Treq</string>
+    <string name="app_name">3al Treq - ع الطريق</string>
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
@@ -36,7 +36,7 @@
     <string name="trip_name">users</string>
 
 
-    <string name="resend_verification_email">Resend Verification Email</string>
+    <string name="resend_verification_email">Didn\'t get it? Resend verification <b>Email</b></string>
     <string name="forgot_password">Forgot Password</string>
     <string name="register">Register</string>
     <string name="sign_in">Sign In</string>
@@ -70,8 +70,10 @@
     <string name="Edit_Profile">Edit Profile</string>
     <string name="edit_photo">Edit Photo</string>
 
+    <!-- Strings related to fragments -->
     <string name="upcoming_trips_fragment">Upcoming</string>
     <string name="past_trips_fragment">Past</string>
+    <string name="canceled_trips_fragments">Canceled</string>
 
     <!--Korany-->
     <string name="Trip_prompt">Choose Status Of Trip</string>
@@ -92,5 +94,11 @@
     <string name="log_out">Log Out</string>
     <string name="sync">Sync</string>
     <string name="text_dialog">Let\'s Start The Trip</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_history_trips_map_activty">Map</string>
+
+    <string name="title_menu_item_help_and_settings">Help &amp; Settings</string>
+    <string name="title_nav_account">Account</string>
+    <string name="title_nav_sign_out">Sign out</string>
 </resources>

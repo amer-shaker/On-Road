@@ -2,7 +2,9 @@ package com.android.onroad.activities;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -19,11 +21,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.onroad.R;
+import com.android.onroad.fragments.CanceledTripsFragment;
 import com.android.onroad.fragments.PastTripsFragment;
 import com.android.onroad.fragments.UpcomingTripsFragment;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -39,6 +50,9 @@ public class HomeActivity extends AppCompatActivity
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mUser;
 
+    // Google SignIn
+    private GoogleSignInClient mGoogleSignInClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +63,15 @@ public class HomeActivity extends AppCompatActivity
         // Initialize Firebase Auth
         mFirebaseAuth = FirebaseAuth.getInstance();
         mUser = mFirebaseAuth.getCurrentUser();
+
+        // Initialize Google SignIn Client
+        GoogleSignInOptions mGoogleSignInOptions = new GoogleSignInOptions
+                .Builder()
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        mGoogleSignInClient = GoogleSignIn.getClient(HomeActivity.this, mGoogleSignInOptions);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -71,8 +94,17 @@ public class HomeActivity extends AppCompatActivity
 
         View header = navigationView.getHeaderView(0);
 
+        ImageView profileImageView = (ImageView) header.findViewById(R.id.profile_image_view);
         TextView usernameTextView = (TextView) header.findViewById(R.id.username_text_view);
         TextView emailTextView = (TextView) header.findViewById(R.id.email_text_view);
+
+        Uri photoUrl = mUser.getPhotoUrl();
+        if (photoUrl != null) {
+            Glide.with(profileImageView.getContext())
+                    .load(photoUrl)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(profileImageView);
+        }
 
         if (mUser != null) {
             usernameTextView.setText(mUser.getDisplayName());
@@ -113,9 +145,7 @@ public class HomeActivity extends AppCompatActivity
 
         switch (id) {
             case R.id.sign_out_menu:
-                // sign out
-                mFirebaseAuth.getInstance().signOut();
-                redirectLoginScreen();
+                signOut();
                 return true;
             case R.id.action_settings:
                 return true;
@@ -125,12 +155,15 @@ public class HomeActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
+        if (id == R.id.nav_account) {
+            // Handle the account action
+            startActivity(new Intent(this, EditAccount.class));
+        } else if (id == R.id.nav_sign_out) {
+            signOut();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -138,11 +171,14 @@ public class HomeActivity extends AppCompatActivity
         return true;
     }
 
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new UpcomingTripsFragment(), getString(R.string.upcoming_trips_fragment));
-        adapter.addFragment(new PastTripsFragment(), getString(R.string.past_trips_fragment));
-        viewPager.setAdapter(adapter);
+    private void signOut() {
+        mFirebaseAuth.signOut();
+        mGoogleSignInClient.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                redirectLoginScreen();
+            }
+        });
     }
 
     private void redirectLoginScreen() {
@@ -151,7 +187,15 @@ public class HomeActivity extends AppCompatActivity
         finish();
     }
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new UpcomingTripsFragment(), getString(R.string.upcoming_trips_fragment));
+        adapter.addFragment(new PastTripsFragment(), getString(R.string.past_trips_fragment));
+        adapter.addFragment(new CanceledTripsFragment(), getString(R.string.canceled_trips_fragments));
+        viewPager.setAdapter(adapter);
+    }
+
+    private class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
