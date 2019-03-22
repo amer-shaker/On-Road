@@ -5,9 +5,9 @@ import android.content.Context;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
-public class VollyDao {
+public class VolleyDao {
 
-    private VollyDao()
+    private VolleyDao()
     {
 
     }
@@ -16,7 +16,7 @@ public class VollyDao {
 
     public static RequestQueue getRequestQueue(Context context) {
         if (mRequestQueue == null) {
-            synchronized (VollyDao.class) {
+            synchronized (VolleyDao.class) {
 
                 if (mRequestQueue == null)
                     mRequestQueue = Volley.newRequestQueue(context);

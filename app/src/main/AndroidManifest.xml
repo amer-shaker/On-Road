@@ -23,7 +23,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBLPdtvo4KoNgMDdVYXcCtJOpM8yvkuSCQ" />
+            android:value="AIzaSyAluiqmBBsMrnJnpodYT7BPG_MYjZrihfE" />
 
         <activity
             android:name=".activities.HistoryTripsMapActivty"

@@ -56,6 +56,10 @@ public class TripDetailsActivity extends AppCompatActivity {
             tvTripame.setText(trip.getName());
 
 
+            mapStatusTxt.setText(trip.getStatus());
+            type.setText(trip.getType());
+            Toast.makeText(this, ""+trip.getNotes().get(0), Toast.LENGTH_SHORT).show();
+
             tvDate.setText(trip.getTripDate());
             tvStartPoint.setText(trip.getStartPoint());
             tvEndPoint.setText(trip.getEndPoint());
