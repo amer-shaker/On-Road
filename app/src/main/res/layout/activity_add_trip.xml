@@ -16,14 +16,13 @@
             android:orientation="vertical">
 
 
-
             <LinearLayout
-                android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:layout_margin="10dp"
                 android:background="@drawable/button_shape"
-                >
+                android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -38,13 +37,13 @@
 
                         <EditText
                             android:id="@+id/trip_name_edit_text"
-                            android:hint="Trip Name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="30dp"
                             android:layout_marginRight="20dp"
                             android:layout_marginBottom="20dp"
-                            android:ems="10" />
+                            android:ems="10"
+                            android:hint="Trip Name" />
                     </android.support.design.widget.TextInputLayout>
 
 
@@ -61,7 +60,7 @@
                         android:layout_marginLeft="40dp"
                         android:layout_marginTop="10dp"
                         android:text="Start Point"
-                        android:textColor="@color/Black"
+                        android:textColor="@android:color/white"
                         android:textSize="18dp"
                         android:textStyle="bold" />
 
@@ -79,9 +78,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                </LinearLayout>
-
+                    android:orientation="vertical"></LinearLayout>
 
 
                 <TextView
@@ -90,7 +87,7 @@
                     android:layout_marginLeft="40dp"
                     android:layout_marginTop="10dp"
                     android:text="End Point"
-                    android:textColor="@color/Black"
+                    android:textColor="@android:color/black"
                     android:textSize="18dp"
                     android:textStyle="bold" />
 
@@ -106,10 +103,10 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_margin="10dp"
-                android:background="@drawable/button_shape"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/button_shape"
                 android:orientation="vertical">
 
                 <TextView
@@ -118,7 +115,7 @@
                     android:layout_marginLeft="40dp"
                     android:layout_marginTop="10dp"
                     android:text="Time of Trip"
-                    android:textColor="@color/Black"
+                    android:textColor="@android:color/black"
                     android:textSize="18dp"
                     android:textStyle="bold" />
 
@@ -128,25 +125,24 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="30dp"
                     android:orientation="horizontal"
-                    android:weightSum="2"
-                    >
+                    android:weightSum="2">
 
                     <Button
                         android:id="@+id/btnAddDate"
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="60dp"
-
                         android:layout_marginLeft="80dp"
+
+                        android:layout_weight="1"
                         android:background="@drawable/calendar" />
 
                     <Button
                         android:id="@+id/btnAddTime"
                         android:layout_width="0dp"
-                        android:layout_weight="1
-"
                         android:layout_height="60dp"
                         android:layout_marginLeft="80dp"
+                        android:layout_weight="1
+"
                         android:background="@drawable/clock" />
                 </LinearLayout>
 
@@ -161,7 +157,7 @@
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="75dp"
-                        android:textColor="@color/Black"
+                        android:textColor="@android:color/black"
                         android:textSize="15dp" />
 
                     <TextView
@@ -169,7 +165,7 @@
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:textColor="@color/Black"
+                        android:textColor="@android:color/black"
                         android:textSize="15dp" />
 
                 </LinearLayout>
@@ -178,10 +174,10 @@
 
             <LinearLayout
 
-                android:background="@drawable/button_shape"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:background="@drawable/button_shape"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
@@ -189,12 +185,12 @@
 
                     android:id="@+id/spnRepeat"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="40dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     android:entries="@array/Repetayion"
                     android:prompt="@string/Trip_prompt"
                     android:textAlignment="center" />
@@ -203,14 +199,14 @@
 
                     android:id="@+id/spnStatus"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
-
                     android:layout_height="40dp"
+
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="20dp"
+                    android:layout_weight="1"
                     android:entries="@array/Status"
                     android:prompt="@string/Trip_prompt2"
                     android:textAlignment="center" />
@@ -219,9 +215,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_margin="10dp"
-                android:background="@drawable/button_shape">
+                android:background="@drawable/button_shape"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -238,12 +234,12 @@
                         <EditText
                             android:id="@+id/add_note_edit_text"
                             android:layout_width="match_parent"
-                            android:hint="Enter Note"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="30dp"
                             android:layout_marginRight="20dp"
                             android:layout_marginBottom="20dp"
-                            android:ems="10" />
+                            android:ems="10"
+                            android:hint="Enter Note" />
                     </android.support.design.widget.TextInputLayout>
 
                     <Button
@@ -259,11 +255,8 @@
                 </LinearLayout>
 
 
-
             </LinearLayout>
-
-
-
+            
             <Button
                 android:id="@+id/btnAddTrip"
                 android:layout_width="match_parent"
@@ -273,12 +266,10 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginRight="50dp"
                 android:layout_marginBottom="20dp"
-                android:textStyle="bold"
-                android:textColor="@color/White"
                 android:background="@drawable/mybutton"
                 android:text="Add Trip"
-
-                />
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
 
         </LinearLayout>
 

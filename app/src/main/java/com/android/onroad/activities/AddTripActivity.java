@@ -130,15 +130,13 @@ public class AddTripActivity extends AppCompatActivity {
 
                 if (tripNameEditText.getText().toString().equals("")) {
                     Toast.makeText(AddTripActivity.this, "enter the trip name", Toast.LENGTH_SHORT).show();
-                }
-
-                else if (myStartPoint.equals(""))
+                } else if (myStartPoint.equals(""))
                     Toast.makeText(AddTripActivity.this, "enter Start Point", Toast.LENGTH_SHORT).show();
 
-              else     if (myEndPoint.equals(""))
+                else if (myEndPoint.equals(""))
                     Toast.makeText(AddTripActivity.this, "enter end Point", Toast.LENGTH_SHORT).show();
 
-              else   if (txtDate.getText().equals(""))
+                else if (txtDate.getText().equals(""))
                     Toast.makeText(AddTripActivity.this, "enter Date", Toast.LENGTH_SHORT).show();
 
                 if (txtTime.getText().equals(""))
@@ -152,24 +150,23 @@ public class AddTripActivity extends AppCompatActivity {
                     if (!isUsed) {
                         tripId = mTripsDatabaseReference.getRef().push().getKey();
                         trip.setTripId(tripId);
-                        myTripName = tripNameEditText.getText().toString();
-                        trip.setName(myTripName);
-                        trip.setTime(myDate.getTime());
-                        trip.setTripDate(tripDate);
-                        trip.setEndPoint(myEndPoint);
-                        trip.setStartPoint(myStartPoint);
-                        trip.setEndPointLatitude(myeLat);
-                        trip.setEndPointLongitude(myeLong);
-                        trip.setStartPointLatitude(mysLat);
-                        trip.setStartPointLongitude(mysLong);
-                        trip.setNotes(myArrayNote);
-                        trip.setType(myRepeat);
-                        trip.setStatus(Trip.UPCOMING_TRIP);
+                    } else {
+                        trip.setTripId(editObj.getTripId());
                     }
 
-                    if (isUsed) {
-                        trip = editObj;
-                    }
+                    myTripName = tripNameEditText.getText().toString();
+                    trip.setName(myTripName);
+                    trip.setTime(myDate.getTime());
+                    trip.setTripDate(tripDate);
+                    trip.setEndPoint(myEndPoint);
+                    trip.setStartPoint(myStartPoint);
+                    trip.setEndPointLatitude(myeLat);
+                    trip.setEndPointLongitude(myeLong);
+                    trip.setStartPointLatitude(mysLat);
+                    trip.setStartPointLongitude(mysLong);
+                    trip.setNotes(myArrayNote);
+                    trip.setType(myRepeat);
+                    trip.setStatus(Trip.UPCOMING_TRIP);
 
                     int id = (int) (myDate.getTime() + myDate.getMonth() + myDate.getYear() + myDate.getSeconds());
                     trip.setAlarmId(id);
@@ -178,10 +175,10 @@ public class AddTripActivity extends AppCompatActivity {
                         Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(),
                                 myDate.getDate(), trip.getAlarmId());
                     } else {
-                        Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(),  myDate.getDate()-
-                                Calendar.getInstance().get(Calendar.DATE) , id);
-                        Log.e("myDate.getDate()",myDate.getDate()+"");
-                        Log.e("Calendar.getInstance",Calendar.getInstance().get(Calendar.DATE)+"");
+                        Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(), myDate.getDate() -
+                                Calendar.getInstance().get(Calendar.DATE), id);
+                        Log.e("myDate.getDate()", myDate.getDate() + "");
+                        Log.e("Calendar.getInstance", Calendar.getInstance().get(Calendar.DATE) + "");
 
                     }
 
@@ -299,7 +296,7 @@ public class AddTripActivity extends AppCompatActivity {
                                 }
                             }
                         }, mYear, mMonth, mDay);
-               // datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+                // datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
                 datePickerDialog.show();
             }
         });
