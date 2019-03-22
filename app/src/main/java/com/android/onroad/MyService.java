@@ -9,8 +9,6 @@ import com.android.onroad.utils.Constants;
 import com.android.onroad.utils.Utility;
 
 public class MyService extends Service {
-    public MyService() {
-    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {

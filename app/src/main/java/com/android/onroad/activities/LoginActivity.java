@@ -22,21 +22,29 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.onroad.R;
+import com.android.onroad.beans.UserBean;
 import com.android.onroad.utils.Validation;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
     public static final String ANONYMOUS = "anonymous";
-    public static final int RC_SIGN_IN = 1;
+    public static final int RC_GOOGLE_SIGN_IN = 1;
 
     // UI references
     private View mLoginFormView;
@@ -54,7 +62,10 @@ public class LoginActivity extends AppCompatActivity {
     // Firebase instance variables
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
-    private FirebaseDatabase mFirebaseDatabase;
+
+    // Google SignIn
+    private SignInButton mGoogleSignInButton;
+    private GoogleSignInClient mGoogleSignInClient;
 
     // Instance variables
     private String email;
@@ -65,13 +76,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Initialize Firebase Auth
+        mUsername = ANONYMOUS;
+
+        // Initialize Firebase components
         mFirebaseAuth = FirebaseAuth.getInstance();
-
-        // Initialize Firebase Database
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        // mFirebaseDatabase.setPersistenceEnabled(true);
-
         setupFirebaseAuth();
 
         // Initialize UI
@@ -116,12 +124,23 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.e(TAG, "onActivityResult()");
-        if (requestCode == RC_SIGN_IN) {
-            if (resultCode == RESULT_OK) {
-                Toast.makeText(this, "Signed in!", Toast.LENGTH_SHORT).show();
-            } else if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(this, "Signed in cancelled", Toast.LENGTH_SHORT).show();
-                finish();
+        if (requestCode == RC_GOOGLE_SIGN_IN) {
+//            if (resultCode == RESULT_OK) {
+//                Toast.makeText(this, "Signed in!", Toast.LENGTH_SHORT).show();
+//            } else if (resultCode == RESULT_CANCELED) {
+//                Toast.makeText(this, "Signed in cancelled", Toast.LENGTH_SHORT).show();
+//                finish();
+//            }
+
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                if (account != null) {
+                    firebaseAuthWithGoogle(account);
+                }
+            } catch (ApiException ex) {
+                Log.e(TAG, ex.getMessage());
             }
         }
     }
@@ -130,6 +149,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
+        Log.d(TAG, "onResume()");
     }
 
     @Override
@@ -156,6 +176,21 @@ public class LoginActivity extends AppCompatActivity {
 
         // Login progress
         mProgressBar = findViewById(R.id.login_progress);
+
+        // Set the dimensions of the sign-in button.
+        mGoogleSignInButton = findViewById(R.id.google_sign_in_button);
+        mGoogleSignInButton.setSize(SignInButton.SIZE_WIDE);
+        mGoogleSignInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onGoogleSignIn();
+            }
+        });
+
+        if (mFirebaseAuth.getCurrentUser() != null) {
+            FirebaseUser user = mFirebaseAuth.getCurrentUser();
+            updateUI(user);
+        }
     }
 
     /**
@@ -282,16 +317,15 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     // user is signed out
                     Log.d(TAG, "onAuthStateChanged(): Signed out");
-                    // user is signed out
                     onSignedOutCleanUp();
-//                    startActivityForResult(
-//                            AuthUI.getInstance()
-//                                    .createSignInIntentBuilder()
-//                                    .setIsSmartLockEnabled(false)
-//                                    .setAvailableProviders(Arrays.asList(
-//                                            new AuthUI.IdpConfig.GoogleBuilder().build(),
-//                                            new AuthUI.IdpConfig.EmailBuilder().build()))
-//                                    .build(), RC_SIGN_IN);
+
+                    GoogleSignInOptions mGoogleSignInOptions = new GoogleSignInOptions
+                            .Builder()
+                            .requestIdToken(getString(R.string.default_web_client_id))
+                            .requestEmail()
+                            .build();
+
+                    mGoogleSignInClient = GoogleSignIn.getClient(LoginActivity.this, mGoogleSignInOptions);
                 }
             }
         };
@@ -309,6 +343,46 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void onGoogleSignIn() {
+        showProgress(true);
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_GOOGLE_SIGN_IN);
+    }
+
+    private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
+        Log.d(TAG, "firebaseAuthWithGoogle: " + account.getId());
+        AuthCredential credential = GoogleAuthProvider
+                .getCredential(account.getIdToken(), null);
+
+        mFirebaseAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            showProgress(false);
+                            Log.d(TAG, "Sign in Success");
+                            FirebaseUser user = mFirebaseAuth.getCurrentUser();
+                            updateUI(user);
+                        } else {
+                            showProgress(false);
+                            Log.d(TAG, "Sign in Failed", task.getException());
+                            Toast.makeText(LoginActivity.this, "SignIn Falied", Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
+                    }
+                });
+    }
+
+    private void updateUI(FirebaseUser user) {
+        UserBean userBean = new UserBean();
+
+        if (user != null) {
+            userBean.setName(user.getDisplayName());
+            userBean.setEmail(user.getEmail());
+            userBean.setPhotoUrl(String.valueOf(user.getPhotoUrl()));
+        }
     }
 
     private class FormTextWatcher implements TextWatcher {

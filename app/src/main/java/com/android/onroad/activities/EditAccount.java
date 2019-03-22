@@ -29,7 +29,7 @@ Button editAccountBtn;
         email=view.findViewById(R.id.edtEmail);
         password=view.findViewById(R.id.edtPassword);
         editAccountBtn=view.findViewById(R.id.btnEditAccount);
-        
+
 
 
 

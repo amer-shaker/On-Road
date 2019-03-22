@@ -55,7 +55,7 @@ public class DilogActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                trip.setStatus("Done");
+                trip.setStatus(Trip.PAST_TRIP);
                 updateTrip(trip);
 
                 Utility.launchMap(DilogActivity.this, trip);
@@ -67,7 +67,7 @@ public class DilogActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Utility.pushNotification(DilogActivity.this, trip);
-                trip.setStatus("Upcoming");
+                trip.setStatus(Trip.UPCOMING_TRIP);
                 updateTrip(trip);
 
                 Log.i("trip_name dialog", trip.getName());

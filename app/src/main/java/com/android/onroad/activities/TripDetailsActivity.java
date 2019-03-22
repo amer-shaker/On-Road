@@ -10,13 +10,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.onroad.R;
-import com.android.onroad.beans.Note;
 import com.android.onroad.beans.Trip;
 import com.android.onroad.utils.Constants;
 import com.android.onroad.utils.Utility;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,8 +34,8 @@ public class TripDetailsActivity extends AppCompatActivity {
     TextView mapStatusTxt;
     @BindView(R.id.trip_type)
     TextView type;
-@BindView( R.id.done_checkbox)
-TextView doneCheckBox;
+    @BindView(R.id.done_checkbox)
+    TextView doneCheckBox;
     @BindView(R.id.edit_trip_details)
 
     TextView editTripDetailsBtn;
@@ -53,15 +51,13 @@ TextView doneCheckBox;
         ButterKnife.bind(this);
         final Trip trip = getIntent().getParcelableExtra(Constants.TRIP_EXTRA);
 
-       // Toast.makeText(this, ""+trip.getName(), Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, ""+trip.getName(), Toast.LENGTH_SHORT).show();
         if (trip != null) {
             tvTripame.setText(trip.getName());
-
-
             tvDate.setText(trip.getTripDate());
             tvStartPoint.setText(trip.getStartPoint());
             tvEndPoint.setText(trip.getEndPoint());
-            startTimeTxt.setText(trip.getTime());
+            startTimeTxt.setText(String.valueOf(trip.getTime()));
             if (trip.getStatus().equals("done")) {
                 doneCheckBox.setSelected(true);
                 doneCheckBox.setVisibility(View.VISIBLE);
@@ -97,4 +93,6 @@ TextView doneCheckBox;
                     }
                 });
             }
+
         }}
+

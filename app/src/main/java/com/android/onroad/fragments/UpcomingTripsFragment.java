@@ -49,7 +49,7 @@ public class UpcomingTripsFragment extends Fragment implements DeleteTripDelegat
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.framgent_upcoming, container, false);
+        View view = inflater.inflate(R.layout.fragment_trip, container, false);
         ButterKnife.bind(this, view);
 
         // Initialize Firebase Auth

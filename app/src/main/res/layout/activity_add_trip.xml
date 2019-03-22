@@ -26,7 +26,7 @@
                     android:layout_marginLeft="40dp"
                     android:layout_marginTop="5dp"
                     android:text="Trip Name"
-                    android:textColor="@color/Black"
+                    android:textColor="@android:color/black"
                     android:textSize="18dp"
                     android:textStyle="bold" />
 
@@ -52,7 +52,7 @@
                     android:layout_marginLeft="40dp"
                     android:layout_marginTop="10dp"
                     android:text="Start Point"
-                    android:textColor="@color/Black"
+                    android:textColor="@android:color/black"
                     android:textSize="18dp"
                     android:textStyle="bold" />
 
@@ -78,7 +78,7 @@
                     android:layout_marginLeft="40dp"
                     android:layout_marginTop="10dp"
                     android:text="End Point"
-                    android:textColor="@color/Black"
+                    android:textColor="@android:color/black"
                     android:textSize="18dp"
                     android:textStyle="bold" />
 
@@ -104,7 +104,7 @@
                     android:layout_marginLeft="40dp"
                     android:layout_marginTop="10dp"
                     android:text="Time of Trip"
-                    android:textColor="@color/Black"
+                    android:textColor="@android:color/black"
                     android:textSize="18dp"
                     android:textStyle="bold" />
 
@@ -142,7 +142,7 @@
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="75dp"
-                        android:textColor="@color/Black"
+                        android:textColor="@android:color/black"
                         android:textSize="15dp" />
 
                     <TextView
@@ -150,7 +150,7 @@
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:textColor="@color/Black"
+                        android:textColor="@android:color/black"
                         android:textSize="15dp" />
 
                 </LinearLayout>
@@ -200,7 +200,7 @@
                     android:layout_marginLeft="40dp"
                     android:layout_marginTop="5dp"
                     android:text="Add Note"
-                    android:textColor="@color/Black"
+                    android:textColor="@android:color/black"
                     android:textSize="18dp"
                     android:textStyle="bold" />
 
@@ -238,7 +238,7 @@
                 android:layout_marginBottom="20dp"
                 android:background="@color/colorAccent"
                 android:text="Add Trip"
-                android:textColor="@color/White" />
+                android:textColor="@android:color/white" />
 
         </LinearLayout>
 
