@@ -42,11 +42,6 @@
             android:parentActivityName=".activities.HomeActivity"
             android:theme="@style/AppTheme" />
 
-        <service
-            android:name=".MyService"
-            android:enabled="true"
-            android:exported="true" />
-
         <activity
             android:name=".activities.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -67,7 +62,7 @@
 
         </activity>
 
-        <receiver android:name=".reciever.MyReceiver" />
+        <receiver android:name=".reciever.TripAlarmReceiver" />
 
     </application>
 

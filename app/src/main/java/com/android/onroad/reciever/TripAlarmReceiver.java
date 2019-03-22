@@ -9,7 +9,7 @@ import com.android.onroad.activities.DilogActivity;
 import com.android.onroad.beans.Trip;
 import com.android.onroad.utils.Constants;
 
-public class MyReceiver extends BroadcastReceiver {
+public class TripAlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {

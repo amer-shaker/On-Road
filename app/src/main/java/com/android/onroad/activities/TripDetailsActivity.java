@@ -58,7 +58,6 @@ public class TripDetailsActivity extends AppCompatActivity {
 
             mapStatusTxt.setText(trip.getStatus());
             type.setText(trip.getType());
-            Toast.makeText(this, ""+trip.getNotes().get(0), Toast.LENGTH_SHORT).show();
 
             tvDate.setText(trip.getTripDate());
             tvStartPoint.setText(trip.getStartPoint());
@@ -71,7 +70,6 @@ public class TripDetailsActivity extends AppCompatActivity {
                 // }
                 mapStatusTxt.setText(trip.getStatus());
                 type.setText(trip.getType());
-                Toast.makeText(this, "" + trip.getNotes().get(0), Toast.LENGTH_SHORT).show();
                 // trip.setDate(trip.getTime());
 
 
