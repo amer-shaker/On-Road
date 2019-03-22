@@ -5,10 +5,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
+import android.os.Bundle;
+import android.util.Log;
 
 import com.android.onroad.R;
 import com.android.onroad.beans.Trip;
-import com.android.onroad.utils.VollyDao;
+import com.android.onroad.utils.VolleyDao;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -36,7 +38,7 @@ public class HistoryTripsMapActivty extends FragmentActivity implements OnMapRea
     private ProgressDialog mProgressDialog;
     private int mRequests;
     private RequestQueue mRequestQueue;
-    Trip myTrip;
+
 
     //should replaced with  array of history trips
     ArrayList<Trip> trips = new ArrayList<>();
@@ -46,7 +48,7 @@ public class HistoryTripsMapActivty extends FragmentActivity implements OnMapRea
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_trips_map_activty);
-        mRequestQueue = VollyDao.getRequestQueue(this);
+        mRequestQueue = VolleyDao.getRequestQueue(this);
         final SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
 
@@ -79,6 +81,8 @@ public class HistoryTripsMapActivty extends FragmentActivity implements OnMapRea
                 mProgressDialog = new ProgressDialog(HistoryTripsMapActivty.this);
                 mProgressDialog.setMessage("Loading...");
                 mProgressDialog.setIndeterminate(true);
+
+                mProgressDialog.setCancelable(true);
                 mProgressDialog.show();
             }
         }, 200);
@@ -130,12 +134,13 @@ public class HistoryTripsMapActivty extends FragmentActivity implements OnMapRea
                             new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
+                                    Log.e("VollyError",error.getCause()+"");
                                 }
                             }
                     )
             );
             mRequests++;
-            //String[] coordinates = myTrip.getStartCoordinates().split(",");
+
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(trip.getStartPointLatitude(), trip.getStartPointLongitude()), 10f));
 
         }
@@ -147,9 +152,11 @@ public class HistoryTripsMapActivty extends FragmentActivity implements OnMapRea
                 mRequests--;
                 if (mRequests == 0) {
 
-//                    mProgressDialog.dismiss();
+                    if( mProgressDialog != null)
+                        mProgressDialog.dismiss();
                 }
-                //  mProgressDialog.dismiss();
+
+
             }
         });
 

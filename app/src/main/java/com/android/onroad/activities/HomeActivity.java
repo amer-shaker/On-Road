@@ -2,6 +2,7 @@ package com.android.onroad.activities;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -98,10 +99,13 @@ public class HomeActivity extends AppCompatActivity
         TextView usernameTextView = (TextView) header.findViewById(R.id.username_text_view);
         TextView emailTextView = (TextView) header.findViewById(R.id.email_text_view);
 
-        Glide.with(profileImageView.getContext())
-                .load(mUser.getPhotoUrl())
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(profileImageView);
+        Uri photoUrl = mUser.getPhotoUrl();
+        if (photoUrl != null) {
+            Glide.with(profileImageView.getContext())
+                    .load(photoUrl)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(profileImageView);
+        }
 
         if (mUser != null) {
             usernameTextView.setText(mUser.getDisplayName());

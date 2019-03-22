@@ -90,7 +90,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="24dp"
                     android:gravity="center"
                     android:text="@string/register"
                     android:textColor="@android:color/holo_blue_dark"
@@ -103,7 +103,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/link_register"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="8dp"
                     android:gravity="center"
                     android:text="@string/forgot_password"
                     android:textColor="@android:color/holo_blue_dark"
@@ -116,9 +116,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/forgot_password"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="8dp"
                     android:text="@string/resend_verification_email"
-                    android:textColor="@android:color/holo_blue_dark"
+                    android:textColor="@color/primaryText"
                     android:textSize="16sp"
                     tools:targetApi="ice_cream_sandwich" />
 
@@ -126,8 +126,8 @@
                     android:id="@+id/google_sign_in_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
                     android:layout_below="@id/resend_verification_email"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginTop="16dp" />
 
             </RelativeLayout>

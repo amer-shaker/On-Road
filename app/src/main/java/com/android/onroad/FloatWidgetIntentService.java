@@ -15,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import com.android.onroad.beans.Note;
 import com.android.onroad.beans.Trip;
 import com.android.onroad.utils.Constants;
 
@@ -32,46 +31,27 @@ public class FloatWidgetIntentService extends Service {
 
     float initialTouchY = 0,initialTouchX = 0;
     long time_start = 0, time_end = 0;
-    ArrayList<String> myNotes;
-    ArrayList<Note> notes;
+
     Trip trip;
 
     public FloatWidgetIntentService() {
 
     }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        int i=super.onStartCommand(intent, flags, startId);
-        trip = intent.getExtras().getParcelable(Constants.TRIP);
-        notes=trip.getNotes();
-
-
-
-
-        ImageView closeButtonCollapsed = (ImageView) floatView.findViewById(R.id.close_btn);
-        closeButtonCollapsed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FloatWidgetIntentService.this.stopSelf();
-                 mWindowManager.removeView(floatView);
-            }
-        });
-
-       return i;
-    }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
+    public IBinder onBind(Intent intent) {
         floatView = LayoutInflater.from(this).inflate(R.layout.float_widget, null);
         myNoteslst = floatView.findViewById(R.id.notesListForWidget);
+        trip = intent.getExtras().getParcelable(Constants.TRIP);
 
-        myNotes = new ArrayList<>();
 
-        for (int j = 0; j < notes.size(); j++) {
-            myNotes.add(notes.get(j).getNote());
+        ArrayList<String> myNotes = new ArrayList<>();
+
+        for (int i = 0; i < trip.getNotes().size(); i++) {
+            myNotes.add(trip.getNotes().get(i).getNote());
         }
+
         ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, myNotes);
         myNoteslst.setAdapter(adapter);
 
@@ -152,10 +132,14 @@ public class FloatWidgetIntentService extends Service {
             }
         });
 
-    }
-
-    @Override
-    public IBinder onBind(Intent intent) {
+        ImageView closeButtonCollapsed = (ImageView) floatView.findViewById(R.id.close_btn);
+        closeButtonCollapsed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FloatWidgetIntentService.this.stopSelf();
+               // mWindowManager.removeView(mFloatingWidget);
+            }
+        });
 
         return null;
     }

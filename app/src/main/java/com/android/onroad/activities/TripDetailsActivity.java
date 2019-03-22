@@ -66,16 +66,16 @@ public class TripDetailsActivity extends AppCompatActivity {
                  }
                 mapStatusTxt.setText(trip.getStatus());
                 type.setText(trip.getType());
-                Toast.makeText(this, "" + trip.getNotes().get(0), Toast.LENGTH_SHORT).show();
+if(trip.getNotes()!=null) {
+    ArrayList<String> myNotes = new ArrayList<>();
 
-                ArrayList<String> myNotes = new ArrayList<>();
+    for (int i = 0; i < trip.getNotes().size(); i++) {
+        myNotes.add(trip.getNotes().get(i).getNote());
+    }
 
-                for (int i = 0; i < trip.getNotes().size(); i++) {
-                    myNotes.add(trip.getNotes().get(i).getNote());
-                }
-
-                ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, myNotes);
-                noteList.setAdapter(adapter);
+    ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, myNotes);
+    noteList.setAdapter(adapter);
+}
 
                 startTripDetailsBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
