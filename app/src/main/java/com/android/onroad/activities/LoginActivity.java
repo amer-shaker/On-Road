@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.android.onroad.R;
 import com.android.onroad.beans.UserBean;
+import com.android.onroad.fragments.ResendVerificationDialogFragment;
 import com.android.onroad.utils.Validation;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -113,7 +114,8 @@ public class LoginActivity extends AppCompatActivity {
         resendEmailVerification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ResendVerificationDialogFragment dialog = new ResendVerificationDialogFragment();
+                dialog.show(getSupportFragmentManager(), "dialog_resend_email_verification");
             }
         });
 

@@ -57,7 +57,7 @@
 
         <activity
             android:name=".activities.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
