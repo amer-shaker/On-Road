@@ -58,17 +58,7 @@ TextView doneCheckBox;
             tvTripame.setText(trip.getName());
 
             Date mydt= new Date();
-           /* String date=mydt.getDay()+"-" +(mydt.getMonth()+1 )+"-"+(mydt.getYear()+1900);
 
-            tvDate.setText(date);
-            tvStartPoint.setText(trip.getStartPoint());
-            tvEndPoint.setText(trip.getEndPoint());
-            startTimeTxt.setText(mydt.getHours() + ":"+mydt.getMinutes());
-            if(trip.getStatus().equals("done")) {
-                doneCheckBox.setSelected(true);
-            doneCheckBox.setVisibility(View.VISIBLE);*/
-
-           // }
             mapStatusTxt.setText(trip.getStatus());
             type.setText(trip.getType());
             Toast.makeText(this, ""+trip.getNotes().get(0), Toast.LENGTH_SHORT).show();

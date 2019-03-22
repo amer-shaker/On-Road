@@ -15,62 +15,73 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+
+
             <LinearLayout
+                android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginTop="5dp"
-                    android:text="Trip Name"
-                    android:textColor="@color/Black"
-                    android:textSize="18dp"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/txtTripName"
+                android:orientation="vertical"
+                android:background="@drawable/button_shape"
+                >
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:ems="10" />
+                    android:orientation="vertical">
 
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp">
+
+
+                    <EditText
+                        android:id="@+id/txtTripName"
+                        android:hint="Trip Name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:ems="10" />
+                    </android.support.design.widget.TextInputLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Start Point"
+                        android:textColor="@color/Black"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+
+                    <fragment
+                        android:id="@+id/txtStartPoint"
+                        android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+                        android:layout_width="341dp"
+                        android:layout_height="44dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="20dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Start Point"
-                    android:textColor="@color/Black"
-                    android:textSize="18dp"
-                    android:textStyle="bold" />
-
-                <fragment
-                    android:id="@+id/txtStartPoint"
-                    android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
-                    android:layout_width="341dp"
-                    android:layout_height="44dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginBottom="20dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -94,6 +105,8 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_margin="10dp"
+                android:background="@drawable/button_shape"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -114,18 +127,23 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="30dp"
                     android:orientation="horizontal"
-                    android:textSize="20dp">
+                    android:weightSum="2"
+                    >
 
                     <Button
                         android:id="@+id/btnAddDate"
-                        android:layout_width="60dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="60dp"
+
                         android:layout_marginLeft="80dp"
                         android:background="@drawable/calendar" />
 
                     <Button
                         android:id="@+id/btnAddTime"
-                        android:layout_width="60dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1
+"
                         android:layout_height="60dp"
                         android:layout_marginLeft="80dp"
                         android:background="@drawable/clock" />
@@ -158,14 +176,19 @@
 
 
             <LinearLayout
+
+                android:background="@drawable/button_shape"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:orientation="horizontal">
+                android:layout_margin="10dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
 
                 <Spinner
+
                     android:id="@+id/spnRepeat"
-                    android:layout_width="150dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="40dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="15dp"
@@ -176,8 +199,11 @@
                     android:textAlignment="center" />
 
                 <Spinner
+
                     android:id="@+id/spnStatus"
-                    android:layout_width="150dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+
                     android:layout_height="40dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="10dp"
@@ -192,40 +218,50 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_margin="10dp"
+                android:background="@drawable/button_shape">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginTop="5dp"
-                    android:text="Add Note"
-                    android:textColor="@color/Black"
-                    android:textSize="18dp"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/txtAddNote"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:ems="10" />
+                    android:orientation="horizontal"
+                    android:weightSum="5">
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:onClick="addNote" />
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_weight="3.5">
+
+                    <EditText
+                        android:id="@+id/txtAddNote"
+                        android:layout_width="match_parent"
+                        android:hint="Enter Note"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:ems="10" />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+
+
+                        android:layout_gravity="center"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight=".75"
+                        android:background="@drawable/ic_menu_send"
+                        android:onClick="addNote" />
+                </LinearLayout>
+
+
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/myScrollView_add"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" />
+
 
             <Button
                 android:id="@+id/btnAddTrip"
@@ -236,7 +272,7 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginRight="50dp"
                 android:layout_marginBottom="20dp"
-                android:background="@color/colorAccent"
+                android:background="@drawable/mybutton"
                 android:text="Add Trip"
                 android:textColor="@color/White" />
 

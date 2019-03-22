@@ -60,7 +60,7 @@ public class AddTripActivity extends AppCompatActivity {
     private Date myDateCheck;
     boolean isUsed = false;
 
-    private String myStartPoint = "", myEndPoint = "", sLat = "", sLong = "", ePoint = "", eLat = "", eLong = "";
+    private String myStartPoint = "", myEndPoint = "";
     double mysLat, mysLong, myeLat, myeLong;
     private ArrayList<Note> myArrayNote = new ArrayList<>();
 
@@ -144,13 +144,13 @@ public class AddTripActivity extends AppCompatActivity {
                     Toast.makeText(AddTripActivity.this, "enter the trip name", Toast.LENGTH_SHORT).show();
                 }
 
-                if (myStartPoint.equals(""))
+                else if (myStartPoint.equals(""))
                     Toast.makeText(AddTripActivity.this, "enter Start Point", Toast.LENGTH_SHORT).show();
 
-                if (myEndPoint.equals(""))
+              else     if (myEndPoint.equals(""))
                     Toast.makeText(AddTripActivity.this, "enter end Point", Toast.LENGTH_SHORT).show();
 
-                if (txtDate.getText().equals(""))
+              else   if (txtDate.getText().equals(""))
                     Toast.makeText(AddTripActivity.this, "enter Date", Toast.LENGTH_SHORT).show();
 
                 if (txtTime.getText().equals(""))
@@ -336,8 +336,7 @@ public class AddTripActivity extends AppCompatActivity {
                     LatLng myLatLong = place.getLatLng();
                     mysLat = myLatLong.latitude;
                     mysLong = myLatLong.longitude;
-                    sLat = mysLat + "";
-                    sLong = mysLong + "";
+
                 }
 
                 @Override
@@ -364,8 +363,7 @@ public class AddTripActivity extends AppCompatActivity {
                     LatLng myLatLong = place.getLatLng();
                     myeLat = myLatLong.latitude;
                     myeLong = myLatLong.longitude;
-                    eLat = myeLat + "";
-                    eLong = myeLong + "";
+
                 }
 
                 @Override
