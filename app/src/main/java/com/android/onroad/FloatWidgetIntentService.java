@@ -47,10 +47,14 @@ public class FloatWidgetIntentService extends Service {
 
 
         ArrayList<String> myNotes = new ArrayList<>();
+        if (trip.getNotes()!=null){
+            for (int i = 0; i < trip.getNotes().size(); i++) {
+                myNotes.add(trip.getNotes().get(i).getNote());
+            }
 
-        for (int i = 0; i < trip.getNotes().size(); i++) {
-            myNotes.add(trip.getNotes().get(i).getNote());
         }
+
+
 
         ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, myNotes);
         myNoteslst.setAdapter(adapter);

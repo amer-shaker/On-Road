@@ -122,8 +122,8 @@ public class Utility {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(context)) {
 
-
             Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+
                     Uri.parse("package:" + context.getPackageName()));
             ((AppCompatActivity) context).startActivityForResult(intent, 1);
         } else {
@@ -132,11 +132,13 @@ public class Utility {
 
             context.bindService(intent, myConnection, Context.BIND_AUTO_CREATE);
 
-            String uri = ("http://maps.google.com/maps/dir?saddr=" + trip.getStartPoint() + "&daddr=" + trip.getEndPoint());
 
-            intent.setPackage("com.google.android.apps.maps");
+            Intent mapIntent = new Intent(android.content.Intent.ACTION_VIEW,
+                    Uri.parse("http://maps.google.com/maps/dir?saddr=" + trip.getStartPoint() + "&daddr=" + trip.getEndPoint()));
+            mapIntent.setPackage("com.google.android.apps.maps");
+            context.startActivity(mapIntent);
 
-            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)));
+
         }
     }
 
