@@ -8,10 +8,6 @@
             android:id="@+id/nav_account"
             android:icon="@drawable/ic_menu_account"
             android:title="Account" />
-        <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
     </group>
 
     <item android:title="Communicate">

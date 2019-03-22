@@ -143,8 +143,7 @@ public class HomeActivity extends AppCompatActivity
         if (id == R.id.nav_account) {
             // Handle the account action
             startActivity(new Intent(this, EditAccount.class));
-        } else if (id == R.id.nav_camera) {
-        }
+        } 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

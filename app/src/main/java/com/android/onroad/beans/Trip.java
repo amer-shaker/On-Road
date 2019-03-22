@@ -21,35 +21,35 @@ public class Trip implements Parcelable {
     private String status;
     private String startPoint;
     private String endPoint;
+    private String tripDate;
     private double startPointLatitude;
     private double startPointLongitude;
     private double endPointLatitude;
     private double endPointLongitude;
-    private Date date;
     private int alarmId;
     private long time;
+    private Date date;
     private ArrayList<Note> notes;
 
     public Trip() {
 
     }
 
-    public Trip(String tripId, String name, String type, String status, String startPoint, String endPoint,
-                double startPointLatitude, double startPointLongitude, double endPointLatitude, double endPointLongitude,
-                Date date, int alarmId, long time, ArrayList<Note> notes) {
+    public Trip(String tripId, String name, String type, String status, String startPoint, String endPoint, String tripDate, double startPointLatitude, double startPointLongitude, double endPointLatitude, double endPointLongitude, int alarmId, long time, Date date, ArrayList<Note> notes) {
         this.tripId = tripId;
         this.name = name;
         this.type = type;
         this.status = status;
         this.startPoint = startPoint;
         this.endPoint = endPoint;
+        this.tripDate = tripDate;
         this.startPointLatitude = startPointLatitude;
         this.startPointLongitude = startPointLongitude;
         this.endPointLatitude = endPointLatitude;
         this.endPointLongitude = endPointLongitude;
-        this.date = date;
         this.alarmId = alarmId;
         this.time = time;
+        this.date = date;
         this.notes = notes;
     }
 
@@ -60,6 +60,7 @@ public class Trip implements Parcelable {
         status = in.readString();
         startPoint = in.readString();
         endPoint = in.readString();
+        tripDate = in.readString();
         startPointLatitude = in.readDouble();
         startPointLongitude = in.readDouble();
         endPointLatitude = in.readDouble();
@@ -80,6 +81,18 @@ public class Trip implements Parcelable {
             return new Trip[size];
         }
     };
+
+    public static String getUpcomingTrip() {
+        return UPCOMING_TRIP;
+    }
+
+    public static String getPastTrip() {
+        return PAST_TRIP;
+    }
+
+    public static String getCanceledTrip() {
+        return CANCELED_TRIP;
+    }
 
     public String getTripId() {
         return tripId;
@@ -129,6 +142,14 @@ public class Trip implements Parcelable {
         this.endPoint = endPoint;
     }
 
+    public String getTripDate() {
+        return tripDate;
+    }
+
+    public void setTripDate(String tripDate) {
+        this.tripDate = tripDate;
+    }
+
     public double getStartPointLatitude() {
         return startPointLatitude;
     }
@@ -161,14 +182,6 @@ public class Trip implements Parcelable {
         this.endPointLongitude = endPointLongitude;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     public int getAlarmId() {
         return alarmId;
     }
@@ -183,6 +196,14 @@ public class Trip implements Parcelable {
 
     public void setTime(long time) {
         this.time = time;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public ArrayList<Note> getNotes() {
@@ -201,7 +222,6 @@ public class Trip implements Parcelable {
         return endPointLatitude + "," + endPointLongitude;
     }
 
-
     @Override
     public int describeContents() {
         return 0;
@@ -215,6 +235,7 @@ public class Trip implements Parcelable {
         dest.writeString(status);
         dest.writeString(startPoint);
         dest.writeString(endPoint);
+        dest.writeString(tripDate);
         dest.writeDouble(startPointLatitude);
         dest.writeDouble(startPointLongitude);
         dest.writeDouble(endPointLatitude);

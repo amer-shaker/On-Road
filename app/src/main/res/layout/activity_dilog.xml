@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent">
+    android:background="@color/colorPrimary">
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -22,7 +22,7 @@
             android:layout_marginEnd="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
-            app:srcCompat="@drawable/anothermap" />
+            app:srcCompat="@drawable/map_detail" />
 
         <TextView
             android:id="@+id/tripNameInDialog"
@@ -37,8 +37,10 @@
             android:layout_marginBottom="5dp"
             android:layout_toRightOf="@id/imgTrip"
             android:background="@android:color/white"
+            android:gravity="center"
             android:text="Trip Name"
-            android:textSize="35sp" />
+            android:textColor="@android:color/black"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/textDialogBody"

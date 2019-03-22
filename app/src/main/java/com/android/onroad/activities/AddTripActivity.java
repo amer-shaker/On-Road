@@ -48,30 +48,23 @@ import java.util.Locale;
 public class AddTripActivity extends AppCompatActivity {
 
     private static final String TAG = "AddTripActivity";
-
-
+    PlaceAutocompleteFragment autocompleteFragment1, autocompleteFragment2;
+    boolean isUsed = false;
+    double mysLat, mysLong, myeLat, myeLong;
+    AutocompleteFilter autocompleteFilter;
     private Button btnTimePicker, btnDatePicker, addTripButton;
     private TextView txtDate, txtTime;
     private Spinner spnRepeat, spnStatus;
-    PlaceAutocompleteFragment autocompleteFragment1, autocompleteFragment2;
+
     private EditText tripName, myNote;
     private Date date;
     private Date myDateCheck;
-    boolean isUsed = false;
-
     private String myStartPoint = "", myEndPoint = "", sLat = "", sLong = "", ePoint = "", eLat = "", eLong = "";
-    double mysLat, mysLong, myeLat, myeLong;
     private ArrayList<Note> myArrayNote = new ArrayList<>();
-
     private Date myDate = new Date();
-
     private Trip editObj;
-    private String myStatus, myRepeat;
-
-
+    private String myStatus, myRepeat, tripTime, tripDate;
     private String myTripName;
-    AutocompleteFilter autocompleteFilter;
-
     // Firebase instance variables
     private FirebaseAuth mFirebaseAuth;
     private FirebaseDatabase mFirebaseDatabase;
@@ -104,7 +97,6 @@ public class AddTripActivity extends AppCompatActivity {
             autocompleteFragment1.setText(editObj.getStartPoint());
             autocompleteFragment2.setText(editObj.getEndPoint());
             editObj.setDate(new Date(editObj.getTime()));
-
             if (myDate != null)
                 Toast.makeText(this, "my date not null", Toast.LENGTH_SHORT).show();
             else
@@ -158,6 +150,7 @@ public class AddTripActivity extends AppCompatActivity {
                     myTripName = tripName.getText().toString();
                     trip.setName(myTripName);
                     trip.setTime(myDate.getTime());
+                    trip.setTripDate(tripDate);
                     trip.setEndPoint(myEndPoint);
                     trip.setStartPoint(myStartPoint);
                     trip.setEndPointLatitude(myeLat);
@@ -172,15 +165,12 @@ public class AddTripActivity extends AppCompatActivity {
                     int id = (int) (myDate.getTime() + myDate.getMonth() + myDate.getYear() + myDate.getSeconds());
                     trip.setAlarmId(id);
                     if (isUsed) {
-                        if (trip != null) {
-                            Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(),
-                                    myDate.getDate() - Calendar.getInstance().get(Calendar.DAY_OF_YEAR), trip.getAlarmId());
-                        }
-                    } else {
-                        if (trip != null)
-                            Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(),
-                                    myDate.getDate(), id);
+                        Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(),
+                                myDate.getDate() - Calendar.getInstance().get(Calendar.DAY_OF_YEAR), trip.getAlarmId());
 
+                    } else {
+                        Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(),
+                                myDate.getDate(), id);
                     }
 
                     if (!isUsed) {
@@ -248,6 +238,7 @@ public class AddTripActivity extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         txtTime.setText(selectedHour + ":" + selectedMinute);
+                        tripTime = selectedHour + ":" + selectedMinute;
                         myDate = new Date();
                         myDate.setHours(selectedHour);
                         myDate.setMinutes(selectedMinute);
@@ -290,6 +281,7 @@ public class AddTripActivity extends AppCompatActivity {
                                         Toast.makeText(view.getContext(), "Enter Valid Date", Toast.LENGTH_SHORT).show();
                                     } else {
                                         txtDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                                        tripDate = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
                                         myDate.setMonth(monthOfYear + 1);
                                         myDate.setYear(year);
                                         myDate.setDate(dayOfMonth);
@@ -297,7 +289,7 @@ public class AddTripActivity extends AppCompatActivity {
                                 }
                             }
                         }, mYear, mMonth, mDay);
-//                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
                 datePickerDialog.show();
             }
         });
