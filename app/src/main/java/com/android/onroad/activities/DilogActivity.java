@@ -37,7 +37,7 @@ public class DilogActivity extends AppCompatActivity {
         btnLater = findViewById(R.id.btnLater);
         btnCancel = findViewById(R.id.btnCancel);
         tvTripName = findViewById(R.id.tripNameInDialog);
-        String status = getIntent().getStringExtra(Constants.FIRE_SOUND_STATUS);
+        final String status = getIntent().getStringExtra(Constants.FIRE_SOUND_STATUS);
 
         tvTripName.setText(trip.getName());
 
@@ -54,14 +54,12 @@ public class DilogActivity extends AppCompatActivity {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // adding intent to move to trip and start
 
+                trip.setStatus("Done");
+                updateTrip(trip);
 
                 Utility.launchMap(DilogActivity.this, trip);
-                if (myPlayer != null) {
-                    myPlayer.stop();
-                }
-                finish();
+               closeSound();
             }
         });
         btnLater.setOnClickListener(new View.OnClickListener() {
@@ -69,12 +67,13 @@ public class DilogActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Utility.pushNotification(DilogActivity.this, trip);
-                Log.i("trip_name dialoyge", trip.getName());
+                trip.setStatus("Upcoming");
+                updateTrip(trip);
 
-                if (myPlayer != null) {
-                    myPlayer.stop();
-                }
-                finish();
+                Log.i("trip_name dialog", trip.getName());
+
+               closeSound();
+
 
             }
         });
@@ -82,10 +81,9 @@ public class DilogActivity extends AppCompatActivity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (myPlayer != null) {
-                    myPlayer.stop();
-                }
-                finish();
+                trip.setStatus("Canceled");
+                updateTrip(trip);
+                closeSound();
             }
         });
 
@@ -148,6 +146,13 @@ public class DilogActivity extends AppCompatActivity {
                     .child("notes")
                     .setValue(trip.getNotes());
         }
+    }
+    public  void closeSound(){
+
+        if (myPlayer != null) {
+            myPlayer.stop();
+        }
+        finish();
     }
 
 

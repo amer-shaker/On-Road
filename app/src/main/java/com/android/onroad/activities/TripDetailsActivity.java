@@ -66,14 +66,10 @@ TextView doneCheckBox;
                 doneCheckBox.setSelected(true);
                 doneCheckBox.setVisibility(View.VISIBLE);
 
-                // }
+                 }
                 mapStatusTxt.setText(trip.getStatus());
                 type.setText(trip.getType());
                 Toast.makeText(this, "" + trip.getNotes().get(0), Toast.LENGTH_SHORT).show();
-                // trip.setDate(trip.getTime());
-
-
-                // Toast.makeText(this, arrayOfNotes.get(0).getNote()+" size of notes ", Toast.LENGTH_SHORT).show();
 
                 ArrayList<String> myNotes = new ArrayList<>();
 
@@ -102,4 +98,3 @@ TextView doneCheckBox;
                 });
             }
         }}
-}

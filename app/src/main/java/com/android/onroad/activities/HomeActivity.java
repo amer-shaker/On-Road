@@ -79,6 +79,7 @@ public class HomeActivity extends AppCompatActivity
             emailTextView.setText(mUser.getEmail());
         }
 
+
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         setupViewPager(viewPager);
 

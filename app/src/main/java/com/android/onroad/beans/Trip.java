@@ -12,7 +12,6 @@ import java.util.Date;
 public class Trip implements Parcelable {
 
     public static final String UPCOMING_TRIP = "Upcoming",PAST_TRIP = "Past",CANCELED_TRIP = "Canceled";
-
     private String tripId,name,type,status,startPoint,endPoint,time,tripDate;
     private double startPointLatitude,startPointLongitude,endPointLatitude,endPointLongitude;
     private Date date;
