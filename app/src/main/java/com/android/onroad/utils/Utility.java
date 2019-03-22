@@ -109,12 +109,6 @@ public class Utility {
         context.startActivity(intent);
     }
 
-<<<<<<< HEAD
-//    public static void startActivity(Context mContext, Activity mActivity) {
-//        Intent intent = new Intent(mContext, mActivity.);
-//        startActivity(intent);
-//    }
-=======
     public static void cancelAlarm(Context context, int alarmId) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent myIntent = new Intent(context, MyReceiver.class);
@@ -122,5 +116,4 @@ public class Utility {
                 context, alarmId, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.cancel(pendingIntent);
     }
->>>>>>> b1398c18ba2da3788343befc2d10c4c63020f96f
 }

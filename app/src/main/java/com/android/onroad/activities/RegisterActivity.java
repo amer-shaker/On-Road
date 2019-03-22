@@ -20,7 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.onroad.R;
-import com.android.onroad.beans.UserModel;
+import com.android.onroad.beans.UserBean;
 import com.android.onroad.utils.Utility;
 import com.android.onroad.utils.Validation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -73,6 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
         // Initialize Firebase Auth
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
+        //mFirebaseDatabase.setPersistenceEnabled(true);
 
         mUsersDatabaseReference = mFirebaseDatabase.getReference().child(getString(R.string.users_database_node));
 
@@ -226,7 +227,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                             sendVerificationEmail();
 
-                            UserModel user = new UserModel();
+                            UserBean user = new UserBean();
                             user.setUserId(mFirebaseAuth.getCurrentUser().getUid());
                             user.setName(email.substring(0, email.indexOf("@")));
                             user.setPhone("1");

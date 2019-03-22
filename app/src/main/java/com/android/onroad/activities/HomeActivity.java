@@ -20,12 +20,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.onroad.R;
-import com.android.onroad.fragments.CanceledFragment;
+import com.android.onroad.fragments.CanceledTripsFragment;
 import com.android.onroad.fragments.PastTripsFragment;
 import com.android.onroad.fragments.UpcomingTripsFragment;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -73,8 +76,14 @@ public class HomeActivity extends AppCompatActivity
 
         View header = navigationView.getHeaderView(0);
 
+        ImageView profileImageView = (ImageView) header.findViewById(R.id.profile_image_view);
         TextView usernameTextView = (TextView) header.findViewById(R.id.username_text_view);
         TextView emailTextView = (TextView) header.findViewById(R.id.email_text_view);
+
+        Glide.with(profileImageView.getContext())
+                .load(mUser.getPhotoUrl())
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(profileImageView);
 
         if (mUser != null) {
             usernameTextView.setText(mUser.getDisplayName());
@@ -132,9 +141,9 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_account) {
+            // Handle the account action
             startActivity(new Intent(this, EditAccount.class));
         } else if (id == R.id.nav_camera) {
-            // Handle the camera action
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -146,7 +155,7 @@ public class HomeActivity extends AppCompatActivity
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new UpcomingTripsFragment(), getString(R.string.upcoming_trips_fragment));
         adapter.addFragment(new PastTripsFragment(), getString(R.string.past_trips_fragment));
-        adapter.addFragment(new CanceledFragment(), getString(R.string.canceled_trips_fragments));
+        adapter.addFragment(new CanceledTripsFragment(), getString(R.string.canceled_trips_fragments));
         viewPager.setAdapter(adapter);
     }
 

@@ -22,20 +22,14 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="CustomTextViewNavBar" parent="@android:style/TextAppearance.Widget.TextView">
-
         <item name="android:layout_gravity">center</item>
         <item name="android:gravity">center</item>
         <item name="android:shadowDx">1</item>
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">2</item>
-
-
     </style>
 
 </resources>
