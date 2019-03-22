@@ -173,7 +173,7 @@ public class AddTripActivity extends AppCompatActivity {
 
                     if (isUsed) {
                         Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(),
-                                myDate.getDate()-Calendar.getInstance().get(Calendar.DAY_OF_YEAR), trip.getAlarmId());
+                                myDate.getDate()-Calendar.getInstance().get(Calendar.DAY_OF_MONTH), trip.getAlarmId());
                     } else {
                         Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(),
                                 myDate.getDate()-Calendar.getInstance().get(Calendar.DAY_OF_MONTH), id);
@@ -296,6 +296,9 @@ public class AddTripActivity extends AppCompatActivity {
                                 }
                             }
                         }, mYear, mMonth, mDay);
+
+
+                // comment this line beause issue on my device abdo
                 // datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
                 datePickerDialog.show();
             }
