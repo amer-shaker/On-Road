@@ -49,35 +49,26 @@ import java.util.Locale;
 public class AddTripActivity extends AppCompatActivity {
 
     private static final String TAG = "AddTripActivity";
-
-
+    PlaceAutocompleteFragment autocompleteFragment1, autocompleteFragment2;
+    boolean isUsed = false;
+    double mysLat, mysLong, myeLat, myeLong;
+    AutocompleteFilter autocompleteFilter;
     private Button btnTimePicker, btnDatePicker, addTripButton;
     private TextView txtDate, txtTime;
     private Spinner spnRepeat, spnStatus;
-    PlaceAutocompleteFragment autocompleteFragment1,autocompleteFragment2;
     private EditText tripName, myNote;
     private Date date;
     private Date myDateCheck;
-    boolean isUsed = false;
-
     private String myStartPoint = "", myEndPoint = "", sLat = "", sLong = "", ePoint = "", eLat = "", eLong = "";
-    double mysLat, mysLong, myeLat, myeLong;
     private ArrayList<Note> myArrayNote = new ArrayList<>();
-
     private Date myDate = new Date();
-
     private Trip editObj;
-    private String myStatus, myRepeat;
-
-
+    private String myStatus, myRepeat, tripTime, tripDate;
     private String myTripName;
-    AutocompleteFilter autocompleteFilter;
-
     // Firebase instance variables
     private FirebaseAuth mFirebaseAuth;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mTripsDatabaseReference;
-
 
 
     @Override
@@ -107,7 +98,7 @@ public class AddTripActivity extends AppCompatActivity {
             autocompleteFragment2.setText(editObj.getEndPoint());
             editObj.setDate(new Date(Long.parseLong(editObj.getTime())));
 
-            Log.e("DDDDDDDDDDDDDDDDDD", editObj.getDate()+ "");
+            Log.e("DDDDDDDDDDDDDDDDDD", editObj.getDate() + "");
 
             if (myDate != null)
                 Toast.makeText(this, "my date not null", Toast.LENGTH_SHORT).show();
@@ -161,7 +152,8 @@ public class AddTripActivity extends AppCompatActivity {
                     trip.setTripId(tripId);
                     myTripName = tripName.getText().toString();
                     trip.setName(myTripName);
-                    trip.setTime(String.valueOf(myDate.getTime()));
+                    trip.setTime(tripTime);
+                    trip.setTripDate(tripDate);
                     trip.setEndPoint(myEndPoint);
                     trip.setStartPoint(myStartPoint);
                     trip.setEndPointLatitude(myeLat);
@@ -176,18 +168,16 @@ public class AddTripActivity extends AppCompatActivity {
                     int id = (int) (myDate.getTime() + myDate.getMonth() + myDate.getYear() + myDate.getSeconds());
                     trip.setAlarmId(id);
                     if (isUsed) {
-                        if (trip!=null) {
-                            Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(),
-                                    myDate.getDate() - Calendar.getInstance().get(Calendar.DAY_OF_YEAR), trip.getAlarmId());
-                        }
+                        Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(),
+                                myDate.getDate() - Calendar.getInstance().get(Calendar.DAY_OF_YEAR), trip.getAlarmId());
+
                     } else {
-                        if(trip!=null)
                         Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(),
                                 myDate.getDate(), id);
 
                     }
 
-                    if(!isUsed){
+                    if (!isUsed) {
 
 
                         mTripsDatabaseReference.child(mFirebaseAuth.getCurrentUser().getUid())
@@ -204,9 +194,7 @@ public class AddTripActivity extends AppCompatActivity {
                                 Toast.makeText(AddTripActivity.this, "Something, went wrong", Toast.LENGTH_SHORT).show();
                             }
                         });
-                    }
-
-                    else{
+                    } else {
 
                         updateTrip(trip);
                     }
@@ -254,6 +242,7 @@ public class AddTripActivity extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         txtTime.setText(selectedHour + ":" + selectedMinute);
+                        tripTime = selectedHour + ":" + selectedMinute;
                         myDate = new Date();
                         myDate.setHours(selectedHour);
                         myDate.setMinutes(selectedMinute);
@@ -296,6 +285,7 @@ public class AddTripActivity extends AppCompatActivity {
                                         Toast.makeText(view.getContext(), "Enter Valid Date", Toast.LENGTH_SHORT).show();
                                     } else {
                                         txtDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                                        tripDate=dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
                                         myDate.setMonth(monthOfYear + 1);
                                         myDate.setYear(year);
                                         myDate.setDate(dayOfMonth);
@@ -322,7 +312,6 @@ public class AddTripActivity extends AppCompatActivity {
         autocompleteFragment1.setFilter(autocompleteFilter);
 
 
-
         if (autocompleteFragment1 != null)
 
             autocompleteFragment1.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -347,8 +336,6 @@ public class AddTripActivity extends AppCompatActivity {
                 }
             });
         else Toast.makeText(this, "Problem with loading page", Toast.LENGTH_LONG).show();
-
-
 
 
         autocompleteFragment2.setFilter(autocompleteFilter);
