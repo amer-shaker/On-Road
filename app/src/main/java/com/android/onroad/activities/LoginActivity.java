@@ -375,16 +375,6 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    private void signOut() {
-        mFirebaseAuth.signOut();
-        mGoogleSignInClient.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                updateUI(null);
-            }
-        });
-    }
-
     private void updateUI(FirebaseUser user) {
         UserBean userBean = new UserBean();
 

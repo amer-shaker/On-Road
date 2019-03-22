@@ -182,7 +182,8 @@ public class AddTripActivity extends AppCompatActivity {
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        Toast.makeText(AddTripActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(AddTripActivity.this, "Successfully added", Toast.LENGTH_SHORT).show();
+                                        finish();
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -191,7 +192,6 @@ public class AddTripActivity extends AppCompatActivity {
                             }
                         });
                     } else {
-
                         updateTrip(trip);
                     }
                 }

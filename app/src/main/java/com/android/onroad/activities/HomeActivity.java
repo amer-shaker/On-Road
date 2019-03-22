@@ -29,6 +29,11 @@ import com.android.onroad.fragments.PastTripsFragment;
 import com.android.onroad.fragments.UpcomingTripsFragment;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -44,6 +49,9 @@ public class HomeActivity extends AppCompatActivity
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mUser;
 
+    // Google SignIn
+    private GoogleSignInClient mGoogleSignInClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +62,15 @@ public class HomeActivity extends AppCompatActivity
         // Initialize Firebase Auth
         mFirebaseAuth = FirebaseAuth.getInstance();
         mUser = mFirebaseAuth.getCurrentUser();
+
+        // Initialize Google SignIn Client
+        GoogleSignInOptions mGoogleSignInOptions = new GoogleSignInOptions
+                .Builder()
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        mGoogleSignInClient = GoogleSignIn.getClient(HomeActivity.this, mGoogleSignInOptions);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -124,9 +141,7 @@ public class HomeActivity extends AppCompatActivity
 
         switch (id) {
             case R.id.sign_out_menu:
-                // sign out
-                mFirebaseAuth.signOut();
-                redirectLoginScreen();
+                signOut();
                 return true;
             case R.id.action_settings:
                 return true;
@@ -143,11 +158,29 @@ public class HomeActivity extends AppCompatActivity
         if (id == R.id.nav_account) {
             // Handle the account action
             startActivity(new Intent(this, EditAccount.class));
-        } 
+        } else if (id == R.id.nav_sign_out) {
+            signOut();
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void signOut() {
+        mFirebaseAuth.signOut();
+        mGoogleSignInClient.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                redirectLoginScreen();
+            }
+        });
+    }
+
+    private void redirectLoginScreen() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -156,12 +189,6 @@ public class HomeActivity extends AppCompatActivity
         adapter.addFragment(new PastTripsFragment(), getString(R.string.past_trips_fragment));
         adapter.addFragment(new CanceledTripsFragment(), getString(R.string.canceled_trips_fragments));
         viewPager.setAdapter(adapter);
-    }
-
-    private void redirectLoginScreen() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
-        finish();
     }
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
