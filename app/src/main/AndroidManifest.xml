@@ -12,6 +12,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
@@ -20,6 +22,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service
+            android:name=".FloatWidgetIntentService"
+            android:exported="false"></service>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -28,15 +33,12 @@
         <activity
             android:name=".activities.HistoryTripsMapActivty"
             android:label="@string/title_activity_history_trips_map_activty" />
-
         <activity
             android:name=".activities.DilogActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
-
         <activity
             android:name=".activities.TripDetailsActivity"
             android:parentActivityName=".activities.HomeActivity" />
-
         <activity
             android:name=".activities.AddTripActivity"
             android:parentActivityName=".activities.HomeActivity"
@@ -50,25 +52,20 @@
         <activity
             android:name=".activities.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".activities.RegisterActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
-
         <activity
             android:name=".activities.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
         <receiver android:name=".reciever.MyReceiver" />
-
     </application>
 
 </manifest>

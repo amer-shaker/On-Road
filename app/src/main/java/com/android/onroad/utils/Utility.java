@@ -4,13 +4,20 @@ import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.net.Uri;
+import android.os.Build;
+import android.os.IBinder;
 import android.os.SystemClock;
+import android.provider.Settings;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.onroad.FloatWidgetIntentService;
 import com.android.onroad.R;
 import com.android.onroad.activities.DilogActivity;
 import com.android.onroad.beans.Trip;
@@ -21,7 +28,24 @@ import java.util.Calendar;
 import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class Utility {
+    static boolean mBound = false;
+    static FloatWidgetIntentService mService;
+    private  static ServiceConnection myConnection = new ServiceConnection() {
 
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            FloatWidgetIntentService binder = (FloatWidgetIntentService) service;
+            mService = binder.getService();
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+//            mBound = false;
+        }
+    };
     public static boolean doStringsMatch(String str1, String str2) {
         return str1.equals(str2);
     }
@@ -92,24 +116,32 @@ public class Utility {
     }
 
     public static void launchMap(Context context, Trip trip) {
-//            Uri gmmIntentUri = Uri.parse("https://www.google.com/maps/dir/?api=1&origin=18.519513,73.868315&destination=18.518496,
-// 73.879259&waypoints=18.520561,73.872435|18.519254,73.876614|18.52152,73.877327|18.52019,73.879935&travelmode=driving");
-//            Intent intent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-//            intent.setPackage("com.google.android.apps.maps");
-//            try {
-//                context.startActivity(intent);
-//            } catch (ActivityNotFoundException ex) {
-//                try {
-//                    Intent unrestrictedIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-//                    context.startActivity(unrestrictedIntent);
-//                } catch (ActivityNotFoundException innerEx) {
-//                    Toast.makeText(context, "Please install a maps application", Toast.LENGTH_LONG).show();
-//                }
-//            }
-        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                Uri.parse("http://maps.google.com/maps/dir?saddr=" + trip.getStartPoint() + "&daddr=" + trip.getEndPoint()));
-        intent.setPackage("com.google.android.apps.maps");
-        context.startActivity(intent);
+//
+//        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+//                Uri.parse("http://maps.google.com/maps/dir?saddr=" + trip.getStartPoint() + "&daddr=" + trip.getEndPoint()));
+//        intent.setPackage("com.google.android.apps.maps");
+//        context.startActivity(intent);
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(context)) {
+
+            //If the draw over permission is not available open the settings screen
+            //to grant the permission.
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + context.getPackageName()));
+            ((AppCompatActivity) context).startActivityForResult(intent, 1);
+        } else {
+            Intent intent = new Intent(context, FloatWidgetIntentService.class);
+            intent.putExtra(Constants.TRIP, trip);
+
+            context.bindService(intent, myConnection, Context.BIND_AUTO_CREATE);
+
+            String uri = ("http://maps.google.com/maps/dir?saddr=" + trip.getStartPoint() + "&daddr=" + trip.getEndPoint());
+
+            intent.setPackage("com.google.android.apps.maps");
+
+            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)));
+        }
     }
 
     public static void cancelAlarm(Context context, int alarmId) {

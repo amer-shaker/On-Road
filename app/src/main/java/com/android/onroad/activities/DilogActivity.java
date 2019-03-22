@@ -1,5 +1,6 @@
 package com.android.onroad.activities;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.onroad.FloatWidgetIntentService;
 import com.android.onroad.R;
 import com.android.onroad.beans.Trip;
 import com.android.onroad.utils.Constants;
@@ -55,7 +57,7 @@ public class DilogActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                trip.setStatus(Trip.PAST_TRIP);
+                trip.setStatus(Trip.DONE_TRIP);
                 updateTrip(trip);
 
                 Utility.launchMap(DilogActivity.this, trip);

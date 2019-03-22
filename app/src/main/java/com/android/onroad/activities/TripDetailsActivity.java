@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.onroad.FloatWidgetIntentService;
 import com.android.onroad.R;
 import com.android.onroad.beans.Trip;
 import com.android.onroad.utils.Constants;
@@ -81,6 +82,7 @@ public class TripDetailsActivity extends AppCompatActivity {
                     public void onClick(View v) {
 
                         Utility.launchMap(TripDetailsActivity.this, trip);
+
                     }
                 });
 

@@ -64,14 +64,14 @@ public class HomeActivity extends AppCompatActivity
         mUser = mFirebaseAuth.getCurrentUser();
 
         // Initialize Google SignIn Client
-
-        GoogleSignInOptions mGoogleSignInOptions = new GoogleSignInOptions
-                .Builder()
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-
-        mGoogleSignInClient = GoogleSignIn.getClient(HomeActivity.this, mGoogleSignInOptions);
+//
+//        GoogleSignInOptions mGoogleSignInOptions = new GoogleSignInOptions
+//                .Builder()
+//                .requestIdToken(getString(R.string.default_web_client_id))
+//                .requestEmail()
+//                .build();
+//
+//        mGoogleSignInClient = GoogleSignIn.getClient(HomeActivity.this, mGoogleSignInOptions);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
