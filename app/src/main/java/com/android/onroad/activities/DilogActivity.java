@@ -18,11 +18,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class DilogActivity extends AppCompatActivity {
+
     Button btnStart, btnLater, btnCancel;
     TextView tvTripName;
     MediaPlayer myPlayer;
-
-
 
     private FirebaseAuth mFirebaseAuth;
     private FirebaseDatabase mFirebaseDatabase;
@@ -55,8 +54,6 @@ public class DilogActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // adding intent to move to trip and start
-
-
                 Utility.launchMap(DilogActivity.this, trip);
                 if (myPlayer != null) {
                     myPlayer.stop();
@@ -96,7 +93,7 @@ public class DilogActivity extends AppCompatActivity {
 
 
     }
-     // TODO Update
+
     private void updateTrip(Trip trip) {
 
         FirebaseUser user = mFirebaseAuth.getCurrentUser();

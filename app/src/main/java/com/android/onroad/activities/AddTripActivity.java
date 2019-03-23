@@ -83,6 +83,58 @@ public class AddTripActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_trip);
         initializeViews();
 
+
+        autocompleteFilter = new AutocompleteFilter.Builder()
+                .setTypeFilter(Place.TYPE_COUNTRY)
+                .setCountry("EG")
+                .build();
+
+        startPointFragment.setFilter(autocompleteFilter);
+
+
+        if (startPointFragment != null)
+            startPointFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+                @Override
+                public void onPlaceSelected(Place place) {
+                    Log.i(TAG, "Place: " + place.getName());
+                    myStartPoint = place.getName().toString();
+                    LatLng myLatLong = place.getLatLng();
+                    mysLat = myLatLong.latitude;
+                    mysLong = myLatLong.longitude;
+
+                }
+
+                @Override
+                public void onError(com.google.android.gms.common.api.Status status) {
+                    Log.i(TAG, "An error occurred: " + status);
+                }
+            });
+        else Toast.makeText(this, "Problem with loading page", Toast.LENGTH_LONG).show();
+
+
+        endPointFragment.setFilter(autocompleteFilter);
+        if (endPointFragment != null)
+            endPointFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+                @Override
+                public void onPlaceSelected(Place place) {
+                    Log.i(TAG, "Place: " + place.getName());
+                    String placeName = place.getName().toString();
+                    Toast.makeText(AddTripActivity.this, "the place is " + placeName, Toast.LENGTH_SHORT).show();
+                    myEndPoint = place.getName().toString();
+                    LatLng myLatLong = place.getLatLng();
+                    myeLat = myLatLong.latitude;
+                    myeLong = myLatLong.longitude;
+
+                }
+
+                @Override
+                public void onError(Status status) {
+                    Log.i(TAG, "An error occurred: " + status);
+                }
+            });
+        else Toast.makeText(this, "Problem with loading page", Toast.LENGTH_LONG).show();
+
+
         // Initialize Firebase Auth
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -100,10 +152,7 @@ public class AddTripActivity extends AppCompatActivity {
             endPointFragment.setText(editObj.getEndPoint());
 
             editObj.setDate(new Date(editObj.getTime()));
-            if (myDate != null)
-                Toast.makeText(this, "my date not null", Toast.LENGTH_SHORT).show();
-            else
-                Toast.makeText(this, "my date is null ", Toast.LENGTH_SHORT).show();
+
 
             String editStatus = "Round Trip";//editObj.getStatus(); //the value you want the position for
             ArrayAdapter myAdap;
@@ -179,7 +228,6 @@ public class AddTripActivity extends AppCompatActivity {
                                 Calendar.getInstance().get(Calendar.DATE), id);
                         Log.e("myDate.getDate()", myDate.getDate() + "");
                         Log.e("Calendar.getInstance", Calendar.getInstance().get(Calendar.DATE) + "");
-
                     }
 
                     if (!isUsed) {
@@ -207,8 +255,7 @@ public class AddTripActivity extends AppCompatActivity {
 
         spnStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position,
-                                       long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 myStatus = spnStatus.getItemAtPosition(position).toString();
                 Toast.makeText(AddTripActivity.this, myStatus, Toast.LENGTH_SHORT).show();
             }
@@ -296,68 +343,12 @@ public class AddTripActivity extends AppCompatActivity {
                                 }
                             }
                         }, mYear, mMonth, mDay);
-                // datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
                 datePickerDialog.show();
             }
         });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        autocompleteFilter = new AutocompleteFilter.Builder()
-                .setTypeFilter(Place.TYPE_COUNTRY)
-                .setCountry("EG")
-                .build();
-
-        startPointFragment.setFilter(autocompleteFilter);
-
-
-        if (startPointFragment != null)
-            startPointFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-                @Override
-                public void onPlaceSelected(Place place) {
-                    Log.i(TAG, "Place: " + place.getName());
-                    myStartPoint = place.getName().toString();
-                    LatLng myLatLong = place.getLatLng();
-                    mysLat = myLatLong.latitude;
-                    mysLong = myLatLong.longitude;
-
-                }
-
-                @Override
-                public void onError(com.google.android.gms.common.api.Status status) {
-                    // TODO: Handle the error.
-                    Log.i(TAG, "An error occurred: " + status);
-                }
-            });
-        else Toast.makeText(this, "Problem with loading page", Toast.LENGTH_LONG).show();
-
-
-        endPointFragment.setFilter(autocompleteFilter);
-        if (endPointFragment != null)
-            endPointFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-                @Override
-                public void onPlaceSelected(Place place) {
-                    // TODO: Get info about the selected place./
-                    Log.i(TAG, "Place: " + place.getName());
-                    String placeName = place.getName().toString();
-                    Toast.makeText(AddTripActivity.this, "the place is " + placeName, Toast.LENGTH_SHORT).show();
-                    myEndPoint = place.getName().toString();
-                    LatLng myLatLong = place.getLatLng();
-                    myeLat = myLatLong.latitude;
-                    myeLong = myLatLong.longitude;
-
-                }
-
-                @Override
-                public void onError(Status status) {
-                    Log.i(TAG, "An error occurred: " + status);
-                }
-            });
-        else Toast.makeText(this, "Problem with loading page", Toast.LENGTH_LONG).show();
-    }
 
     public void addNote(View view) {
         if (addNoteEditText.getText().toString().equals(""))

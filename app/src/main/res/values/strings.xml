@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">3al Treq - ع الطريق</string>
+    <string name="app_name">3al Treq</string>
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
@@ -66,6 +66,7 @@
     <string name="start_point">Start Point : </string>
     <string name="end_point">End Point : </string>
     <string name="button_start_trip">Start</string>
+
     <!-- related to edit account-->
     <string name="Edit_Profile">Edit Profile</string>
     <string name="edit_photo">Edit Photo</string>

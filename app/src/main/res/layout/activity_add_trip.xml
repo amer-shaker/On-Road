@@ -256,7 +256,7 @@
 
 
             </LinearLayout>
-            
+
             <Button
                 android:id="@+id/btnAddTrip"
                 android:layout_width="match_parent"
