@@ -84,7 +84,6 @@ public class DilogActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 trip.setStatus("Canceled");
-                updateTrip(trip);
                 closeSound();
             }
         });
