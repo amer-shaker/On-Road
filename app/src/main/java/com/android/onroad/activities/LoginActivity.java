@@ -321,13 +321,13 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d(TAG, "onAuthStateChanged(): Signed out");
                     onSignedOutCleanUp();
 
-                    GoogleSignInOptions mGoogleSignInOptions = new GoogleSignInOptions
-                            .Builder()
-                            .requestIdToken(getString(R.string.default_web_client_id))
-                            .requestEmail()
-                            .build();
+//                    GoogleSignInOptions mGoogleSignInOptions = new GoogleSignInOptions
+//                            .Builder()
+//                            .requestIdToken(getString(R.string.default_web_client_id))
+//                            .requestEmail()
+//                            .build();
 
-                    mGoogleSignInClient = GoogleSignIn.getClient(LoginActivity.this, mGoogleSignInOptions);
+               //     mGoogleSignInClient = GoogleSignIn.getClient(LoginActivity.this, mGoogleSignInOptions);
                 }
             }
         };

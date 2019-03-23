@@ -33,8 +33,7 @@ public class TripDetailsActivity extends AppCompatActivity {
     TextView startTimeTxt;
     @BindView(R.id.map_status)
     TextView mapStatusTxt;
-    @BindView(R.id.trip_type)
-    TextView type;
+
     @BindView(R.id.done_checkbox)
     TextView doneCheckBox;
     @BindView(R.id.edit_trip_details)
@@ -57,7 +56,6 @@ public class TripDetailsActivity extends AppCompatActivity {
             tvTripame.setText(trip.getName());
 
             mapStatusTxt.setText(trip.getStatus());
-            type.setText(trip.getType());
 
             tvDate.setText(trip.getTripDate());
             tvStartPoint.setText(trip.getStartPoint());
@@ -67,22 +65,24 @@ public class TripDetailsActivity extends AppCompatActivity {
                 doneCheckBox.setSelected(true);
                 doneCheckBox.setVisibility(View.VISIBLE);
 
-                 }
-                mapStatusTxt.setText(trip.getStatus());
-                type.setText(trip.getType());
+            }
+            mapStatusTxt.setText(trip.getStatus());
 
 
-if(trip.getNotes()!=null) {
-    ArrayList<String> myNotes = new ArrayList<>();
+            if (trip.getNotes() != null) {
+                ArrayList<String> myNotes = new ArrayList<>();
 
-    for (int i = 0; i < trip.getNotes().size(); i++) {
-        myNotes.add(trip.getNotes().get(i).getNote());
-    }
+                for (int i = 0; i < trip.getNotes().size(); i++) {
+                    myNotes.add(trip.getNotes().get(i).getNote());
+                }
 
-    ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, myNotes);
-    noteList.setAdapter(adapter);
-}
-
+                ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, myNotes);
+                noteList.setAdapter(adapter);
+            }
+            if (trip.getStatus().equals(Trip.CANCELED_TRIP) || trip.getStatus().equals(Trip.PAST_TRIP)) {
+                startTripDetailsBtn.setVisibility(View.GONE);
+                editTripDetailsBtn.setVisibility(View.GONE);
+            } else {
                 startTripDetailsBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -101,6 +101,6 @@ if(trip.getNotes()!=null) {
                     }
                 });
             }
-
+        }
         }}
 
