@@ -4,24 +4,48 @@ import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.net.Uri;
+import android.os.Build;
+import android.os.IBinder;
 import android.os.SystemClock;
+import android.provider.Settings;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.onroad.FloatWidgetIntentService;
 import com.android.onroad.R;
 import com.android.onroad.activities.DilogActivity;
 import com.android.onroad.beans.Trip;
-import com.android.onroad.reciever.MyReceiver;
+import com.android.onroad.reciever.TripAlarmReceiver;
 
 import java.util.Calendar;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class Utility {
+    static boolean mBound = false;
+    static FloatWidgetIntentService mService;
+    private  static ServiceConnection myConnection = new ServiceConnection() {
 
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            FloatWidgetIntentService binder = (FloatWidgetIntentService) service;
+            mService = binder.getService();
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+//            mBound = false;
+        }
+    };
     public static boolean doStringsMatch(String str1, String str2) {
         return str1.equals(str2);
     }
@@ -57,13 +81,10 @@ public class Utility {
 
     public static void setupAlarmManager(Context context, Trip trip, long timeInMillis, int id) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context, MyReceiver.class);
+        Intent intent = new Intent(context, TripAlarmReceiver.class);
         Log.i("trip_name setupAlarm", trip.getName());
         intent.putExtra(Constants.TRIP, trip);
-
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        Toast.makeText(context, "calendar.getTimeInMillis :  " + SystemClock.elapsedRealtime() + timeInMillis, Toast.LENGTH_SHORT).show();
         Log.e("time", " " + SystemClock.elapsedRealtime() + timeInMillis);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, timeInMillis
                 , AlarmManager.INTERVAL_DAY, pendingIntent);
@@ -74,8 +95,9 @@ public class Utility {
         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.DATE, day);
+        calendar.add(Calendar.DATE, day);
         Log.i("trip_name setAlarmTime", trip.getName());
+        Log.i("Calendar.DATE", Calendar.DATE + "");
 
 
         if (calendar.getTimeInMillis() > Calendar.getInstance()
@@ -87,34 +109,38 @@ public class Utility {
             Utility.setupAlarmManager(context, trip,
                     calendar.getTimeInMillis(), id);
 
-            Toast.makeText(context, "calendar.getTimeInMillis :  " + calendar.getTimeInMillis() / (60 * 1000), Toast.LENGTH_SHORT).show();
         }
     }
 
     public static void launchMap(Context context, Trip trip) {
-//            Uri gmmIntentUri = Uri.parse("https://www.google.com/maps/dir/?api=1&origin=18.519513,73.868315&destination=18.518496,
-// 73.879259&waypoints=18.520561,73.872435|18.519254,73.876614|18.52152,73.877327|18.52019,73.879935&travelmode=driving");
-//            Intent intent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-//            intent.setPackage("com.google.android.apps.maps");
-//            try {
-//                context.startActivity(intent);
-//            } catch (ActivityNotFoundException ex) {
-//                try {
-//                    Intent unrestrictedIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-//                    context.startActivity(unrestrictedIntent);
-//                } catch (ActivityNotFoundException innerEx) {
-//                    Toast.makeText(context, "Please install a maps application", Toast.LENGTH_LONG).show();
-//                }
-//            }
-        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                Uri.parse("http://maps.google.com/maps/dir?saddr=" + trip.getStartPoint() + "&daddr=" + trip.getEndPoint()));
-        intent.setPackage("com.google.android.apps.maps");
-        context.startActivity(intent);
+
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(context)) {
+
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+
+                    Uri.parse("package:" + context.getPackageName()));
+            ((AppCompatActivity) context).startActivityForResult(intent, 1);
+        } else {
+            Intent intent = new Intent(context, FloatWidgetIntentService.class);
+            intent.putExtra(Constants.TRIP, trip);
+
+            context.startService(intent);
+
+
+            Intent mapIntent = new Intent(android.content.Intent.ACTION_VIEW,
+                    Uri.parse("http://maps.google.com/maps/dir?saddr=" + trip.getStartPoint() + "&daddr=" + trip.getEndPoint()));
+            mapIntent.setPackage("com.google.android.apps.maps");
+            context.startActivity(mapIntent);
+
+
+        }
     }
 
     public static void cancelAlarm(Context context, int alarmId) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent myIntent = new Intent(context, MyReceiver.class);
+        Intent myIntent = new Intent(context, TripAlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context, alarmId, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.cancel(pendingIntent);

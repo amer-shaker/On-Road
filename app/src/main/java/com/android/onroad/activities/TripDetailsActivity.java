@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.onroad.FloatWidgetIntentService;
 import com.android.onroad.R;
 import com.android.onroad.beans.Trip;
 import com.android.onroad.utils.Constants;
@@ -55,10 +56,8 @@ public class TripDetailsActivity extends AppCompatActivity {
         if (trip != null) {
             tvTripame.setText(trip.getName());
 
-
             mapStatusTxt.setText(trip.getStatus());
             type.setText(trip.getType());
-            Toast.makeText(this, ""+trip.getNotes().get(0), Toast.LENGTH_SHORT).show();
 
             tvDate.setText(trip.getTripDate());
             tvStartPoint.setText(trip.getStartPoint());
@@ -68,29 +67,28 @@ public class TripDetailsActivity extends AppCompatActivity {
                 doneCheckBox.setSelected(true);
                 doneCheckBox.setVisibility(View.VISIBLE);
 
-                // }
+                 }
                 mapStatusTxt.setText(trip.getStatus());
                 type.setText(trip.getType());
-                Toast.makeText(this, "" + trip.getNotes().get(0), Toast.LENGTH_SHORT).show();
-                // trip.setDate(trip.getTime());
 
 
-                // Toast.makeText(this, arrayOfNotes.get(0).getNote()+" size of notes ", Toast.LENGTH_SHORT).show();
+if(trip.getNotes()!=null) {
+    ArrayList<String> myNotes = new ArrayList<>();
 
-                ArrayList<String> myNotes = new ArrayList<>();
+    for (int i = 0; i < trip.getNotes().size(); i++) {
+        myNotes.add(trip.getNotes().get(i).getNote());
+    }
 
-                for (int i = 0; i < trip.getNotes().size(); i++) {
-                    myNotes.add(trip.getNotes().get(i).getNote());
-                }
-
-                ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, myNotes);
-                noteList.setAdapter(adapter);
+    ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, myNotes);
+    noteList.setAdapter(adapter);
+}
 
                 startTripDetailsBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
                         Utility.launchMap(TripDetailsActivity.this, trip);
+
                     }
                 });
 
@@ -103,6 +101,6 @@ public class TripDetailsActivity extends AppCompatActivity {
                     }
                 });
             }
-        }
-    }
-}
+
+        }}
+

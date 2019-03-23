@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -140,21 +141,22 @@ public class AddTripActivity extends AppCompatActivity {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mTripsDatabaseReference = mFirebaseDatabase.getReference().child(getString(R.string.trips_database_node));
 
-        myDate = new Date();
+       myDate = new Date();
 
         editObj = getIntent().getParcelableExtra(Constants.TRIP);
         if (editObj != null) {
             isUsed = true;
+            myDate=new Date(editObj.getTime());
             // putDataInFields();
             addTripButton.setText("Update Trip");
             tripNameEditText.setText(editObj.getName());
             startPointFragment.setText(editObj.getStartPoint());
             endPointFragment.setText(editObj.getEndPoint());
-
             editObj.setDate(new Date(editObj.getTime()));
 
-
-            String editStatus = "Round Trip";//editObj.getStatus(); //the value you want the position for
+            myStartPoint=editObj.getStartPoint();
+            myEndPoint=editObj.getEndPoint();
+            String editStatus = "Round Trip";
             ArrayAdapter myAdap;
             myAdap = (ArrayAdapter) spnStatus.getAdapter(); //cast to an ArrayAdapter
 
@@ -172,27 +174,25 @@ public class AddTripActivity extends AppCompatActivity {
                 txtTime.setText(myDate.getHours() + ":" + myDate.getMinutes() + " ");
             }
         }
-
         addTripButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (tripNameEditText.getText().toString().equals("")) {
+                if (TextUtils.isEmpty(tripNameEditText.getText().toString().trim())) {
+
                     Toast.makeText(AddTripActivity.this, "enter the trip name", Toast.LENGTH_SHORT).show();
-                } else if (myStartPoint.equals(""))
+                } else if (TextUtils.isEmpty(myStartPoint.trim()))
                     Toast.makeText(AddTripActivity.this, "enter Start Point", Toast.LENGTH_SHORT).show();
 
-                else if (myEndPoint.equals(""))
+                else if (TextUtils.isEmpty(myEndPoint.trim()))
                     Toast.makeText(AddTripActivity.this, "enter end Point", Toast.LENGTH_SHORT).show();
 
-                else if (txtDate.getText().equals(""))
+                else if (TextUtils.isEmpty(txtDate.getText().toString().trim()))
                     Toast.makeText(AddTripActivity.this, "enter Date", Toast.LENGTH_SHORT).show();
 
-                if (txtTime.getText().equals(""))
+               else if (TextUtils.isEmpty(txtTime.getText().toString().trim()))
                     Toast.makeText(AddTripActivity.this, "enter Time", Toast.LENGTH_SHORT).show();
                 else {
-
-
                     Trip trip = new Trip();
 
                     String tripId = null;
@@ -222,12 +222,14 @@ public class AddTripActivity extends AppCompatActivity {
 
                     if (isUsed) {
                         Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(),
-                                myDate.getDate(), trip.getAlarmId());
+                                myDate.getDate()-Calendar.getInstance().get(Calendar.DAY_OF_MONTH), trip.getAlarmId());
                     } else {
-                        Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(), myDate.getDate() -
-                                Calendar.getInstance().get(Calendar.DATE), id);
+                        Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(),
+                                myDate.getDate()-Calendar.getInstance().get(Calendar.DAY_OF_MONTH), id);
                         Log.e("myDate.getDate()", myDate.getDate() + "");
-                        Log.e("Calendar.getInstance", Calendar.getInstance().get(Calendar.DATE) + "");
+
+                        Log.e("Calendar.getInstance", Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + "");
+
                     }
 
                     if (!isUsed) {
@@ -248,6 +250,9 @@ public class AddTripActivity extends AppCompatActivity {
                         });
                     } else {
                         updateTrip(trip);
+                        Toast.makeText(AddTripActivity.this, "Updated Successfully", Toast.LENGTH_SHORT).show();
+                        finish();
+
                     }
                 }
             }
@@ -343,7 +348,10 @@ public class AddTripActivity extends AppCompatActivity {
                                 }
                             }
                         }, mYear, mMonth, mDay);
-                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+//                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+
+                // comment this line beause issue on my device abdo
+                // datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
                 datePickerDialog.show();
             }
         });

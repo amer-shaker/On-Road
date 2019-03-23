@@ -1,13 +1,16 @@
 package com.android.onroad.activities;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.onroad.FloatWidgetIntentService;
 import com.android.onroad.R;
 import com.android.onroad.beans.Trip;
 import com.android.onroad.utils.Constants;
@@ -31,12 +34,12 @@ public class DilogActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dilog);
-        final Trip trip = getIntent().getExtras().getParcelable(Constants.TRIP);
+         final Trip trip = getIntent().getExtras().getParcelable(Constants.TRIP);
         btnStart = findViewById(R.id.btnStart);
         btnLater = findViewById(R.id.btnLater);
         btnCancel = findViewById(R.id.btnCancel);
         tvTripName = findViewById(R.id.tripNameInDialog);
-        String status = getIntent().getStringExtra(Constants.FIRE_SOUND_STATUS);
+        final String status = getIntent().getStringExtra(Constants.FIRE_SOUND_STATUS);
 
         tvTripName.setText(trip.getName());
 
@@ -53,12 +56,16 @@ public class DilogActivity extends AppCompatActivity {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // adding intent to move to trip and start
-                Utility.launchMap(DilogActivity.this, trip);
-                if (myPlayer != null) {
-                    myPlayer.stop();
+
+                if (trip!=null) {
+
+                    trip.setStatus(Trip.DONE_TRIP);
+                    //todo remove comment
+
+                    //   updateTrip(trip);
+                    Utility.launchMap(DilogActivity.this, trip);
                 }
-                finish();
+               closeSound();
             }
         });
         btnLater.setOnClickListener(new View.OnClickListener() {
@@ -66,12 +73,14 @@ public class DilogActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Utility.pushNotification(DilogActivity.this, trip);
-                Log.i("trip_name dialoyge", trip.getName());
+                trip.setStatus(Trip.UPCOMING_TRIP);
+                //todo remove comment
+            //    updateTrip(trip);
 
-                if (myPlayer != null) {
-                    myPlayer.stop();
-                }
-                finish();
+                Log.i("trip_name dialog", trip.getName());
+
+               closeSound();
+
 
             }
         });
@@ -79,10 +88,11 @@ public class DilogActivity extends AppCompatActivity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (myPlayer != null) {
-                    myPlayer.stop();
-                }
-                finish();
+                trip.setStatus("Canceled");
+                //todo remove comment
+
+             //   updateTrip(trip);
+                closeSound();
             }
         });
 
@@ -90,7 +100,6 @@ public class DilogActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
 
     }
 
@@ -145,6 +154,13 @@ public class DilogActivity extends AppCompatActivity {
                     .child("notes")
                     .setValue(trip.getNotes());
         }
+     }
+    public  void closeSound(){
+
+        if (myPlayer != null) {
+            myPlayer.stop();
+        }
+        finish();
     }
 
 
