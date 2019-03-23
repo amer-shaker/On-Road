@@ -2,6 +2,7 @@ package com.android.onroad.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -15,6 +16,10 @@ import com.android.onroad.R;
 import com.android.onroad.beans.Trip;
 import com.android.onroad.utils.Constants;
 import com.android.onroad.utils.Utility;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -47,11 +52,22 @@ public class TripDetailsActivity extends AppCompatActivity {
     @BindView(R.id.notesLayout)
     LinearLayout notesLayout;
 
+    // Firebase instance variables
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mTripsDatabaseReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_trip);
         ButterKnife.bind(this);
+
+
+        // Initialize Firebase Auth
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mTripsDatabaseReference = mFirebaseDatabase.getReference().child(getString(R.string.trips_database_node));
         final Trip trip = getIntent().getParcelableExtra(Constants.TRIP_EXTRA);
 
         // Toast.makeText(this, ""+trip.getName(), Toast.LENGTH_SHORT).show();
@@ -88,11 +104,12 @@ public class TripDetailsActivity extends AppCompatActivity {
                 startTripDetailsBtn.setVisibility(View.GONE);
                 editTripDetailsBtn.setVisibility(View.GONE);
             } else {
-                startTripDetailsBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        Utility.launchMap(TripDetailsActivity.this, trip);
+                        startTripDetailsBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                            trip.setStatus(Trip.PAST_TRIP);
+                            updateTrip(trip);
+                            Utility.launchMap(TripDetailsActivity.this, trip);
 
 
 
@@ -110,6 +127,74 @@ public class TripDetailsActivity extends AppCompatActivity {
             }
         }
         }
+    private void updateTrip(@NonNull Trip trip) {
+
+        FirebaseUser user = mFirebaseAuth.getCurrentUser();
+
+        if (user != null) {
+            String userId = user.getUid();
+
+            mTripsDatabaseReference.child(userId)
+                    .child(trip.getTripId())
+                    .child("name")
+                    .setValue(trip.getName());
+
+            mTripsDatabaseReference.child(userId)
+                    .child(trip.getTripId())
+                    .child("date")
+                    .setValue(trip.getDate());
+
+            mTripsDatabaseReference.child(userId)
+                    .child(trip.getTripId())
+                    .child("startPoint")
+                    .setValue(trip.getStartPoint());
+
+            mTripsDatabaseReference.child(userId)
+                    .child(trip.getTripId())
+                    .child("endPoint")
+                    .setValue(trip.getEndPoint());
+
+            mTripsDatabaseReference.child(userId)
+                    .child(trip.getTripId())
+                    .child("startPointLatitude")
+                    .setValue(trip.getStartPointLatitude());
+
+            mTripsDatabaseReference.child(userId)
+                    .child(trip.getTripId())
+                    .child("startPointLongitude")
+                    .setValue(trip.getStartPointLongitude());
+
+            mTripsDatabaseReference.child(userId)
+                    .child(trip.getTripId())
+                    .child("endPointLatitude")
+                    .setValue(trip.getEndPointLatitude());
+
+            mTripsDatabaseReference.child(userId)
+                    .child(trip.getTripId())
+                    .child("endPointLongitude")
+                    .setValue(trip.getEndPointLongitude());
+
+            mTripsDatabaseReference.child(userId)
+                    .child(trip.getTripId())
+                    .child("type")
+                    .setValue(trip.getType());
+
+            mTripsDatabaseReference.child(userId)
+                    .child(trip.getTripId())
+                    .child("status")
+                    .setValue(trip.getStatus());
+
+            mTripsDatabaseReference.child(userId)
+                    .child(trip.getTripId())
+                    .child("notes")
+                    .setValue(trip.getNotes());
+        }
+    }
+
+
+
+
+
 
 
 }
