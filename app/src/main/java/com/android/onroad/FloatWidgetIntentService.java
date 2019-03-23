@@ -32,18 +32,35 @@ public class FloatWidgetIntentService extends Service {
     float initialTouchY = 0,initialTouchX = 0;
     long time_start = 0, time_end = 0;
 
-    Trip trip;
 
     public FloatWidgetIntentService() {
 
     }
 
-
+    Trip trip;
     @Override
     public IBinder onBind(Intent intent) {
+
+
+        return null;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (floatView != null) mWindowManager.removeView(floatView);
+    }
+
+    public FloatWidgetIntentService getService() {
+
+        return FloatWidgetIntentService.this;
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        trip = intent.getExtras().getParcelable(Constants.TRIP);
         floatView = LayoutInflater.from(this).inflate(R.layout.float_widget, null);
         myNoteslst = floatView.findViewById(R.id.notesListForWidget);
-        trip = intent.getExtras().getParcelable(Constants.TRIP);
 
 
         ArrayList<String> myNotes = new ArrayList<>();
@@ -141,22 +158,9 @@ public class FloatWidgetIntentService extends Service {
             @Override
             public void onClick(View view) {
                 FloatWidgetIntentService.this.stopSelf();
-               // mWindowManager.removeView(mFloatingWidget);
+                // mWindowManager.removeView(mFloatingWidget);
             }
         });
-
-        return null;
+        return super.onStartCommand(intent, flags, startId);
     }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (floatView != null) mWindowManager.removeView(floatView);
-    }
-
-    public FloatWidgetIntentService getService() {
-
-        return FloatWidgetIntentService.this;
-    }
-
 }

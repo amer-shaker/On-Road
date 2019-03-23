@@ -84,10 +84,7 @@ public class Utility {
         Intent intent = new Intent(context, TripAlarmReceiver.class);
         Log.i("trip_name setupAlarm", trip.getName());
         intent.putExtra(Constants.TRIP, trip);
-
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        Toast.makeText(context, "calendar.getTimeInMillis :  " + SystemClock.elapsedRealtime() + timeInMillis, Toast.LENGTH_SHORT).show();
         Log.e("time", " " + SystemClock.elapsedRealtime() + timeInMillis);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, timeInMillis
                 , AlarmManager.INTERVAL_DAY, pendingIntent);
@@ -112,7 +109,6 @@ public class Utility {
             Utility.setupAlarmManager(context, trip,
                     calendar.getTimeInMillis(), id);
 
-            Toast.makeText(context, "calendar.getTimeInMillis :  " + calendar.getTimeInMillis() / (60 * 1000), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -130,7 +126,7 @@ public class Utility {
             Intent intent = new Intent(context, FloatWidgetIntentService.class);
             intent.putExtra(Constants.TRIP, trip);
 
-            context.bindService(intent, myConnection, Context.BIND_AUTO_CREATE);
+            context.startService(intent);
 
 
             Intent mapIntent = new Intent(android.content.Intent.ACTION_VIEW,

@@ -34,7 +34,7 @@ public class DilogActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dilog);
-        final Trip trip = getIntent().getExtras().getParcelable(Constants.TRIP);
+         final Trip trip = getIntent().getExtras().getParcelable(Constants.TRIP);
         btnStart = findViewById(R.id.btnStart);
         btnLater = findViewById(R.id.btnLater);
         btnCancel = findViewById(R.id.btnCancel);
@@ -56,11 +56,13 @@ public class DilogActivity extends AppCompatActivity {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (trip!=null) {
 
-                trip.setStatus(Trip.DONE_TRIP);
-             //   updateTrip(trip);
+                    trip.setStatus(Trip.DONE_TRIP);
+                    //   updateTrip(trip);
 
-                Utility.launchMap(DilogActivity.this, trip);
+                    Utility.launchMap(DilogActivity.this, trip);
+                }
                closeSound();
             }
         });

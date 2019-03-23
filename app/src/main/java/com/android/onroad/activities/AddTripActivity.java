@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -98,14 +99,10 @@ public class AddTripActivity extends AppCompatActivity {
             tripNameEditText.setText(editObj.getName());
             startPointFragment.setText(editObj.getStartPoint());
             endPointFragment.setText(editObj.getEndPoint());
-
             editObj.setDate(new Date(editObj.getTime()));
-            if (myDate != null)
-                Toast.makeText(this, "my date not null", Toast.LENGTH_SHORT).show();
-            else
-                Toast.makeText(this, "my date is null ", Toast.LENGTH_SHORT).show();
-
-            String editStatus = "Round Trip";//editObj.getStatus(); //the value you want the position for
+            myStartPoint=editObj.getStartPoint();
+            myEndPoint=editObj.getEndPoint();
+            String editStatus = "Round Trip";
             ArrayAdapter myAdap;
             myAdap = (ArrayAdapter) spnStatus.getAdapter(); //cast to an ArrayAdapter
 
@@ -123,27 +120,25 @@ public class AddTripActivity extends AppCompatActivity {
                 txtTime.setText(myDate.getHours() + ":" + myDate.getMinutes() + " ");
             }
         }
-
         addTripButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (tripNameEditText.getText().toString().equals("")) {
+                if (TextUtils.isEmpty(tripNameEditText.getText().toString().trim())) {
+
                     Toast.makeText(AddTripActivity.this, "enter the trip name", Toast.LENGTH_SHORT).show();
-                } else if (myStartPoint.equals(""))
+                } else if (TextUtils.isEmpty(myStartPoint.trim()))
                     Toast.makeText(AddTripActivity.this, "enter Start Point", Toast.LENGTH_SHORT).show();
 
-                else if (myEndPoint.equals(""))
+                else if (TextUtils.isEmpty(myEndPoint.trim()))
                     Toast.makeText(AddTripActivity.this, "enter end Point", Toast.LENGTH_SHORT).show();
 
-                else if (txtDate.getText().equals(""))
+                else if (TextUtils.isEmpty(txtDate.getText().toString().trim()))
                     Toast.makeText(AddTripActivity.this, "enter Date", Toast.LENGTH_SHORT).show();
 
-                if (txtTime.getText().equals(""))
+               else if (TextUtils.isEmpty(txtTime.getText().toString().trim()))
                     Toast.makeText(AddTripActivity.this, "enter Time", Toast.LENGTH_SHORT).show();
                 else {
-
-
                     Trip trip = new Trip();
 
                     String tripId = null;
