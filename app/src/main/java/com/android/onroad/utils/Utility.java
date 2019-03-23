@@ -28,17 +28,17 @@ import java.util.Calendar;
 import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class Utility {
-    static boolean mBound = false;
+
+    private static FirebaseDatabase mFirebaseDatabase;
     static FloatWidgetIntentService mService;
-    private static FirebaseDatabase mDatabase;
+    static boolean mBound = false;
 
-    public static FirebaseDatabase getDatabase() {
-        if (mDatabase == null) {
-            mDatabase = FirebaseDatabase.getInstance();
-            mDatabase.setPersistenceEnabled(true);
+    public static FirebaseDatabase getFirebaseDatabaseInstance() {
+        if (mFirebaseDatabase == null) {
+            mFirebaseDatabase = FirebaseDatabase.getInstance();
+            mFirebaseDatabase.setPersistenceEnabled(true);
         }
-
-        return mDatabase;
+        return mFirebaseDatabase;
     }
 
     private static ServiceConnection myConnection = new ServiceConnection() {

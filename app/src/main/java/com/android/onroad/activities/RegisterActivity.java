@@ -75,7 +75,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         // Initialize Firebase Auth
         mFirebaseAuth = FirebaseAuth.getInstance();
-        mFirebaseDatabase = Utility.getDatabase();
+        mFirebaseDatabase = Utility.getFirebaseDatabaseInstance();
 
 
         mUsersDatabaseReference = mFirebaseDatabase.getReference().child(getString(R.string.users_database_node));

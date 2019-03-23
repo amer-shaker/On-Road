@@ -67,7 +67,7 @@ public class HistoryTripsMapActivty extends FragmentActivity implements OnMapRea
 
         // Initialize Firebase Auth
         mFirebaseAuth = FirebaseAuth.getInstance();
-        mFirebaseDatabase = Utility.getDatabase();
+        mFirebaseDatabase = Utility.getFirebaseDatabaseInstance();
 
         if (mFirebaseAuth.getCurrentUser() != null) {
             mTripsDatabaseReference = mFirebaseDatabase.getReference().child(getString(R.string.trips_database_node))
