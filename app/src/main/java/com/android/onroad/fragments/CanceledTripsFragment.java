@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.android.onroad.R;
 import com.android.onroad.adapters.CanceledTripsAdapter;
 import com.android.onroad.beans.Trip;
+import com.android.onroad.utils.Utility;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -49,7 +50,7 @@ public class CanceledTripsFragment extends Fragment {
 
         // Initialize Firebase Auth
         mFirebaseAuth = FirebaseAuth.getInstance();
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mFirebaseDatabase = Utility.getDatabase();
 
         if (mFirebaseAuth.getCurrentUser() != null) {
             mTripsDatabaseReference = mFirebaseDatabase.getReference().child(getString(R.string.trips_database_node))

@@ -15,13 +15,13 @@ import android.os.SystemClock;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.onroad.FloatWidgetIntentService;
 import com.android.onroad.R;
 import com.android.onroad.activities.DilogActivity;
 import com.android.onroad.beans.Trip;
 import com.android.onroad.reciever.TripAlarmReceiver;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 
@@ -30,7 +30,18 @@ import static android.content.Context.NOTIFICATION_SERVICE;
 public class Utility {
     static boolean mBound = false;
     static FloatWidgetIntentService mService;
-    private  static ServiceConnection myConnection = new ServiceConnection() {
+    private static FirebaseDatabase mDatabase;
+
+    public static FirebaseDatabase getDatabase() {
+        if (mDatabase == null) {
+            mDatabase = FirebaseDatabase.getInstance();
+            mDatabase.setPersistenceEnabled(true);
+        }
+
+        return mDatabase;
+    }
+
+    private static ServiceConnection myConnection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName className,
@@ -46,6 +57,7 @@ public class Utility {
 //            mBound = false;
         }
     };
+
     public static boolean doStringsMatch(String str1, String str2) {
         return str1.equals(str2);
     }
@@ -113,7 +125,6 @@ public class Utility {
     }
 
     public static void launchMap(Context context, Trip trip) {
-
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(context)) {
