@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.onroad.R;
 import com.android.onroad.fragments.CanceledTripsFragment;
@@ -162,13 +163,10 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_account) {
-            // Handle the account action
-            //TODO
-            /**
-             * create edit account
-             */
-
-            //startActivity(new Intent(this, EditAccount.class));
+            Toast.makeText(HomeActivity.this, "Comming soon", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_previous_trips) {
+            Intent intent = new Intent(this, HistoryTripsMapActivty.class);
+            startActivity(intent);
         } else if (id == R.id.nav_sign_out) {
             signOut();
         }

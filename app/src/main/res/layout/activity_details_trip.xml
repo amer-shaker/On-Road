@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.TripDetailsActivity">
+
+    tools:context="activities.TripDetailsActivity">
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -21,6 +23,7 @@
                 android:layout_height="100dp"
                 android:src="@drawable/worldwide"
                 android:layout_gravity="center"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -181,6 +184,7 @@
                     android:layout_width="wrap_content"
 
                     android:layout_height="wrap_content"
+
                     android:drawableLeft="@drawable/notes_img"
                     android:text="Notes  : "
                     android:textSize="18dp"
@@ -203,16 +207,9 @@
 
 
 
-            </LinearLayout>
 
 
-
-
-
-
-
-
-
+                </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -241,7 +238,15 @@
 
             </LinearLayout>
 
-        </LinearLayout>
+
+
+
+            </LinearLayout>
+
+
+
+
+
 
     </ScrollView>
 

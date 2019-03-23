@@ -4,12 +4,15 @@ import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.onroad.R;
 import com.android.onroad.beans.Trip;
+import com.android.onroad.utils.Utility;
 import com.android.onroad.utils.VolleyDao;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -23,6 +26,12 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,11 +52,29 @@ public class HistoryTripsMapActivty extends FragmentActivity implements OnMapRea
     //should replaced with  array of history trips
     ArrayList<Trip> trips = new ArrayList<>();
 
+    // Firebase instance variables
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mTripsDatabaseReference;
+    private ChildEventListener mChildEventListener;
+
+    private static final String TAG = "HistoryTripsMapActivty";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_trips_map_activty);
+
+        // Initialize Firebase Auth
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = Utility.getFirebaseDatabaseInstance();
+
+        if (mFirebaseAuth.getCurrentUser() != null) {
+            mTripsDatabaseReference = mFirebaseDatabase.getReference().child(getString(R.string.trips_database_node))
+                    .child(mFirebaseAuth.getCurrentUser().getUid());
+        }
+
+
         mRequestQueue = VolleyDao.getRequestQueue(this);
         final SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -55,24 +82,7 @@ public class HistoryTripsMapActivty extends FragmentActivity implements OnMapRea
         //dummy data
 
         mapFragment.getMapAsync(this);
-        Trip t1 = new Trip();
-        Trip t2 = new Trip();
 
-        t1.setStartPointLatitude(30.109760);
-        t1.setStartPointLongitude(31.247240);
-
-        t1.setEndPointLongitude(30.797569);
-        t1.setEndPointLatitude(29.753120);
-
-
-        t2.setStartPointLatitude(29.86622312999999);
-        t2.setStartPointLongitude(31.337005422999999);
-
-        t2.setEndPointLongitude(31.2313116);
-        t2.setEndPointLatitude(31.0445296);
-
-        trips.add(t1);
-        trips.add(t2);
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -134,7 +144,7 @@ public class HistoryTripsMapActivty extends FragmentActivity implements OnMapRea
                             new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
-                                    Log.e("VollyError",error.getCause()+"");
+                                    Log.e("VollyError", error.getCause() + "");
                                 }
                             }
                     )
@@ -152,7 +162,7 @@ public class HistoryTripsMapActivty extends FragmentActivity implements OnMapRea
                 mRequests--;
                 if (mRequests == 0) {
 
-                    if( mProgressDialog != null)
+                    if (mProgressDialog != null)
                         mProgressDialog.dismiss();
                 }
 
@@ -214,5 +224,65 @@ public class HistoryTripsMapActivty extends FragmentActivity implements OnMapRea
             poly.add(p);
         }
         return poly;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i(TAG, "onResume()");
+        attachDatabaseReadListener();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.i(TAG, "onPause()");
+        trips.clear();
+        detachDatabaseReadListener();
+    }
+
+    private void attachDatabaseReadListener() {
+        if (mChildEventListener == null) {
+            mChildEventListener = new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                    Log.i(TAG, "onChildAdded()");
+                    Trip trip = dataSnapshot.getValue(Trip.class);
+                    if (trip != null) {
+                        if (trip.getStatus().equals(Trip.PAST_TRIP)) {
+                            trips.add(trip);
+                        }
+                    }
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText(HistoryTripsMapActivty.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            };
+            mTripsDatabaseReference.addChildEventListener(mChildEventListener);
+        }
+    }
+
+    private void detachDatabaseReadListener() {
+        if (mChildEventListener != null) {
+            mTripsDatabaseReference.removeEventListener(mChildEventListener);
+            mChildEventListener = null;
+        }
     }
 }
