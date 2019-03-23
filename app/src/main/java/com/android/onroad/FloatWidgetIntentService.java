@@ -29,7 +29,7 @@ public class FloatWidgetIntentService extends Service {
     private int initialX = 0;
     private int initialY = 0;
 
-    private float initialTouchY = 0,initialTouchX = 0;
+    private float initialTouchY = 0, initialTouchX = 0;
     private long time_start = 0, time_end = 0;
 
     Trip trip;
@@ -57,19 +57,19 @@ public class FloatWidgetIntentService extends Service {
 
     @Override
     public int onStartCommand(final Intent intent, int flags, int startId) {
-        trip = intent.getExtras().getParcelable(Constants.TRIP);
-        floatView = LayoutInflater.from(this).inflate(R.layout.float_widget, null);
-        myNoteslst = floatView.findViewById(R.id.notesListForWidget);
+        if (intent.getExtras().getParcelable(Constants.TRIP) != null) {
+            trip = intent.getExtras().getParcelable(Constants.TRIP);
+            floatView = LayoutInflater.from(this).inflate(R.layout.float_widget, null);
+            myNoteslst = floatView.findViewById(R.id.notesListForWidget);
 
-
+        }
         ArrayList<String> myNotes = new ArrayList<>();
-        if (trip.getNotes()!=null){
+        if (trip.getNotes() != null) {
             for (int i = 0; i < trip.getNotes().size(); i++) {
                 myNotes.add(trip.getNotes().get(i).getNote());
             }
 
         }
-
 
 
         ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, myNotes);
@@ -161,6 +161,7 @@ public class FloatWidgetIntentService extends Service {
         });
         return super.onStartCommand(intent, flags, startId);
     }
+
     public FloatWidgetIntentService getService() {
 
         return FloatWidgetIntentService.this;

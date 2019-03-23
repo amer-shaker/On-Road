@@ -196,6 +196,9 @@ public class AddTripActivity extends AppCompatActivity {
                         });
                     } else {
                         updateTrip(trip);
+                        Toast.makeText(AddTripActivity.this, "Updated Successfully", Toast.LENGTH_SHORT).show();
+                        finish();
+
                     }
                 }
             }
