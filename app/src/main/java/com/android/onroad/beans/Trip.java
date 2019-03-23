@@ -10,10 +10,10 @@ import java.util.Date;
 
 @IgnoreExtraProperties
 public class Trip implements Parcelable {
+
     public static final String UPCOMING_TRIP = "Upcoming";
     public static final String PAST_TRIP = "Past";
     public static final String CANCELED_TRIP = "Canceled";
-    public static final String DONE_TRIP="Done";
 
     private String tripId;
     private String name;

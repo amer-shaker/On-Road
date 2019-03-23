@@ -141,12 +141,12 @@ public class AddTripActivity extends AppCompatActivity {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mTripsDatabaseReference = mFirebaseDatabase.getReference().child(getString(R.string.trips_database_node));
 
-       myDate = new Date();
+        myDate = new Date();
 
         editObj = getIntent().getParcelableExtra(Constants.TRIP);
         if (editObj != null) {
             isUsed = true;
-            myDate=new Date(editObj.getTime());
+            myDate = new Date(editObj.getTime());
             // putDataInFields();
             addTripButton.setText("Update Trip");
             tripNameEditText.setText(editObj.getName());
@@ -154,8 +154,8 @@ public class AddTripActivity extends AppCompatActivity {
             endPointFragment.setText(editObj.getEndPoint());
             editObj.setDate(new Date(editObj.getTime()));
 
-            myStartPoint=editObj.getStartPoint();
-            myEndPoint=editObj.getEndPoint();
+            myStartPoint = editObj.getStartPoint();
+            myEndPoint = editObj.getEndPoint();
             String editStatus = "Round Trip";
             ArrayAdapter myAdap;
             myAdap = (ArrayAdapter) spnStatus.getAdapter(); //cast to an ArrayAdapter
@@ -190,7 +190,7 @@ public class AddTripActivity extends AppCompatActivity {
                 else if (TextUtils.isEmpty(txtDate.getText().toString().trim()))
                     Toast.makeText(AddTripActivity.this, "enter Date", Toast.LENGTH_SHORT).show();
 
-               else if (TextUtils.isEmpty(txtTime.getText().toString().trim()))
+                else if (TextUtils.isEmpty(txtTime.getText().toString().trim()))
                     Toast.makeText(AddTripActivity.this, "enter Time", Toast.LENGTH_SHORT).show();
                 else {
                     Trip trip = new Trip();
@@ -222,10 +222,10 @@ public class AddTripActivity extends AppCompatActivity {
 
                     if (isUsed) {
                         Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(),
-                                myDate.getDate()-Calendar.getInstance().get(Calendar.DAY_OF_MONTH), trip.getAlarmId());
+                                myDate.getDate() - Calendar.getInstance().get(Calendar.DAY_OF_MONTH), trip.getAlarmId());
                     } else {
                         Utility.setAlarmTime(AddTripActivity.this, trip, myDate.getHours(), myDate.getMinutes(),
-                                myDate.getDate()-Calendar.getInstance().get(Calendar.DAY_OF_MONTH), id);
+                                myDate.getDate() - Calendar.getInstance().get(Calendar.DAY_OF_MONTH), id);
                         Log.e("myDate.getDate()", myDate.getDate() + "");
 
                         Log.e("Calendar.getInstance", Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + "");

@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.android.onroad.R;
-import com.android.onroad.adapters.PastTripsAdapter;
+import com.android.onroad.adapters.CanceledTripsAdapter;
 import com.android.onroad.beans.Trip;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -28,13 +28,12 @@ import java.util.List;
 public class CanceledTripsFragment extends Fragment {
 
     private View view;
-    List<Trip> trips = new ArrayList<>();
-
+    private List<Trip> trips = new ArrayList<>();
 
     private RecyclerView recyclerView;
-    private PastTripsAdapter pastTripsAdapter;
+    private CanceledTripsAdapter mCanceledTripsAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private static final String TAG = "PastTripsFragment";
+    private static final String TAG = "CanceledTripsFragment";
 
     // Firebase instance variables
     private FirebaseAuth mFirebaseAuth;
@@ -68,8 +67,8 @@ public class CanceledTripsFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         // specify an adapter (see also next example)
-        pastTripsAdapter = new PastTripsAdapter(getActivity(), trips);
-        recyclerView.setAdapter(pastTripsAdapter);
+        mCanceledTripsAdapter = new CanceledTripsAdapter(getActivity(), trips);
+        recyclerView.setAdapter(mCanceledTripsAdapter);
     }
 
     @Override
@@ -97,7 +96,7 @@ public class CanceledTripsFragment extends Fragment {
                     if (trip != null) {
                         if (trip.getStatus().equals(Trip.CANCELED_TRIP)) {
                             trips.add(trip);
-                            pastTripsAdapter.updateList(trips);
+                            mCanceledTripsAdapter.updateList(trips);
                         }
                     }
                 }

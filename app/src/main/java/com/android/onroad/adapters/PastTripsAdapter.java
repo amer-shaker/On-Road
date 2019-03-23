@@ -1,6 +1,5 @@
 package com.android.onroad.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -85,7 +84,7 @@ public class PastTripsAdapter extends RecyclerView.Adapter<PastTripsAdapter.Trip
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(mContext, TripDetailsActivity.class);
-            Toast.makeText(mContext, ""+trips.get(getAdapterPosition()).getName(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "" + trips.get(getAdapterPosition()).getName(), Toast.LENGTH_SHORT).show();
             intent.putExtra(Constants.TRIP_EXTRA, trips.get(getAdapterPosition()));
             mContext.startActivity(intent);
         }
