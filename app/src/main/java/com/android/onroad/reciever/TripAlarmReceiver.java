@@ -15,10 +15,15 @@ public class TripAlarmReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Trip trip = intent.getExtras().getParcelable(Constants.TRIP);
         Intent intentDialogue = new Intent(context, DilogActivity.class);
-        Log.i("trip_name onReceive",trip.getName());
-        intentDialogue.putExtra(Constants.TRIP, trip);
-        intentDialogue.putExtra(Constants.FIRE_SOUND_STATUS, "fired");
-        intentDialogue.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intentDialogue);
+        if (trip!=null){
+            intentDialogue.putExtra(Constants.TRIP, trip);
+            intentDialogue.putExtra(Constants.FIRE_SOUND_STATUS, "fired");
+            intentDialogue.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intentDialogue);
+        }
+        else {
+
+        }
+
     }
 }

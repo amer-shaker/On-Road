@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +44,8 @@ public class TripDetailsActivity extends AppCompatActivity {
     TextView startTripDetailsBtn;
     @BindView(R.id.noteList)
     ListView noteList;
+    @BindView(R.id.notesLayout)
+    LinearLayout notesLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +73,8 @@ public class TripDetailsActivity extends AppCompatActivity {
 
 
             if (trip.getNotes() != null) {
+                notesLayout.setVisibility(View.VISIBLE);
+
                 ArrayList<String> myNotes = new ArrayList<>();
 
                 for (int i = 0; i < trip.getNotes().size(); i++) {
@@ -89,6 +94,8 @@ public class TripDetailsActivity extends AppCompatActivity {
 
                         Utility.launchMap(TripDetailsActivity.this, trip);
 
+
+
                     }
                 });
 
@@ -102,5 +109,8 @@ public class TripDetailsActivity extends AppCompatActivity {
                 });
             }
         }
-        }}
+        }
+
+
+}
 

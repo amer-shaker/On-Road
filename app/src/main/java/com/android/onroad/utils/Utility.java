@@ -84,7 +84,7 @@ public class Utility {
         Intent intent = new Intent(context, TripAlarmReceiver.class);
         Log.i("trip_name setupAlarm", trip.getName());
         intent.putExtra(Constants.TRIP, trip);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, intent, PendingIntent.FLAG_IMMUTABLE);
         Log.e("time", " " + SystemClock.elapsedRealtime() + timeInMillis);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, timeInMillis
                 , AlarmManager.INTERVAL_DAY, pendingIntent);
