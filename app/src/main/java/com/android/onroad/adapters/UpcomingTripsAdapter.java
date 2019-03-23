@@ -127,7 +127,7 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
         public void onClick(View v) {
             Intent intent = new Intent(mContext, TripDetailsActivity.class);
             intent.putExtra(Constants.TRIP_EXTRA, trips.get(getAdapterPosition()));
-            Toast.makeText(mContext, ""+trips.get(getAdapterPosition()).getName(), Toast.LENGTH_SHORT).show();
+
             mContext.startActivity(intent);
         }
     }

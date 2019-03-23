@@ -39,18 +39,38 @@ public class FloatWidgetIntentService extends Service {
     }
 
 /*
+>>>>>>> 889de85e1fb2760ea1852d337b79b830769c0993
     @Override
     public IBinder onBind(Intent intent) {
+
+
+        return null;
+    }*/
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (floatView != null) mWindowManager.removeView(floatView);
+
+    }
+
+
+    @Override
+    public int onStartCommand(final Intent intent, int flags, int startId) {
+        trip = intent.getExtras().getParcelable(Constants.TRIP);
         floatView = LayoutInflater.from(this).inflate(R.layout.float_widget, null);
         myNoteslst = floatView.findViewById(R.id.notesListForWidget);
-        trip = intent.getExtras().getParcelable(Constants.TRIP);
 
 
         ArrayList<String> myNotes = new ArrayList<>();
+        if (trip.getNotes()!=null){
+            for (int i = 0; i < trip.getNotes().size(); i++) {
+                myNotes.add(trip.getNotes().get(i).getNote());
+            }
 
-        for (int i = 0; i < trip.getNotes().size(); i++) {
-            myNotes.add(trip.getNotes().get(i).getNote());
         }
+
+
 
         ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, myNotes);
         myNoteslst.setAdapter(adapter);
@@ -136,148 +156,20 @@ public class FloatWidgetIntentService extends Service {
         closeButtonCollapsed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FloatWidgetIntentService.this.stopSelf();
-               // mWindowManager.removeView(mFloatingWidget);
+                FloatWidgetIntentService.this.stopService(intent);
             }
         });
-
-        return null;
+        return super.onStartCommand(intent, flags, startId);
     }
-*/
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        int startCommand= super.onStartCommand(intent, flags, startId);
-
-        floatView = LayoutInflater.from(this).inflate(R.layout.float_widget, null);
-        myNoteslst = floatView.findViewById(R.id.notesListForWidget);
-if(trip.getNotes() !=null) {
-    ArrayList<String> myNotes = new ArrayList<>();
-
-    for (int i = 0; i < trip.getNotes().size(); i++) {
-        myNotes.add(trip.getNotes().get(i).getNote());
-    }
-
-    ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, myNotes);
-    myNoteslst.setAdapter(adapter);
-}
-
-        ImageView closeButtonCollapsed = (ImageView) floatView.findViewById(R.id.close_btn);
-        closeButtonCollapsed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FloatWidgetIntentService.this.stopSelf();
-                 mWindowManager.removeView(floatView);
-            }
-        });
-
-
-        return startCommand;
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-
-
-
-
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            params = new WindowManager.LayoutParams(
-                    WindowManager.LayoutParams.WRAP_CONTENT,
-                    WindowManager.LayoutParams.WRAP_CONTENT,
-                    WindowManager.LayoutParams.TYPE_PHONE,
-                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                            | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
-                            | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
-                            | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                    PixelFormat.TRANSLUCENT);
-        } else {
-            params = new WindowManager.LayoutParams(
-                    WindowManager.LayoutParams.WRAP_CONTENT,
-                    WindowManager.LayoutParams.WRAP_CONTENT,
-                    WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                            | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
-                            | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
-                            | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                    PixelFormat.TRANSLUCENT);
-        }
-
-        params.gravity = Gravity.START | Gravity.TOP;
-        params.x = 0;
-        params.y = 100;
-        mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
-        mWindowManager.addView(floatView, params);
-
-        floatView.findViewById(R.id.collapsed_iv).setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-
-                        initialX = params.x;
-                        initialY = params.y;
-                        initialTouchX = event.getRawX();
-                        initialTouchY = event.getRawY();
-                        time_start = System.currentTimeMillis();
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        //Calculate the X and Y coordinates of the view.
-                        params.x = initialX + (int) (event.getRawX() - initialTouchX - 60);
-                        params.y = initialY + (int) (event.getRawY() - initialTouchY - 60);
-                        //Update the layout with new X & Y coordinate
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        DisplayMetrics metrics = new DisplayMetrics();
-                        mWindowManager.getDefaultDisplay().getMetrics(metrics);
-                        int xInches = metrics.widthPixels;
-                        if (params.x > xInches / 2) {
-                            params.x = xInches - floatView.getWidth() - 10;
-                        } else {
-                            params.x = 0;
-                        }
-                        time_end = System.currentTimeMillis();
-                        if (time_end - time_start < 500) {
-                            if (!isExpand) {
-                                myNoteslst.setVisibility(View.VISIBLE);
-                                isExpand = !isExpand;
-                            } else {
-                                myNoteslst.setVisibility(View.GONE);
-                                isExpand = !isExpand;
-                            }
-                        }
-                        break;
-                    default:
-                        return false;
-                }
-                mWindowManager.updateViewLayout(floatView, params);
-                return true;
-            }
-        });
-
-
-    }
-
-    @Override
-    public IBinder onBind(Intent intent) {
-        trip = intent.getExtras().getParcelable(Constants.TRIP);
-
-        return null;
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (floatView != null) mWindowManager.removeView(floatView);
-    }
-
     public FloatWidgetIntentService getService() {
 
         return FloatWidgetIntentService.this;
     }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+
 
 }

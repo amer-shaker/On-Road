@@ -21,7 +21,7 @@ import com.android.onroad.FloatWidgetIntentService;
 import com.android.onroad.R;
 import com.android.onroad.activities.DilogActivity;
 import com.android.onroad.beans.Trip;
-import com.android.onroad.reciever.MyReceiver;
+import com.android.onroad.reciever.TripAlarmReceiver;
 
 import java.util.Calendar;
 
@@ -81,13 +81,10 @@ public class Utility {
 
     public static void setupAlarmManager(Context context, Trip trip, long timeInMillis, int id) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context, MyReceiver.class);
+        Intent intent = new Intent(context, TripAlarmReceiver.class);
         Log.i("trip_name setupAlarm", trip.getName());
         intent.putExtra(Constants.TRIP, trip);
-
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        Toast.makeText(context, "calendar.getTimeInMillis :  " + SystemClock.elapsedRealtime() + timeInMillis, Toast.LENGTH_SHORT).show();
         Log.e("time", " " + SystemClock.elapsedRealtime() + timeInMillis);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, timeInMillis
                 , AlarmManager.INTERVAL_DAY, pendingIntent);
@@ -98,8 +95,9 @@ public class Utility {
         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.DATE, day);
+        calendar.add(Calendar.DATE, day);
         Log.i("trip_name setAlarmTime", trip.getName());
+        Log.i("Calendar.DATE", Calendar.DATE + "");
 
 
         if (calendar.getTimeInMillis() > Calendar.getInstance()
@@ -111,42 +109,38 @@ public class Utility {
             Utility.setupAlarmManager(context, trip,
                     calendar.getTimeInMillis(), id);
 
-            Toast.makeText(context, "calendar.getTimeInMillis :  " + calendar.getTimeInMillis() / (60 * 1000), Toast.LENGTH_SHORT).show();
         }
     }
 
     public static void launchMap(Context context, Trip trip) {
-//
-//        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-//                Uri.parse("http://maps.google.com/maps/dir?saddr=" + trip.getStartPoint() + "&daddr=" + trip.getEndPoint()));
-//        intent.setPackage("com.google.android.apps.maps");
-//        context.startActivity(intent);
+
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(context)) {
 
-            //If the draw over permission is not available open the settings screen
-            //to grant the permission.
             Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+
                     Uri.parse("package:" + context.getPackageName()));
             ((AppCompatActivity) context).startActivityForResult(intent, 1);
         } else {
             Intent intent = new Intent(context, FloatWidgetIntentService.class);
             intent.putExtra(Constants.TRIP, trip);
 
-            context.bindService(intent, myConnection, Context.BIND_AUTO_CREATE);
+            context.startService(intent);
 
-            String uri = ("http://maps.google.com/maps/dir?saddr=" + trip.getStartPoint() + "&daddr=" + trip.getEndPoint());
 
-            intent.setPackage("com.google.android.apps.maps");
+            Intent mapIntent = new Intent(android.content.Intent.ACTION_VIEW,
+                    Uri.parse("http://maps.google.com/maps/dir?saddr=" + trip.getStartPoint() + "&daddr=" + trip.getEndPoint()));
+            mapIntent.setPackage("com.google.android.apps.maps");
+            context.startActivity(mapIntent);
 
-            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)));
+
         }
     }
 
     public static void cancelAlarm(Context context, int alarmId) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent myIntent = new Intent(context, MyReceiver.class);
+        Intent myIntent = new Intent(context, TripAlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context, alarmId, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.cancel(pendingIntent);

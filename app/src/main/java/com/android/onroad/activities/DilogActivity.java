@@ -3,6 +3,7 @@ package com.android.onroad.activities;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -34,7 +35,7 @@ public class DilogActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dilog);
-        final Trip trip = getIntent().getExtras().getParcelable(Constants.TRIP);
+         final Trip trip = getIntent().getExtras().getParcelable(Constants.TRIP);
         btnStart = findViewById(R.id.btnStart);
         btnLater = findViewById(R.id.btnLater);
         btnCancel = findViewById(R.id.btnCancel);
@@ -56,11 +57,14 @@ public class DilogActivity extends AppCompatActivity {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (trip!=null) {
 
-                trip.setStatus(Trip.DONE_TRIP);
-                updateTrip(trip);
+                    trip.setStatus(Trip.DONE_TRIP);
+                    //todo remove comment
 
-                Utility.launchMap(DilogActivity.this, trip);
+                    //   updateTrip(trip);
+                    Utility.launchMap(DilogActivity.this, trip);
+                }
                closeSound();
             }
         });
@@ -70,7 +74,8 @@ public class DilogActivity extends AppCompatActivity {
 
                 Utility.pushNotification(DilogActivity.this, trip);
                 trip.setStatus(Trip.UPCOMING_TRIP);
-                updateTrip(trip);
+                //todo remove comment
+            //    updateTrip(trip);
 
                 Log.i("trip_name dialog", trip.getName());
 
@@ -84,6 +89,9 @@ public class DilogActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 trip.setStatus("Canceled");
+                //todo remove comment
+
+             //   updateTrip(trip);
                 closeSound();
             }
         });
@@ -93,61 +101,71 @@ public class DilogActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-
     }
      // TODO Update
-    private void updateTrip(Trip trip) {
+     private void updateTrip(@NonNull Trip trip) {
 
-        FirebaseUser user = mFirebaseAuth.getCurrentUser();
+         FirebaseUser user = mFirebaseAuth.getCurrentUser();
 
-        if (user != null) {
-            String userId = mFirebaseAuth.getCurrentUser().getUid();
+         if (user != null) {
+             String userId = user.getUid();
 
-            mTripsDatabaseReference.child(userId)
-                    .child("name")
-                    .setValue(trip.getName());
+             mTripsDatabaseReference.child(userId)
+                     .child(trip.getTripId())
+                     .child("name")
+                     .setValue(trip.getName());
 
-            mTripsDatabaseReference.child(userId)
-                    .child("date")
-                    .setValue(trip.getDate());
+             mTripsDatabaseReference.child(userId)
+                     .child(trip.getTripId())
+                     .child("date")
+                     .setValue(trip.getDate());
 
-            mTripsDatabaseReference.child(userId)
-                    .child("startPoint")
-                    .setValue(trip.getStartPoint());
+             mTripsDatabaseReference.child(userId)
+                     .child(trip.getTripId())
+                     .child("startPoint")
+                     .setValue(trip.getStartPoint());
 
-            mTripsDatabaseReference.child(userId)
-                    .child("endPoint")
-                    .setValue(trip.getEndPoint());
+             mTripsDatabaseReference.child(userId)
+                     .child(trip.getTripId())
+                     .child("endPoint")
+                     .setValue(trip.getEndPoint());
 
-            mTripsDatabaseReference.child(userId)
-                    .child("startPointLatitude")
-                    .setValue(trip.getStartPointLatitude());
+             mTripsDatabaseReference.child(userId)
+                     .child(trip.getTripId())
+                     .child("startPointLatitude")
+                     .setValue(trip.getStartPointLatitude());
 
-            mTripsDatabaseReference.child(userId)
-                    .child("startPointLongitude")
-                    .setValue(trip.getStartPointLongitude());
+             mTripsDatabaseReference.child(userId)
+                     .child(trip.getTripId())
+                     .child("startPointLongitude")
+                     .setValue(trip.getStartPointLongitude());
 
-            mTripsDatabaseReference.child(userId)
-                    .child("endPointLatitude")
-                    .setValue(trip.getEndPointLatitude());
+             mTripsDatabaseReference.child(userId)
+                     .child(trip.getTripId())
+                     .child("endPointLatitude")
+                     .setValue(trip.getEndPointLatitude());
 
-            mTripsDatabaseReference.child(userId)
-                    .child("endPointLongitude")
-                    .setValue(trip.getEndPointLongitude());
+             mTripsDatabaseReference.child(userId)
+                     .child(trip.getTripId())
+                     .child("endPointLongitude")
+                     .setValue(trip.getEndPointLongitude());
 
-            mTripsDatabaseReference.child(userId)
-                    .child("type")
-                    .setValue(trip.getType());
+             mTripsDatabaseReference.child(userId)
+                     .child(trip.getTripId())
+                     .child("type")
+                     .setValue(trip.getType());
 
-            mTripsDatabaseReference.child(userId)
-                    .child("status")
-                    .setValue(trip.getStatus());
+             mTripsDatabaseReference.child(userId)
+                     .child(trip.getTripId())
+                     .child("status")
+                     .setValue(trip.getStatus());
 
-            mTripsDatabaseReference.child(userId)
-                    .child("notes")
-                    .setValue(trip.getNotes());
-        }
-    }
+             mTripsDatabaseReference.child(userId)
+                     .child(trip.getTripId())
+                     .child("notes")
+                     .setValue(trip.getNotes());
+         }
+     }
     public  void closeSound(){
 
         if (myPlayer != null) {

@@ -163,7 +163,12 @@ public class HomeActivity extends AppCompatActivity
 
         if (id == R.id.nav_account) {
             // Handle the account action
-            startActivity(new Intent(this, EditAccount.class));
+            //TODO
+            /**
+             * create edit account
+             */
+
+            //startActivity(new Intent(this, EditAccount.class));
         } else if (id == R.id.nav_sign_out) {
             signOut();
         }
