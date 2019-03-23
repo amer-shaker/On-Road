@@ -169,6 +169,9 @@ public class HomeActivity extends AppCompatActivity
              */
 
             //startActivity(new Intent(this, EditAccount.class));
+        } else if (id == R.id.nav_previous_trips) {
+            Intent intent = new Intent(this, HistoryTripsMapActivty.class);
+            startActivity(intent);
         } else if (id == R.id.nav_sign_out) {
             signOut();
         }

@@ -39,6 +39,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -81,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Initialize Firebase components
         mFirebaseAuth = FirebaseAuth.getInstance();
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         setupFirebaseAuth();
 
         // Initialize UI

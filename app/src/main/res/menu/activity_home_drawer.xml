@@ -8,6 +8,10 @@
             android:id="@+id/nav_account"
             android:icon="@drawable/ic_menu_account"
             android:title="@string/title_nav_account" />
+        <item
+            android:id="@+id/nav_previous_trips"
+            android:icon="@drawable/ic_map"
+            android:title="@string/title_nav_past_trips" />
     </group>
 
     <item android:title="@string/title_menu_item_help_and_settings">

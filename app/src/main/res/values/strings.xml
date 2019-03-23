@@ -101,5 +101,6 @@
 
     <string name="title_menu_item_help_and_settings">Help &amp; Settings</string>
     <string name="title_nav_account">Account</string>
+    <string name="title_nav_past_trips">Past Trips</string>
     <string name="title_nav_sign_out">Sign out</string>
 </resources>

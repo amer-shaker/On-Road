@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.android.onroad.activities.TripDetailsActivity">
+    tools:context="activities.TripDetailsActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -19,8 +19,8 @@
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/trip_name_img"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:src="@drawable/trip_name_img" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -59,6 +59,7 @@
                         android:drawableLeft="@drawable/end_point_img"
                         android:text="end point : "
                         android:textSize="20sp" />
+
                     <TextView
 
                         android:layout_width="wrap_content"
@@ -66,7 +67,6 @@
                         android:drawableLeft="@drawable/trip_name_img"
                         android:text="Type : "
                         android:textSize="20sp" />
-
 
 
                     <TextView
@@ -90,6 +90,7 @@
                         android:drawableLeft="@drawable/status_img"
                         android:text="status  : "
                         android:textSize="20sp" />
+
                     <TextView
                         android:layout_width="wrap_content"
 
@@ -178,26 +179,19 @@
 
                     </LinearLayout>
 
-
                 </LinearLayout>
-
 
             </LinearLayout>
 
 
-
-
-    <ListView
-        android:background="@drawable/list_notes_shap"
-        android:id="@+id/noteList"
-        android:layout_width="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:theme="@style/AppTheme"></ListView>
-
-
+            <ListView
+                android:id="@+id/noteList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/list_notes_shap" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
