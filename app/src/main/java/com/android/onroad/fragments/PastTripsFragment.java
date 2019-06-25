@@ -30,8 +30,6 @@ public class PastTripsFragment extends Fragment {
 
     private View view;
     List<Trip> trips = new ArrayList<>();
-
-
     private RecyclerView recyclerView;
     private PastTripsAdapter pastTripsAdapter;
     private RecyclerView.LayoutManager layoutManager;
